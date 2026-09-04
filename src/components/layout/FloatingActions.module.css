@@ -57,6 +57,9 @@
   display: none;
   gap: var(--space-2);
   padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+  /* Pinned to the shared token so the clearance the footer reserves cannot
+     drift away from the space this actually occupies. */
+  min-height: calc(var(--action-bar-h) + env(safe-area-inset-bottom));
   background: rgba(6, 9, 15, 0.92);
   backdrop-filter: blur(14px) saturate(140%);
   border-top: 1px solid var(--dark-border);

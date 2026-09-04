@@ -1,5 +1,8 @@
 /** Primary navigation, footer columns and the global call to action. */
 
+import industries from "./industries";
+import resources from "./resources";
+
 export const primaryNav = [
   { label: "Industries", to: "/industries" },
   { label: "Capabilities", to: "/products" },
@@ -125,3 +128,38 @@ export const siteMap = [
 ];
 
 export default primaryNav;
+
+/**
+ * Contents of the desktop dropdowns, keyed by the parent nav path.
+ *
+ * Only two top-level items carry one, and both for the same reason: they are
+ * index pages in front of a set of real pages that had no other route in. The
+ * six sector pages and the six buyer guides were reachable only by landing on
+ * the index first and clicking through, which is a page of friction in front
+ * of content a buyer often arrives already knowing they want.
+ *
+ * Built from the same data the pages themselves render, so a new sector or a
+ * new guide appears in the nav without anyone remembering to add it.
+ */
+export const navMenus = {
+  "/industries": {
+    overview: "All industries",
+    items: industries.map((industry) => ({
+      label: industry.title,
+      to: `/industries/${industry.id}`,
+    })),
+  },
+  "/resources": {
+    overview: "All buyer guides",
+    items: [
+      ...resources.map((resource) => ({
+        label: resource.title,
+        to: `/resources/${resource.slug}`,
+      })),
+      /* The three reference pages that live only in the footer otherwise. */
+      { label: "Materials & standards", to: "/standards" },
+      { label: "Trade glossary", to: "/glossary" },
+      { label: "Buyer FAQ", to: "/faq" },
+    ],
+  },
+};

@@ -320,3 +320,22 @@ a.contactItem:hover {
     gap: var(--space-2);
   }
 }
+
+/*
+ * Clearance for the fixed action bar on phones.
+ *
+ * The bar carries the quote CTA and is pinned to the bottom of the screen from
+ * 760px down. At the foot of the page it sat directly on top of the last row
+ * of the footer — the Sitemap link measured y 744–788 against a bar occupying
+ * 738–812, so it was completely hidden and unreachable.
+ *
+ * Declared after the 520px rule because that one sets `padding-block` as a
+ * shorthand, which would otherwise reset this.
+ */
+@media (max-width: 760px) {
+  .inner {
+    padding-bottom: calc(
+      var(--space-5) + var(--action-bar-h) + env(safe-area-inset-bottom)
+    );
+  }
+}

@@ -202,11 +202,21 @@
   --z-overlay: 80;
   --z-modal: 100;
 
-  --header-h: 76px;
+  /* Tall enough to hold the rounded bar plus the gap that makes it read as
+     floating rather than docked. */
+  --header-h: 92px;
+
+  /*
+   * Height of the fixed action bar that appears at the foot of the screen on
+   * phones. Declared once because two places need to agree on it: the bar
+   * itself, and the footer, which has to reserve the same space or the bar
+   * covers the last row of links.
+   */
+  --action-bar-h: 4.75rem;
 }
 
 @media (max-width: 900px) {
   :root {
-    --header-h: 64px;
+    --header-h: 80px;
   }
 }

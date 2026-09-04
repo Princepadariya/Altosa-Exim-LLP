@@ -7,24 +7,148 @@
   height: var(--header-h);
   display: flex;
   align-items: center;
-  border-bottom: 1px solid transparent;
-  transition:
-    background-color var(--dur) var(--ease-out),
-    border-color var(--dur) var(--ease-out),
-    backdrop-filter var(--dur) var(--ease-out);
+
+  /* Gap above and below the floating bar. */
+  --bar-gap: 12px;
+  /* Side inset: the container's own margin, or the gap once the viewport is
+     narrower than the container and that margin would go negative. */
+  --bar-inset: max(var(--bar-gap), calc((100% - var(--container)) / 2));
 }
 
-.scrolled {
-  background: rgba(5, 8, 15, 0.82);
+/*
+ * The bar is painted here rather than on .inner.
+ *
+ * Growing .inner itself meant animating max-width and padding, and max-width
+ * cannot interpolate to `none` — it snapped to full width while the padding
+ * was still easing, so the content slid about 42px across the tween before
+ * landing back where it started. Painting the surface on a pseudo-element
+ * leaves the layout completely untouched: the logo, the links and the button
+ * never move, and the only thing that animates is the shape behind them.
+ */
+.header::before {
+  content: "";
+  position: absolute;
+  top: var(--bar-gap);
+  bottom: var(--bar-gap);
+  left: var(--bar-inset);
+  right: var(--bar-inset);
+  background: rgba(5, 8, 15, 0.72);
   backdrop-filter: blur(14px) saturate(140%);
-  border-bottom-color: var(--dark-border);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-full);
+  box-shadow: 0 18px 44px -28px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  transition:
+    top var(--dur) var(--ease-out),
+    right var(--dur) var(--ease-out),
+    bottom var(--dur) var(--ease-out),
+    left var(--dur) var(--ease-out),
+    border-radius var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
 }
 
+/* Deepened once the page is under it, where the bar needs to hold its own
+   against content rather than the hero's dark ground. */
+.scrolled::before {
+  background: rgba(5, 8, 15, 0.92);
+  border-color: var(--dark-border-strong);
+}
+
+/*
+ * Scrolling down: the surface spreads to the edges of the strip and squares
+ * off. Nothing here touches layout, so this is purely a change of shape.
+ */
+.headerFull::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+  /* Hidden rather than removed, so the border box stays the same size and the
+     surface cannot jump by a pixel as it squares off. */
+  border-inline-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: var(--dark-border-strong);
+}
+
+/* Sits above the painted bar. Its geometry is the container's and never
+   changes between the two states — that is the whole point. */
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: var(--space-5);
   width: 100%;
+}
+
+@media (max-width: 900px) {
+  .header {
+    --bar-gap: 7px;
+  }
+}
+
+/* --- Drawer scrim --------------------------------------------------------- */
+
+/*
+ * Sits above the header so the drawer stack covers the whole screen, page and
+ * bar alike. Blurred rather than merely dimmed: the page behind stays
+ * recognisable as the place you came from without competing for attention.
+ */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay) + 1);
+  background: rgba(3, 6, 12, 0.55);
+  backdrop-filter: blur(8px) saturate(120%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    visibility var(--dur);
+}
+
+.scrimOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Only exists while the drawer does. */
+@media (min-width: 1081px) {
+  .scrim {
+    display: none;
+  }
+}
+
+/* --- Drawer close --------------------------------------------------------- */
+
+.drawerClose {
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-2);
+  color: var(--steel-300);
+  background: none;
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  /* The plus icon turned into a cross, the way the form's dismiss controls
+     already do it, rather than adding a second glyph to the icon set. */
+  transition:
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.drawerClose svg {
+  transform: rotate(45deg);
+}
+
+.drawerClose:hover {
+  color: var(--white);
+  border-color: var(--accent);
 }
 
 /* --- Wordmark ------------------------------------------------------------ */
@@ -198,28 +322,42 @@
 
 /* --- Mobile drawer ------------------------------------------------------- */
 
+/*
+ * A panel that slides in from the right edge rather than dropping down over
+ * the page.
+ *
+ * It covers everything — the page and the header alike — over a blurred
+ * scrim, and carries its own close button because the toggle that opened it is
+ * underneath. 100dvh rather than 100vh so a mobile browser's collapsing
+ * address bar cannot leave the foot of the panel cut off.
+ */
 .drawer {
   position: fixed;
-  inset: var(--header-h) 0 0;
-  z-index: var(--z-overlay);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(var(--z-overlay) + 2);
+  width: 80%;
+  max-width: 26rem;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: var(--space-6) var(--gutter) var(--space-8);
+  padding: var(--space-5) var(--gutter) var(--space-8);
   background: var(--dark-bg);
+  border-left: 1px solid var(--dark-border-strong);
+  box-shadow: -24px 0 60px -30px rgba(0, 0, 0, 0.9);
   overflow-y: auto;
-  transform: translateY(-8px);
-  opacity: 0;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
   visibility: hidden;
   transition:
-    opacity var(--dur) var(--ease-out),
     transform var(--dur) var(--ease-out),
     visibility var(--dur);
 }
 
 .drawerOpen {
-  opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .drawerNav {
@@ -292,6 +430,187 @@
 
 .drawerContact a:hover {
   color: var(--accent);
+}
+
+/* --- Desktop dropdowns ---------------------------------------------------- */
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/*
+ * The chevron is its own control beside the link rather than part of it, so
+ * the label can keep going to the index page while the panel gets an explicit
+ * toggle with a state a screen reader can read.
+ */
+.disclosure {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-left: -0.35rem;
+  color: var(--steel-400);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.disclosure:hover {
+  color: var(--white);
+}
+
+.disclosureOpen {
+  color: var(--white);
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.65rem);
+  left: 0;
+  z-index: 1;
+  min-width: 17rem;
+  max-width: 22rem;
+  padding: var(--space-3);
+  background: rgba(8, 11, 18, 0.97);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
+}
+
+/*
+ * Transparent bridge across the gap between the trigger and the panel. Without
+ * it the pointer leaves the nav item on its way down, the panel closes, and a
+ * submenu link can never be reached with the mouse.
+ */
+.menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -0.65rem;
+  height: 0.65rem;
+}
+
+/* The index page again, at the head of its own list: someone who opened the
+   panel to look for a sector may still want the overview. */
+.menuOverview {
+  display: block;
+  padding: 0.45rem 0.6rem;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--steel-400);
+  border-bottom: 1px solid var(--dark-border);
+  border-radius: 0;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.menuOverview:hover {
+  color: var(--azure-300);
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.menuLink {
+  display: block;
+  padding: 0.45rem 0.6rem;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--steel-200);
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.menuLink:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.menuLink:global(.active) {
+  color: var(--azure-300);
+}
+
+/* --- Drawer groups -------------------------------------------------------- */
+
+.drawerGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Carries the rule that the link itself normally draws, so the row and its
+   collapsed sub-list read as one band. */
+.drawerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.drawerRow .drawerLink {
+  flex: 1;
+  border-bottom: 0;
+}
+
+.drawerDisclosure {
+  display: grid;
+  place-items: center;
+  /* A 44px square: this is the one control on the row that is not the link,
+     and it has to be tappable without catching the link beside it. */
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  color: var(--steel-400);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition:
+    color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.drawerDisclosureOpen {
+  color: var(--white);
+  transform: rotate(180deg);
+}
+
+/* No `display` here on purpose: declaring one would beat the UA rule that the
+   `hidden` attribute relies on, and the list would never collapse. */
+.drawerSubList {
+  padding: var(--space-2) 0;
+  list-style: none;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.drawerSubLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.35rem 0 0.35rem var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--steel-300);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.drawerSubLink:hover,
+.drawerSubLink:global(.active) {
+  color: var(--azure-300);
 }
 
 @media (max-width: 1080px) {
