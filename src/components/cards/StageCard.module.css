@@ -1,0 +1,92 @@
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.stage:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.number {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--accent);
+  padding-top: 6px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--fs-xl);
+  color: var(--text);
+}
+
+/* Who actually performs the checks at this stage — the point of the section. */
+.owner {
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.summary {
+  max-width: 54ch;
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.tick {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .stage {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .number {
+    padding-top: 0;
+  }
+}

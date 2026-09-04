@@ -1,0 +1,108 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: start;
+}
+
+.highlights {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-7);
+}
+
+.highlight {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.highlight:first-child {
+  border-top: 1px solid var(--dark-border);
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  color: var(--azure-400);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius);
+  transition: transform var(--dur) var(--ease-spring);
+}
+
+.highlight:hover .iconWrap {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+.title {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-lg);
+  color: var(--dark-text);
+}
+
+.body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+/* --- Fact card ------------------------------------------------------------ */
+
+.facts {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-6));
+  padding: var(--space-6);
+  background: var(--dark-surface-raised);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--dark-inner-light);
+}
+
+.factsTitle {
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+.factRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--dark-border);
+}
+
+.factRow:last-child {
+  border-bottom: none;
+}
+
+.factLabel {
+  font-size: var(--fs-sm);
+  color: var(--steel-400);
+}
+
+.factValue {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--dark-text);
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .facts {
+    position: static;
+  }
+}

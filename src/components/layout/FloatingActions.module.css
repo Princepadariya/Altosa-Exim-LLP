@@ -1,0 +1,97 @@
+/* --- Back to top ---------------------------------------------------------- */
+
+.toTop {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: var(--z-sticky);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: var(--white);
+  background: var(--ink-900);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  visibility: hidden;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-spring),
+    visibility var(--dur),
+    background-color var(--dur) var(--ease-out);
+}
+
+.toTopVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+}
+
+.toTop:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toTop svg {
+  transform: rotate(-90deg);
+}
+
+/* Lift clear of the mobile action bar when it is showing. */
+@media (max-width: 760px) {
+  .toTop {
+    bottom: calc(72px + 1rem);
+  }
+}
+
+/* --- Mobile action bar ---------------------------------------------------- */
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  display: none;
+  gap: var(--space-2);
+  padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+  background: rgba(6, 9, 15, 0.92);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-top: 1px solid var(--dark-border);
+  transform: translateY(100%);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.barVisible {
+  transform: translateY(0);
+}
+
+.barAction {
+  flex: 1;
+}
+
+.barSecondary {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  flex-shrink: 0;
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius);
+  transition:
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.barSecondary:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .bar {
+    display: flex;
+  }
+}

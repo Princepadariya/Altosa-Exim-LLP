@@ -1,0 +1,127 @@
+.modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.mode:hover {
+  transform: translateY(var(--lift));
+  box-shadow: var(--shadow-lg);
+}
+
+.modeIcon {
+  color: var(--accent);
+}
+
+.modeName {
+  font-size: var(--fs-lg);
+  color: var(--text);
+}
+
+.modeTransit {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.03em;
+  color: var(--text-soft);
+}
+
+.modeNote {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* --- Packing -------------------------------------------------------------- */
+
+.packing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 0;
+  margin-top: var(--space-7);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.pack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.pack:hover {
+  background: var(--surface-sunken);
+}
+
+.packName {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.packNote {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.packSuited {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.03em;
+  color: var(--accent);
+}
+
+/* --- Documents ------------------------------------------------------------ */
+
+.docs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-4) var(--space-7);
+  margin-top: var(--space-7);
+}
+
+.doc {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.docIcon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--accent);
+}
+
+.docName {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.docPurpose {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}

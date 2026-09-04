@@ -1,0 +1,153 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-5);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+a.card:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+a.card:hover::before {
+  transform: scaleX(1);
+}
+
+.cardIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-2);
+  color: var(--accent);
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
+  transition: transform var(--dur) var(--ease-spring);
+}
+
+a.card:hover .cardIcon {
+  transform: scale(1.08) rotate(-6deg);
+}
+
+.cardLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.cardValue {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  word-break: break-word;
+}
+
+.cardNote {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Corner arrow: the explicit signal that these two are links, where the
+   surrounding cards were previously indistinguishable from static blocks. */
+.cardGo {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  color: var(--text-soft);
+  transition:
+    color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+a.card:hover .cardGo {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+/* --- Reference detail ----------------------------------------------------- */
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-5) var(--space-6);
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detailLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.detailIcon {
+  flex-shrink: 0;
+  color: var(--text-soft);
+}
+
+.detailValue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.detailValue strong {
+  font-weight: 600;
+  color: var(--text);
+}
+

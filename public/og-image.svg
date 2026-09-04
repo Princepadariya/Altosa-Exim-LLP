@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1020"/>
+      <stop offset="100%" stop-color="#05080f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.1" r="0.7">
+      <stop offset="0%" stop-color="#0f8da8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0f8da8" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g transform="translate(80, 150)">
+    <rect x="0" y="0" width="56" height="4" fill="#0f8da8"/>
+    <text x="0" y="46" fill="#94a3b8" font-family="monospace" font-size="20" letter-spacing="4">
+      MERCHANT EXPORTER &amp; COMMISSION AGENT
+    </text>
+
+    <text x="0" y="150" fill="#ffffff" font-family="Sora, Segoe UI, sans-serif" font-size="76" font-weight="700" letter-spacing="-2">
+      Reliable industrial
+    </text>
+    <text x="0" y="235" fill="#0f8da8" font-family="Sora, Segoe UI, sans-serif" font-size="76" font-weight="700" letter-spacing="-2">
+      sourcing.
+    </text>
+
+    <text x="0" y="300" fill="#9fb0c8" font-family="Inter, Segoe UI, sans-serif" font-size="26">
+      Sourced against your drawing — Rajkot, Gujarat, India
+    </text>
+
+    <g transform="translate(0, 350)" font-family="monospace" font-size="18" letter-spacing="2">
+      <text x="0" y="0" fill="#ffffff" font-size="26" font-weight="700">ALTOSA EXIM LLP</text>
+      <text x="330" y="0" fill="#64748b">IEC · GST REGISTERED</text>
+    </g>
+  </g>
+
+  <g transform="translate(880, 300)" fill="none" stroke="#94a3b8" stroke-opacity="0.55" stroke-width="2">
+    <circle r="150"/>
+    <circle r="115" stroke-opacity="0.3"/>
+    <circle r="58" stroke="#0f8da8" stroke-opacity="0.9" stroke-width="3"/>
+    <circle cx="133" cy="0" r="12"/>
+    <circle cx="66" cy="115" r="12"/>
+    <circle cx="-66" cy="115" r="12"/>
+    <circle cx="-133" cy="0" r="12"/>
+    <circle cx="-66" cy="-115" r="12"/>
+    <circle cx="66" cy="-115" r="12"/>
+  </g>
+</svg>

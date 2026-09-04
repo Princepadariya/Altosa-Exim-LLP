@@ -1,0 +1,84 @@
+.records {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.record {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: var(--space-5);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+.record:hover {
+  background: var(--white);
+  color: var(--text);
+}
+
+.recordTick {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+/* --- Certifications ------------------------------------------------------- */
+
+.certifications {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.certBody {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+.regRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.regChip {
+  padding: 0.5rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  color: var(--azure-400);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+}
+
+.limits {
+  padding: var(--space-6);
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-lg);
+}
+
+.limitsTitle {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-xl);
+  color: var(--white);
+}
+
+.limitsBody {
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}

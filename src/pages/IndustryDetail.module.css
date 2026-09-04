@@ -1,0 +1,216 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 19rem;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: start;
+}
+
+/* 64ch, not 52ch: at 52 the intro filled ~71% of its column and stopped well
+   short of the rule beneath it. */
+.intro {
+  font-size: var(--fs-lg);
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: 64ch;
+}
+
+.blockTitle {
+  margin: var(--space-9) 0 var(--space-5);
+  font-size: var(--fs-2xl);
+  color: var(--text);
+}
+
+/* --- Components list ------------------------------------------------------ */
+
+.components {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.component {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: var(--space-5);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.component:hover {
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
+.tick {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+/* --- Considerations ------------------------------------------------------- */
+
+.considerations {
+  display: flex;
+  flex-direction: column;
+}
+
+.consideration {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.consideration:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.considerationNumber {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--accent);
+  padding-top: 5px;
+}
+
+.considerationTitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-lg);
+  color: var(--text);
+}
+
+/* No cap: the grid column already sets the measure (~63ch here), and the 56ch
+   cap left the text 63% of a row whose rule ran the full width. */
+.considerationBody {
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* --- Sidebar -------------------------------------------------------------- */
+
+.aside {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-6));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.plate {
+  margin-bottom: var(--space-1);
+}
+
+.panel {
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.panelTitle {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip {
+  padding: 0.3rem 0.7rem;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+}
+
+.chipMono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.ctaPanel {
+  padding: var(--space-5);
+  background: var(--ink-950);
+  border-radius: var(--radius-lg);
+  color: var(--dark-text);
+}
+
+.ctaTitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-md);
+  color: var(--white);
+}
+
+.ctaBody {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--dark-text-muted);
+}
+
+/* --- Other sectors -------------------------------------------------------- */
+
+.otherGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.other {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.other:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--accent);
+}
+
+.otherNumber {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-soft);
+}
+
+.otherTitle {
+  font-size: var(--fs-md);
+  color: var(--text);
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .aside {
+    position: static;
+  }
+}

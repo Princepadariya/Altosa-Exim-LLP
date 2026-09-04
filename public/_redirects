@@ -1,0 +1,3 @@
+# SPA fallback for Netlify-style hosts. On Vercel use vercel.json rewrites;
+# on Apache/Nginx point every unmatched path at /index.html.
+/*  /index.html  200

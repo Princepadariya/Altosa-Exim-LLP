@@ -1,0 +1,68 @@
+.section {
+  min-height: 80svh;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--header-h) + var(--space-8));
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 42rem;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--azure-400);
+}
+
+.title {
+  font-size: var(--fs-4xl);
+  color: var(--white);
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--dark-border);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  font-size: var(--fs-sm);
+  color: var(--steel-200);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+  transition:
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--ink-950);
+  background: var(--white);
+  border-color: var(--white);
+}

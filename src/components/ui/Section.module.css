@@ -1,0 +1,120 @@
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+  background: var(--bg);
+  overflow: clip;
+}
+
+.subtle {
+  background: var(--bg-subtle);
+}
+
+.dark {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.tight {
+  padding-block: calc(var(--section-y) * 0.6);
+}
+
+/* --- Plate marker --------------------------------------------------------- */
+
+/* Sits in the outer margin on wide screens, where a plate number sits on a
+   drawing sheet. It sticks so it stays with you as the section scrolls. */
+.plate {
+  position: absolute;
+  top: 0;
+  left: calc(var(--gutter) * -1 + 0.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  color: var(--text-soft);
+}
+
+.hasPlate .inner {
+  position: relative;
+}
+
+.plateNumber {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.plateRule {
+  width: 1px;
+  flex: 1;
+  min-height: 3.5rem;
+  background: linear-gradient(to bottom, var(--border-strong), transparent);
+}
+
+.plateLabel {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+}
+
+.dark .plate {
+  color: var(--steel-400);
+}
+
+.dark .plateNumber {
+  color: var(--azure-400);
+}
+
+.dark .plateRule {
+  background: linear-gradient(to bottom, var(--dark-border-strong), transparent);
+}
+
+/* Below the point where the margin disappears, the plate would collide with
+   the content, so it is dropped rather than crammed in. */
+@media (max-width: 1380px) {
+  .plate {
+    display: none;
+  }
+}
+
+.flush {
+  padding-block: 0;
+}
+
+/* Blueprint grid backdrop for dark sections. */
+.grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Warm glow anchored to the top of a dark section. */
+.glow::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  width: min(70rem, 120%);
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 141, 168, 0.16),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}

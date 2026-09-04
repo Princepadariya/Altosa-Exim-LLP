@@ -1,0 +1,321 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    backdrop-filter var(--dur) var(--ease-out);
+}
+
+.scrolled {
+  background: rgba(5, 8, 15, 0.82);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--dark-border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+/* --- Wordmark ------------------------------------------------------------ */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-right: auto;
+  flex-shrink: 0;
+}
+
+.brandMark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  overflow: hidden;
+}
+
+.brandMark svg {
+  position: relative;
+  z-index: 1;
+  color: var(--white);
+}
+
+.brandMark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.4));
+  transform: translate(-100%, -100%);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.brand:hover .brandMark::after {
+  transform: translate(0, 0);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--white);
+}
+
+.brandSuffix {
+  color: var(--steel-400);
+  font-weight: 500;
+  margin-left: 0.3em;
+  font-size: 0.75em;
+  letter-spacing: 0.1em;
+}
+
+/* 11px rather than 10px: this is the only place the location appears in the
+   header, and 10px uppercase is below comfortable reading on a phone. */
+.brandRole {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+/* --- Desktop nav --------------------------------------------------------- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.link {
+  position: relative;
+  padding: 0.5rem 0.7rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--steel-200);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur) var(--ease-out);
+  white-space: nowrap;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.25rem;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--white);
+}
+
+.link:hover::after,
+.active::after {
+  transform: scaleX(1);
+}
+
+.active {
+  color: var(--white);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* --- Mobile toggle ------------------------------------------------------- */
+
+.toggle {
+  display: none;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+}
+
+.toggleBar {
+  position: absolute;
+  left: 50%;
+  width: 17px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transition:
+    transform var(--dur) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.toggleBar:nth-child(1) {
+  transform: translate(-50%, -5px);
+}
+.toggleBar:nth-child(2) {
+  transform: translate(-50%, 0);
+}
+.toggleBar:nth-child(3) {
+  transform: translate(-50%, 5px);
+}
+
+.toggleOpen .toggleBar:nth-child(1) {
+  transform: translate(-50%, 0) rotate(45deg);
+}
+.toggleOpen .toggleBar:nth-child(2) {
+  opacity: 0;
+}
+.toggleOpen .toggleBar:nth-child(3) {
+  transform: translate(-50%, 0) rotate(-45deg);
+}
+
+/* --- Mobile drawer ------------------------------------------------------- */
+
+.drawer {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--gutter) var(--space-8);
+  background: var(--dark-bg);
+  overflow-y: auto;
+  transform: translateY(-8px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    visibility var(--dur);
+}
+
+.drawerOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--dark-border);
+}
+
+.drawerLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--steel-200);
+  border-bottom: 1px solid var(--dark-border);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    color var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.drawerOpen .drawerLink {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--stagger, 0) * 45ms + 60ms);
+}
+
+.drawerLink:hover,
+.drawerActive {
+  color: var(--white);
+}
+
+.drawerActive .drawerArrow {
+  color: var(--accent);
+}
+
+.drawerArrow {
+  color: var(--steel-400);
+}
+
+.drawerFooter {
+  margin-top: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.drawerContact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--dark-text-muted);
+}
+
+/* The drawer is touch-only, and these sat at 22px against the nav links'
+   67px — below the 24px minimum for a tap target. */
+.drawerContact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: var(--steel-200);
+}
+
+.drawerContact a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 1080px) {
+  .nav {
+    display: none;
+  }
+
+  .toggle {
+    display: block;
+  }
+
+  .ctaDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 1081px) {
+  .drawer {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .brandRole {
+    display: none;
+  }
+}

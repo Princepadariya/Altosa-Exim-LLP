@@ -1,0 +1,102 @@
+/* Mosaic: a wide lead item across the top, the rest in a three-up beneath it.
+   Used on the homepage, where six families in an even grid read as filler. */
+.mosaic {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lead {
+  grid-column: span 3;
+}
+
+@media (max-width: 1000px) {
+  .mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lead {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 680px) {
+  .mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .lead {
+    grid-column: span 1;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--space-7);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.filter {
+  position: relative;
+  padding: 0.55rem 1.05rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.filter:hover {
+  color: var(--text);
+  border-color: var(--steel-400);
+}
+
+.filter:active {
+  transform: scale(0.97);
+}
+
+.filterActive {
+  color: var(--white);
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+}
+
+.count {
+  margin-left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-soft);
+}
+
+.filterActive .count {
+  color: var(--azure-400);
+}
+
+.results {
+  margin-top: var(--space-6);
+}
+
+.resultCount {
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.empty {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+}

@@ -1,0 +1,49 @@
+/* Card grids shared by every section.
+   auto-fill, not auto-fit: auto-fit collapses empty tracks, so a filtered view
+   showing one result stretched that card across the full row — which blew its
+   image up to ~830px tall. auto-fill keeps the tracks, so a card is the same
+   size whether the filter returns one result or eight. */
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.cols2 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.cols3 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+.cols4 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
+.spaced {
+  margin-top: var(--space-8);
+}
+
+/* Two-column editorial split: sticky heading beside flowing content. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.sticky {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-6));
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky {
+    position: static;
+  }
+}

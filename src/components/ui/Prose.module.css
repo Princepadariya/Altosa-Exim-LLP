@@ -1,0 +1,130 @@
+.prose {
+  max-width: 46rem;
+}
+
+.prose > * + * {
+  margin-top: var(--space-5);
+}
+
+.paragraph {
+  font-size: var(--fs-lg);
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+.heading {
+  margin-top: var(--space-9) !important;
+  font-size: var(--fs-2xl);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+  scroll-margin-top: calc(var(--header-h) + 2rem);
+}
+
+.heading:first-child {
+  margin-top: 0 !important;
+}
+
+/* --- Lists ---------------------------------------------------------------- */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  counter-reset: step;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.marker {
+  flex-shrink: 0;
+  margin-top: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+.ordered .item {
+  counter-increment: step;
+}
+
+.ordered .marker {
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  background: none;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  min-width: 1.5rem;
+  padding-top: 5px;
+}
+
+.ordered .marker::before {
+  content: "0" counter(step);
+}
+
+/* --- Table ---------------------------------------------------------------- */
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  min-width: 34rem;
+}
+
+.table th {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-4) var(--space-5);
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.table tbody tr:hover {
+  background: var(--surface-sunken);
+}
+
+.table td:first-child {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}

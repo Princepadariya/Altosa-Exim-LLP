@@ -1,0 +1,243 @@
+/* Destination board.
+   One row per region — region and count on the left, its destinations laid
+   out across — so all 25 are visible at once. The previous version stacked
+   each region as a tall block, which meant scrolling to grasp the footprint.
+
+   The leading numeral is also gone: it was the country count, but set alone
+   above the region name it read as an ordinal, so two six-country regions in
+   a row looked like a duplicated index. */
+
+/* --- Tally strip ---------------------------------------------------------- */
+
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2rem, 6vw, 5rem);
+  margin-top: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.tallyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.figure {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 3.4vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.figureLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* --- Region rows ---------------------------------------------------------- */
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  /* Right column sized so the largest region (6) still lays out on one line. */
+  grid-template-columns: minmax(0, 0.26fr) minmax(0, 0.74fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rowHead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.regionName {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.regionCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.blurb {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* --- Code tiles ----------------------------------------------------------- */
+
+/* auto-fill, not auto-fit: tiles keep a consistent size across regions rather
+   than stretching, so a three-country region does not get tiles twice the
+   width of a six-country one.
+   The 8rem floor is chosen so six tiles — the largest region — still resolve
+   to a single track row; at 8.5rem they wrapped a lone sixth tile onto a
+   second line, which made those two regions read as ragged. */
+.codes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
+  gap: var(--space-2);
+}
+
+/* Flag and code share the top row; the name takes the full tile width beneath.
+   Setting the flag beside the name instead left it about 75px, which wrapped
+   the longer country names into a narrow column. */
+.tile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 0.5rem;
+  row-gap: 0.3rem;
+  align-items: center;
+  /* Horizontal padding trimmed to space-3: at space-4 the content box was
+     109px and "United Arab Emirates" needed ~116px, so that one tile wrapped
+     and pushed its whole region's row 16px taller than the others. */
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition:
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.tile:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Flag spans both rows, sitting beside the name and code.
+   Kept small with a hairline and slight rounding: at this size the flags read
+   as identifiers rather than as blocks of colour, which matters against an
+   otherwise near-monochrome palette. */
+.flag {
+  grid-row: 1;
+  grid-column: 1;
+  width: 1.5rem;
+  height: 1.125rem;
+  object-fit: cover;
+  border-radius: 2px;
+  /* A hairline keeps flags with white edges (JP-style, and NL/IT/etc.) from
+     bleeding into the white tile. */
+  box-shadow: 0 0 0 1px rgba(20, 21, 26, 0.16);
+}
+
+/* 11px rather than --fs-xs (12px): at 12px the longest name, "United Arab
+   Emirates", needed 121px against 115px available and wrapped — which made
+   its whole region's row 16px taller than the other four. This keeps every
+   tile on the board a uniform height. */
+.name {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.code {
+  grid-row: 1;
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  color: var(--text-soft);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.tile:hover .code {
+  color: var(--accent);
+}
+
+/* --- Origin strip --------------------------------------------------------- */
+
+.origin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.originLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.gateways {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+.gateway {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.gatewayType {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .blurb {
+    max-width: 60ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .codes {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 7rem), 1fr));
+  }
+
+  .tile {
+    padding: var(--space-3);
+  }
+}

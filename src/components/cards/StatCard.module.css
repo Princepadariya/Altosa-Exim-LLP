@@ -1,0 +1,129 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-5) var(--space-5) var(--space-5);
+  border-left: 1px solid var(--dark-border);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1;
+  /* Not --tracking-tight: that is tuned for a geometric sans and pulls the
+     serif numerals into each other at this size. */
+  letter-spacing: -0.015em;
+  color: var(--white);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* --azure-400, not --accent: --accent is the light-surface value and lands at
+   ~3.5:1 on this near-black band. This is ~8:1. */
+.suffix {
+  color: var(--azure-400);
+}
+
+/* --- Measure rule --------------------------------------------------------- */
+
+.measure {
+  position: relative;
+  height: 7px;
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-2);
+  /* Tick marks sitting on a baseline. */
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--dark-border-strong) 0 1px,
+    transparent 1px 9px
+  );
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  background-size: 100% 5px;
+}
+
+.measure::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--dark-border);
+}
+
+/* Accent sweep, timed to run alongside the count-up. */
+.measure::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--azure-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.card:global(.is-visible) .measure::after {
+  transform: scaleX(1);
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.note {
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--steel-400);
+}
+
+/* --- Light surface variant ------------------------------------------------ */
+
+.light {
+  border-left-color: var(--border);
+}
+
+.light .value {
+  color: var(--text);
+}
+
+.light .suffix {
+  color: var(--accent);
+}
+
+.light .measure {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--border-strong) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+.light .measure::before {
+  background: var(--border);
+}
+
+.light .measure::after {
+  background: var(--accent);
+}
+
+.light .label {
+  color: var(--text);
+}
+
+.light .note {
+  color: var(--text-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .measure::after {
+    transition: none;
+    transform: scaleX(1);
+  }
+}

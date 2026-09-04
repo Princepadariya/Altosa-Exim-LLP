@@ -1,0 +1,245 @@
+.models {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.model {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.model::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--gradient-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.model:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.model:hover::before {
+  transform: scaleY(1);
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-2);
+  color: var(--accent);
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
+  transition: transform var(--dur) var(--ease-spring);
+}
+
+.model:hover .iconWrap {
+  transform: rotate(-6deg) scale(1.07);
+}
+
+.name {
+  font-size: var(--fs-2xl);
+  color: var(--text);
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.summary {
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.bestForLabel {
+  margin-top: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.bestFor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bestForItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.tick {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--accent);
+}
+
+/* --- Comparison ----------------------------------------------------------- */
+
+.compare {
+  margin-top: var(--space-9);
+}
+
+.compareIntro {
+  margin-bottom: var(--space-5);
+}
+
+.compareTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+}
+
+.compareNote {
+  margin-top: var(--space-2);
+  max-width: 62ch;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* One template shared by the header and every row so the columns stay locked. */
+.grid {
+  --compare-cols: minmax(0, 0.95fr) minmax(0, 1fr) minmax(0, 1fr);
+  border-top: 1px solid var(--border-strong);
+}
+
+.headRow,
+.compareRow {
+  display: grid;
+  grid-template-columns: var(--compare-cols);
+  align-items: stretch;
+}
+
+/* Rule on the row, not on the heading cells: on the cells it began under the
+   first heading instead of spanning the full width. */
+.headRow {
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.compareRow {
+  border-bottom: 1px solid var(--border);
+}
+
+/* A quiet stripe. The rows are wide, and tracking a question across to the
+   far column is the actual reading difficulty here. */
+.compareRow:nth-child(even) {
+  background: var(--surface-sunken);
+}
+
+.colHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.colIcon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.question {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.answer {
+  padding: var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* A single divider between the two arrangements — deliberately NOT a tint on
+   one of them. Shading one column reads as recommending it, which contradicts
+   the note directly above ("neither arrangement is inherently better"). The
+   two are distinguished by their headings and this rule, symmetrically. */
+.alt {
+  border-left: 1px solid var(--border);
+}
+
+.compareRow:hover .answer {
+  color: var(--text);
+}
+
+@media (max-width: 860px) {
+  /* Stacked: each answer carries its own arrangement label, since the column
+     headings are no longer overhead to identify it. */
+  .headRow {
+    display: none;
+  }
+
+  .compareRow {
+    grid-template-columns: 1fr;
+    padding: var(--space-5) 0;
+  }
+
+  .question {
+    padding: 0 0 var(--space-3);
+  }
+
+  .answer {
+    display: grid;
+    grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+    padding: var(--space-2) 0;
+    border: 0;
+    background: none;
+  }
+
+  .answer::before {
+    content: attr(data-model);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+}

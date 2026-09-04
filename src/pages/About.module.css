@@ -1,0 +1,123 @@
+/* Vision and mission set as type, not as cards. Two sentences do not need a
+   container each — a rule and a change of scale carry them. */
+.statements {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+  margin-top: var(--space-8);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border-strong);
+}
+
+.statement {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.statementLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.statementBody {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  line-height: 1.38;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  /* Gap is zero and the space comes from padding instead, so the divider sits
+     exactly midway between the two columns. */
+  .statements {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .statement {
+    padding-right: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .statement + .statement {
+    padding-right: 0;
+    padding-left: clamp(2rem, 4vw, 3.5rem);
+    border-left: 1px solid var(--border);
+  }
+}
+
+/* --- Registrations -------------------------------------------------------- */
+
+.registrations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.registration {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+  box-shadow: var(--dark-inner-light);
+}
+
+.registration:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--dark-border-strong);
+}
+
+.regCode {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--azure-400);
+}
+
+.regLabel {
+  font-size: var(--fs-lg);
+  color: var(--dark-text);
+}
+
+.regNote {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+/* --- Fact strip ----------------------------------------------------------- */
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--dark-border);
+}
+
+.fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-sm);
+  color: var(--steel-200);
+}
+
+.factIcon {
+  color: var(--steel-400);
+}

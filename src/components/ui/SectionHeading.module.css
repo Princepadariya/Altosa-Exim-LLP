@@ -1,0 +1,158 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 46rem;
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.center .eyebrow::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.title {
+  font-size: var(--fs-3xl);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--text);
+  letter-spacing: var(--tracking-snug);
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* --- Variants ------------------------------------------------------------- */
+
+/* Title and lead side by side, so a wide section does not open with a
+   narrow column of text stranded on the left. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: end;
+  max-width: none;
+}
+
+.splitLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.splitRight .lead {
+  padding-bottom: 0.35rem;
+}
+
+/* Oversized, no eyebrow — for a section that should land on its own.
+   Full width by default: constrained to a column this size breaks into five
+   or six lines. The title is instead held by a ch-based measure, so the line
+   count stays roughly constant as the type scales. */
+.statement {
+  max-width: none;
+  gap: var(--space-5);
+}
+
+.statement .title {
+  max-width: 30ch;
+  font-size: var(--fs-4xl);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.statement .lead {
+  max-width: 66ch;
+}
+
+/* Eyebrow on a hairline that runs to the edge of the section. */
+.rule {
+  max-width: none;
+  gap: var(--space-5);
+}
+
+.ruleTop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.rule .eyebrow::before {
+  display: none;
+}
+
+.ruleLine {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.onDark .ruleLine {
+  background: var(--dark-border);
+}
+
+.rule .title,
+.split .title {
+  max-width: 22ch;
+}
+
+.rule .lead {
+  max-width: 46rem;
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: var(--space-4);
+  }
+
+  .rule .title,
+  .split .title {
+    max-width: none;
+  }
+}
+
+/* On dark sections */
+.onDark .title {
+  color: var(--dark-text);
+}
+
+.onDark .lead {
+  color: var(--dark-text-muted);
+}
+
+.onDark .eyebrow {
+  color: var(--azure-400);
+}

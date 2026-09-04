@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Design tokens — Altosa Exim
+   Industrial precision: deep ink base, tempered steel neutrals, signal-azure
+   accent. The accent shares a hue family with the blueprint decorations, so
+   the drawing motifs and the calls to action read as one system rather than
+   two competing colours.
+   ========================================================================== */
+
+:root {
+  /* --- Brand palette ---------------------------------------------------
+     The ink ramp carries a slight blue cast so it reads as tempered steel
+     rather than flat black, and sits cleanly under the azure accent. */
+  /* Ink: near-neutral black with only a trace of cool in it. The old ramp was
+     navy, which fought the warm paper below and read as generic dark-SaaS. */
+  --ink-980: #08090a;
+  --ink-950: #0d0e10;
+  --ink-900: #131417;
+  --ink-850: #1a1b1f;
+  --ink-800: #212328;
+  --ink-700: #2d2f35;
+  --ink-600: #3e414a;
+  --ink-500: #585c66;
+
+  /* Small labels on the dark bands. Sized to clear AA against the lightest
+     dark surface it lands on, --ink-850 (4.84); #71747c measured 4.13–4.26
+     across the ink range. Dark-surface only — light-surface labels use
+     --text-soft, which is tuned for the paper backgrounds instead. */
+  --steel-400: #85888f;
+  --steel-300: #9b9ea6;
+  --steel-200: #c7c9ce;
+  --steel-100: #e4e2de;
+  --steel-050: #f2f0ec;
+
+  /* Signal azure. --azure-600 is the light-surface accent (4.6:1 on white,
+     so it is legible as text); --azure-400 is the dark-surface accent. */
+  /* Petrol teal rather than sky blue. Deeper and less default, and it holds up
+     against warm paper where a bright cyan looks like a UI element.
+     --azure-600 is the light-surface accent (5.3:1 on paper), --azure-400 the
+     luminous one for dark bands. */
+  --azure-900: #04323d;
+  --azure-800: #06485a;
+  --azure-700: #08596b;
+  --azure-600: #0c7186;
+  --azure-500: #0f8da8;
+  --azure-400: #2ab4d1;
+  --azure-300: #66d2e6;
+  --azure-200: #b3e9f2;
+  --azure-100: #e2f6fa;
+
+  --blueprint: #7dd3fc;
+  --blueprint-deep: #0369a1;
+  --verify: #34d399;
+  --verify-deep: #059669;
+
+  --white: #ffffff;
+
+  /* --- Semantic: light surfaces ---------------------------------------- */
+  /* Warm paper, not screen white. Cards stay pure white so they lift off the
+     page slightly — the depth comes from the paper/card difference rather than
+     from a shadow on every element. */
+  --bg: #faf8f4;
+  --bg-subtle: #f3f0e9;
+  --bg-muted: #e9e5dc;
+  --surface: var(--white);
+  --surface-sunken: #f7f4ee;
+  --border: #e6e1d7;
+  --border-strong: #d2ccbf;
+
+  /* Headings sit near-black for authority; body copy is deliberately softer so
+     the two read as separate voices rather than one flat grey. */
+  /* Neutral ink on warm paper — the newsprint pairing. Blue-grey text on a warm
+     ground reads muddy, so these carry no cast. All clear AA on --bg:
+     text 16.5:1, muted 7.4:1, soft 4.7:1. */
+  --text: #14151a;
+  --text-muted: #4e525b;
+  /* #6c6f77 cleared AA on --bg (4.74) but fell to 4.42 on the darker
+     --bg-subtle bands, where most eyebrows and labels actually sit. This
+     clears 4.5 on both: 5.03 on --bg, 4.68 on --bg-subtle. */
+  --text-soft: #686b73;
+  --text-inverse: var(--white);
+
+  --accent: var(--azure-600);
+  --accent-hover: var(--azure-700);
+  --accent-soft: var(--azure-100);
+
+  /* --- Semantic: dark surfaces (used by .is-dark sections) -------------- */
+  --dark-bg: var(--ink-980);
+  --dark-surface: rgba(255, 255, 255, 0.028);
+  --dark-surface-raised: rgba(255, 255, 255, 0.055);
+  --dark-border: rgba(255, 255, 255, 0.08);
+  --dark-border-strong: rgba(255, 255, 255, 0.17);
+  --dark-text: #f2f1ee;
+  --dark-text-muted: #a8a9ac;
+
+  /* Hairline highlight along the top edge of a raised dark card. */
+  --dark-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  /* --- Gradients -------------------------------------------------------- */
+  --gradient-accent: linear-gradient(135deg, var(--azure-600), var(--azure-400));
+  --gradient-ink: linear-gradient(160deg, var(--ink-850), var(--ink-980) 72%);
+  --gradient-hairline: linear-gradient(
+    90deg,
+    transparent,
+    var(--dark-border-strong) 18%,
+    var(--dark-border-strong) 82%,
+    transparent
+  );
+
+  /* --- Typography ------------------------------------------------------- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* An editorial serif against the mono readouts and CAD linework: the pairing
+     is what stops the page reading as a generic sans template. Revert this one
+     line to go back to a geometric sans display. */
+  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
+
+  /* Fluid type scale — clamp(min, preferred, max) */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md: 1rem;
+  --fs-lg: clamp(1.0625rem, 0.2vw + 1rem, 1.1875rem);
+  --fs-xl: clamp(1.25rem, 0.5vw + 1.1rem, 1.5rem);
+  --fs-2xl: clamp(1.5rem, 1vw + 1.25rem, 2rem);
+  --fs-3xl: clamp(1.875rem, 2vw + 1.35rem, 2.75rem);
+  --fs-4xl: clamp(2.25rem, 3.4vw + 1.4rem, 4rem);
+  --fs-5xl: clamp(2.75rem, 5vw + 1.4rem, 5.25rem);
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.18;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  --tracking-tight: -0.025em;
+  --tracking-snug: -0.015em;
+  --tracking-wide: 0.06em;
+  --tracking-widest: 0.16em;
+
+  /* --- Spacing ---------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6.5rem;
+  --space-12: 8rem;
+
+  --section-y: clamp(4rem, 8vw, 7.5rem);
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  /* One page width for every band, so the header, hero and sections all
+     align on the same gutters. Change this and the whole site rescales. */
+  --container: 84rem;
+  --container-narrow: 58rem;
+
+  /* --- Radii & elevation ------------------------------------------------ */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+  --radius-full: 999px;
+
+  /* Warm-neutral, to match the paper. A navy-tinted shadow on a warm ground
+     reads as a bruise rather than as depth. */
+  --shadow-sm: 0 1px 2px rgba(38, 32, 22, 0.06);
+  --shadow:
+    0 1px 2px rgba(38, 32, 22, 0.05),
+    0 6px 18px -6px rgba(38, 32, 22, 0.12);
+  --shadow-lg:
+    0 1px 2px rgba(38, 32, 22, 0.05),
+    0 20px 44px -20px rgba(38, 32, 22, 0.22);
+  --shadow-xl:
+    0 2px 4px rgba(38, 32, 22, 0.06),
+    0 36px 80px -30px rgba(38, 32, 22, 0.32);
+  --shadow-accent: 0 14px 36px -14px rgba(15, 141, 168, 0.5);
+  --shadow-dark: 0 24px 60px -28px rgba(0, 0, 0, 0.75);
+
+  /* --- Motion ----------------------------------------------------------- */
+  /* One lift distance for every card-style hover. These had drifted to -4, -5
+     and -6px across different components, so the same gesture read slightly
+     differently depending on where you were on the page. */
+  --lift: -5px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur: 280ms;
+  --dur-slow: 620ms;
+  --dur-reveal: 900ms;
+
+  /* --- Layers ----------------------------------------------------------- */
+  --z-base: 1;
+  --z-sticky: 40;
+  --z-header: 60;
+  --z-overlay: 80;
+  --z-modal: 100;
+
+  --header-h: 76px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --header-h: 64px;
+  }
+}

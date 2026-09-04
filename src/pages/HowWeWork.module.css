@@ -1,0 +1,75 @@
+.principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.principle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+  box-shadow: var(--dark-inner-light);
+}
+
+.principle:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--dark-border-strong);
+}
+
+.principleIcon {
+  color: var(--azure-400);
+}
+
+.principleTitle {
+  font-size: var(--fs-lg);
+  color: var(--dark-text);
+}
+
+.principleBody {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+/* --- Quotation scope ------------------------------------------------------ */
+
+.scope {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.scopeItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  transition:
+    color var(--dur) var(--ease-out),
+    padding-left var(--dur) var(--ease-out);
+}
+
+.scopeItem:hover {
+  color: var(--text);
+  padding-left: var(--space-3);
+}
+
+.scopeNumber {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+}

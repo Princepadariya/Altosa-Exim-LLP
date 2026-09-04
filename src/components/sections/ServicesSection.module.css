@@ -1,0 +1,181 @@
+/* A bordered matrix: cells share hairline dividers instead of floating as
+   separate cards, so the six services read as one table.
+   This replaced a staggered layout that offset each column down the page —
+   with variable content heights it produced ragged gaps and clipped the
+   oversized ordinals at the column edges, reading as misalignment rather
+   than rhythm. */
+
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: var(--space-9);
+  border-top: 1px solid var(--dark-border);
+  border-left: 1px solid var(--dark-border);
+}
+
+.service {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-right: 1px solid var(--dark-border);
+  border-bottom: 1px solid var(--dark-border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+/* Accent rule that wipes across the top of the cell on hover. */
+.service::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--azure-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.service:hover {
+  background: var(--dark-surface);
+}
+
+.service:hover::before {
+  transform: scaleX(1);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-2);
+}
+
+.number {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--ink-600);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.service:hover .number {
+  color: var(--azure-400);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--azure-400);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: var(--tracking-snug);
+  color: var(--dark-text);
+  text-wrap: balance;
+}
+
+.summary {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-text-muted);
+}
+
+/* Pinned to the bottom so the point lists line up across a row even when the
+   summaries above them run to different lengths. */
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: auto;
+  padding-top: var(--space-4);
+}
+
+.point {
+  position: relative;
+  padding-left: 1rem;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--steel-300);
+}
+
+.point::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 1px;
+  background: var(--azure-400);
+}
+
+/* --- Light tone ----------------------------------------------------------- */
+
+.onLight {
+  border-top-color: var(--border);
+  border-left-color: var(--border);
+}
+
+.onLight .service {
+  border-right-color: var(--border);
+  border-bottom-color: var(--border);
+}
+
+.onLight .service::before {
+  background: var(--accent);
+}
+
+.onLight .service:hover {
+  background: var(--bg-subtle);
+}
+
+.onLight .number {
+  color: var(--border-strong);
+}
+
+.onLight .service:hover .number,
+.onLight .icon {
+  color: var(--accent);
+}
+
+.onLight .title {
+  color: var(--text);
+}
+
+.onLight .summary,
+.onLight .point {
+  color: var(--text-muted);
+}
+
+.onLight .point::before {
+  background: var(--accent);
+}
+
+@media (max-width: 1000px) {
+  .matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .service {
+    padding: var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service::before {
+    transition: none;
+  }
+}

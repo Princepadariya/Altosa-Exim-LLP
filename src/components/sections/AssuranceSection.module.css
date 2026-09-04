@@ -1,0 +1,161 @@
+/* A numbered manifesto. Each point sits on its own line with a large ordinal
+   in the margin, so the set reads as commitments rather than feature tiles. */
+
+/* Two columns.
+   As a single full-width column the text ran to ~55% of the section and left
+   the right half empty while the rules spanned the whole width, which read as
+   unfinished. Row-major flow keeps the reading order 1-2 / 3-4 / 5-6. */
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  /* Items stretch to their row height so the bottom rules of a pair line up
+     instead of sitting at two different heights. */
+  align-content: start;
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+/* Accent rule that wipes across the bottom of the row on hover. */
+.item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.item:hover {
+  background: var(--bg-subtle);
+}
+
+.item:hover::after {
+  transform: scaleX(1);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--border-strong);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.item:hover .index {
+  color: var(--accent);
+}
+
+.itemMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-display);
+  /* Stepped down from --fs-xl for the narrower two-column measure. */
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+/* --- Dark tone ------------------------------------------------------------ */
+
+.onDark .list {
+  border-top-color: var(--dark-border);
+}
+
+.onDark .item {
+  border-bottom-color: var(--dark-border);
+}
+
+.onDark .item:hover {
+  background: var(--dark-surface);
+}
+
+.onDark .index {
+  color: var(--ink-600);
+}
+
+.onDark .item:hover .index {
+  color: var(--azure-400);
+}
+
+.onDark .title {
+  color: var(--dark-text);
+}
+
+.onDark .iconWrap {
+  color: var(--azure-400);
+}
+
+.onDark .body {
+  color: var(--dark-text-muted);
+}
+
+.footerNote {
+  margin-top: var(--space-7);
+}
+
+@media (max-width: 900px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .item {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-5) 0;
+  }
+
+  .index {
+    font-size: var(--fs-lg);
+    padding-top: 0.15rem;
+  }
+
+  .title {
+    font-size: var(--fs-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,708 @@
+.hero {
+  position: relative;
+  min-height: min(100svh, 52rem);
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--header-h) + var(--space-8));
+  padding-bottom: var(--space-9);
+  background: var(--ink-980);
+  color: var(--dark-text);
+  overflow: clip;
+}
+
+/* Blueprint grid */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 95% 85% at 22% 28%, #000 18%, transparent 82%);
+  pointer-events: none;
+}
+
+/* Slow-drifting azure glow behind the drawing */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -25%;
+  right: -12%;
+  width: 58rem;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(15, 141, 168, 0.26),
+    rgba(12, 113, 134, 0.08) 42%,
+    transparent 68%
+  );
+  animation: drift 24s var(--ease-in-out) infinite alternate;
+  pointer-events: none;
+}
+
+/* Grounds the composition so the copy never floats on flat black. */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 120%,
+    rgba(4, 50, 61, 0.5),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  /* Weighted toward the copy so "Reliable industrial" holds one line at a
+     display size worth having. The drawing panel still has room to breathe. */
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+  width: 100%;
+}
+
+/* --- Copy ---------------------------------------------------------------- */
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 44rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: fit-content;
+  padding: 0.45rem 0.9rem 0.45rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--steel-200);
+  background: var(--dark-surface-raised);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+}
+
+.pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--verify);
+}
+
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+
+/* Sized so "Reliable industrial" holds one line with ~10% headroom, rather
+   than inheriting the global --fs-5xl, which overflowed the column by ~140px
+   once the words were joined.
+   Deliberately NOT white-space: nowrap. The font loads with display=swap, and
+   the Georgia fallback is ~14% wider than Spectral — under nowrap that flash
+   would be clipped by the hero's overflow. Sized to fit instead, so the worst
+   case is a brief two-line wrap that resolves when the webfont lands. */
+.title {
+  font-size: clamp(2.25rem, 5.3vw, 4.5rem);
+  font-weight: 600;
+  /* 1.02 clipped the descender on "sourcing" against the line below it. */
+  line-height: 1.07;
+  letter-spacing: -0.015em;
+  color: var(--white);
+}
+
+/* Each line clips upward into place on load. */
+.line {
+  display: block;
+  overflow: hidden;
+}
+
+.lineInner {
+  display: block;
+  transform: translateY(105%);
+  animation: riseIn 1s var(--ease-out) forwards;
+  animation-delay: var(--line-delay, 0ms);
+}
+
+/* Emphasis by roman → italic, the way a serif actually does it. A gradient
+   fill on display type reads as a effect rather than as typography, and the
+   saturated cyan fought the restraint of the rest of the palette. */
+.accent {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--azure-300);
+  /* Italics sit tighter; a hair of tracking back keeps the colour word from
+     looking cramped beside the roman lines above it. */
+  letter-spacing: -0.005em;
+}
+
+/* Held to ~58 characters. At 38rem it ran past 70 and the rag went slack,
+   which is most of why the column read as unresolved. */
+.lead {
+  max-width: 34rem;
+  font-size: clamp(1.0625rem, 0.3vw + 1rem, 1.1875rem);
+  line-height: 1.68;
+  color: #c2c3c6;
+  text-wrap: pretty;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 0.55s forwards;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 0.7s forwards;
+}
+
+/* Set as a footnote to the buttons rather than as more body copy: mono, small
+   and quiet, so it reads as an aside instead of competing with the lead. */
+.hint {
+  max-width: 30rem;
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--dark-border-strong);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--steel-400);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 0.85s forwards;
+}
+
+/* --- Credibility strip --------------------------------------------------- */
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--dark-border);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 1s forwards;
+}
+
+.badge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: var(--space-5);
+}
+
+.badge:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+  bottom: 0.2rem;
+  width: 1px;
+  background: var(--dark-border);
+}
+
+.badgeCode {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+
+.badgeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+/* --- Destinations strip --------------------------------------------------- */
+
+.shipsTo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 1.15s forwards;
+}
+
+.shipsToLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.flag {
+  width: 21px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+  /* Keeps flags with white fields from dissolving into the dark hero. */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.shipsToMore {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--azure-400);
+}
+
+/* --- Drawing sheet ------------------------------------------------------- */
+
+.stage {
+  perspective: 1400px;
+}
+
+.visual {
+  position: relative;
+  aspect-ratio: 42 / 46;
+  max-height: 35rem;
+  margin-inline: auto;
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 28% 18%, rgba(42, 180, 209, 0.1), transparent 58%),
+    linear-gradient(158deg, var(--ink-850), var(--ink-980) 74%);
+  overflow: hidden;
+  box-shadow:
+    var(--dark-inner-light),
+    0 30px 70px -32px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(42, 180, 209, 0.06);
+  opacity: 0;
+  animation: fadeIn 1.2s var(--ease-out) 0.35s forwards;
+
+  /* Driven by usePointerTilt */
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 400ms var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(188, 192, 197, 0.62);
+  translate: var(--shift-x, 0) var(--shift-y, 0);
+  transition: translate 400ms var(--ease-out);
+}
+
+/* Technical drawing strokes draw themselves in. */
+.sheet :global(.draw) {
+  stroke-dasharray: var(--len, 600);
+  stroke-dashoffset: var(--len, 600);
+  animation: draw 2.2s var(--ease-out) forwards;
+  animation-delay: var(--draw-delay, 0.6s);
+}
+
+.sheet :global(.accent) {
+  color: var(--azure-400);
+}
+
+.part {
+  animation: breathe 12s var(--ease-in-out) infinite;
+  transform-origin: 210px 208px;
+}
+
+.hatch {
+  color: var(--azure-400);
+  opacity: 0;
+  animation: fadeIn 1.4s var(--ease-out) 1.5s forwards;
+}
+
+.zone {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.45;
+}
+
+/* Dimension groups fade in after the part is drawn. */
+.dim {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  fill: currentColor;
+  animation: fadeIn 0.7s var(--ease-out) forwards;
+  animation-delay: var(--dim-delay, 1.8s);
+}
+
+.callout {
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  opacity: 0.85;
+}
+
+.note {
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+/* A measuring pass that sweeps the sheet. */
+.scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 28%;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(42, 180, 209, 0.07) 45%,
+    rgba(102, 210, 230, 0.16) 50%,
+    rgba(42, 180, 209, 0.07) 55%,
+    transparent
+  );
+  animation: scan 7s var(--ease-in-out) 2.4s infinite;
+  pointer-events: none;
+}
+
+/* --- Title block --------------------------------------------------------- */
+
+.titleBlock {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 3;
+  display: grid;
+  background: rgba(3, 6, 12, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  translate: calc(var(--shift-x, 0px) * 0.4) calc(var(--shift-y, 0px) * 0.4);
+  transition: translate 400ms var(--ease-out);
+}
+
+.tbMain {
+  display: flex;
+  flex-direction: column;
+}
+
+.tbRow {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 0.38rem var(--space-4);
+}
+
+.tbRow:not(:last-child) {
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.tbMeta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--dark-border-strong);
+}
+
+.tbCell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0.38rem var(--space-4);
+}
+
+.tbCell:not(:last-child) {
+  border-right: 1px solid var(--dark-border);
+}
+
+.tbKey {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+.tbValue {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--white);
+}
+
+.tbAccent {
+  color: var(--azure-300);
+}
+
+/* --- Scroll cue ---------------------------------------------------------- */
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-5);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease-out) 1.3s forwards;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, var(--steel-400), transparent);
+  animation: cue 2.2s var(--ease-in-out) infinite;
+}
+
+/* --- Keyframes ----------------------------------------------------------- */
+
+@keyframes riseIn {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes scan {
+  0% {
+    top: -30%;
+    opacity: 0;
+  }
+  12%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    top: 102%;
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translate(-8%, 10%) scale(1.12);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes cue {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .visual {
+    aspect-ratio: 42 / 44;
+    max-height: 30rem;
+    max-width: 28rem;
+  }
+
+  .scrollCue {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .visual {
+    aspect-ratio: 4 / 5;
+    max-height: 27rem;
+  }
+
+  /* The sheet scales down far enough that the finest annotation layer would
+     render around 7px — illegible, and it reads as noise rather than detail.
+     Drop it and enlarge what stays. */
+  .zone,
+  .note,
+  /* The title block takes a larger share of the narrow panel, so the
+     bottom dimension would sit behind it. */
+  .dimH {
+    display: none;
+  }
+
+  .dim {
+    font-size: 14px;
+  }
+
+  .callout {
+    font-size: 13px;
+  }
+
+  .tbRow {
+    grid-template-columns: 4.75rem 1fr;
+    padding-inline: var(--space-3);
+  }
+
+  .tbCell {
+    padding-inline: var(--space-3);
+  }
+
+  /* The role label is 36 characters and wrapped inside the pill at 335px.
+     11px holds one line here without dropping to a size that is hard to read
+     on the one line that says what the business actually is. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    padding: 0.4rem 0.75rem 0.4rem 0.55rem;
+  }
+
+  /* Two badges per row rather than three stacked. At space-5 the pair came to
+     344px against a 335px column — nine pixels short — so each badge took its
+     own line and the block ran 222px tall. */
+  .badges {
+    gap: var(--space-3);
+  }
+
+  .badge {
+    padding-right: var(--space-3);
+  }
+}
+
+/* Below ~400px the pill cannot hold 36 characters on one line at a readable
+   size. Rather than shrink the type further, the chrome is dropped and the
+   label wraps as plain text — which looks deliberate, where a wrapped pill
+   does not. */
+@media (max-width: 400px) {
+  .eyebrow {
+    align-items: flex-start;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    line-height: 1.45;
+  }
+
+  .pulse {
+    margin-top: 0.35rem;
+  }
+
+  .shipsToLabel,
+  .badgeLabel {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineInner,
+  .lead,
+  .actions,
+  .hint,
+  .badges,
+  .shipsTo,
+  .visual,
+  .scrollCue,
+  .hatch,
+  .dim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .sheet :global(.draw) {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .part,
+  .scan,
+  .hero::after,
+  .pulse::after,
+  .scrollLine {
+    animation: none;
+  }
+
+  .scan {
+    display: none;
+  }
+}

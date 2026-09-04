@@ -1,0 +1,262 @@
+/* --- Process datasheet ---------------------------------------------------- */
+
+/* One shared column template for the header, every row and the scale, so the
+   bars, their labels and the axis ticks all line up on the same grid. */
+.sheet {
+  --sheet-cols: minmax(0, 0.9fr) minmax(0, 1.35fr) 8rem minmax(0, 1.3fr);
+
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--border-strong);
+}
+
+.sheetHead,
+.row,
+.scale {
+  display: grid;
+  grid-template-columns: var(--sheet-cols);
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.sheetHead {
+  padding: var(--space-4) 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.row {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.row:hover {
+  background: var(--surface-sunken);
+}
+
+.process {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.spec {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.envelope {
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.tolerance {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--text-soft);
+}
+
+.moq {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* --- Lead-time axis ------------------------------------------------------- */
+
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.axis {
+  position: relative;
+  display: block;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-muted);
+}
+
+/* The range segment, placed from --from to --to on a 0…leadAxisMax scale. */
+.range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--from);
+  right: calc(100% - var(--to));
+  border-radius: inherit;
+  background: var(--gradient-accent);
+}
+
+.leadLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+.axisHeadLabel {
+  /* Sits over the bar column. */
+  justify-self: start;
+}
+
+/* --- Scale ---------------------------------------------------------------- */
+
+.scale {
+  padding-top: var(--space-3);
+}
+
+.scaleLabel {
+  grid-column: 3;
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.scaleTicks {
+  grid-column: 4;
+  position: relative;
+  display: block;
+  height: 1rem;
+}
+
+.tick {
+  position: absolute;
+  left: var(--at);
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-soft);
+}
+
+/* A hairline joining each tick up to the bars. */
+.tick::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  height: 0.3rem;
+  background: var(--border-strong);
+}
+
+.notice {
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 1000px) {
+  .sheetHead {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-3) var(--space-5);
+    align-items: start;
+  }
+
+  .process {
+    grid-column: 1 / -1;
+  }
+
+  .lead {
+    grid-column: 1 / -1;
+  }
+
+  .scale {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Lead-time drivers ---------------------------------------------------- */
+
+.drivers {
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.driversTitle {
+  margin-bottom: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.driverGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: var(--space-5);
+}
+
+.driver {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.driver:hover {
+  transform: translateY(var(--lift));
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.driverEffect {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+}
+
+.driverTitle {
+  font-size: var(--fs-md);
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.driverBody {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}

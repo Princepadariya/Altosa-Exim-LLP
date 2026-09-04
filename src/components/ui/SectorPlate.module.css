@@ -1,0 +1,68 @@
+.plate {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(42, 180, 209, 0.09), transparent 58%),
+    linear-gradient(158deg, var(--ink-850), var(--ink-980) 76%);
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--dark-inner-light);
+}
+
+/* Blueprint grid behind the drawing. */
+.plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 85% 80% at 40% 35%, #000 25%, transparent 85%);
+  pointer-events: none;
+}
+
+.sheet {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  color: rgba(188, 192, 197, 0.66);
+}
+
+.part {
+  transition: color var(--dur) var(--ease-out);
+}
+
+.sheet :global(.accent) {
+  color: var(--azure-400);
+}
+
+.caption {
+  position: relative;
+  padding: 0 var(--space-4) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+/* --- Compact ------------------------------------------------------------- */
+
+/* Thumbnail: a tighter viewBox around the part, heavier strokes, and a much
+   finer grid — the full sheet's frame and centre lines turn to noise at this
+   size. */
+.compact {
+  border-radius: var(--radius);
+}
+
+.compact::before {
+  background-size: 12px 12px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 30%, transparent 90%);
+}
+
+.compact .sheet {
+  color: rgba(198, 202, 208, 0.7);
+}
+

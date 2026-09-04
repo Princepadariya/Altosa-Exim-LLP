@@ -1,0 +1,116 @@
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.groupTitle {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--accent);
+}
+
+.linkGo {
+  flex-shrink: 0;
+  color: var(--text-soft);
+  transition:
+    transform var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+.link:hover .linkGo {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.note {
+  margin-top: 0.3rem;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* Data-generated sub-pages, indented on a rail. */
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--border);
+}
+
+.childLink {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--text-muted);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.childLink:hover {
+  color: var(--accent);
+}
+
+.xml {
+  margin-top: var(--space-9);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.xmlLink {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Touch targets: these are standalone links with no card behind them. */
+@media (pointer: coarse) {
+  .link,
+  .childLink {
+    min-height: 44px;
+  }
+}
