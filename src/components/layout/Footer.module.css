@@ -89,6 +89,16 @@
     display: flex;
     align-items: center;
   }
+
+  /*
+   * The link columns are the exception. A 44px target around a 22px label
+   * leaves 11px of dead space above and below every line, and stacked five to
+   * a column that reads as a gap rather than as spacing. 36px still clears the
+   * 24px minimum comfortably while pulling the lists back together.
+   */
+  .colLink {
+    min-height: 36px;
+  }
 }
 
 a.contactItem:hover {
@@ -100,21 +110,42 @@ a.contactItem:hover {
   color: var(--steel-400);
 }
 
+.timezoneNote {
+  max-width: 30rem;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--steel-400);
+}
+
 .registrations {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-top: var(--space-2);
+  list-style: none;
 }
 
 .regChip {
-  padding: 0.3rem 0.7rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--dark-border-strong);
+  border-radius: var(--radius-full);
+}
+
+.regCode {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   letter-spacing: 0.08em;
   color: var(--steel-300);
-  border: 1px solid var(--dark-border-strong);
-  border-radius: var(--radius-full);
+}
+
+/* The expansion is the point of the chip on a phone, but it stays secondary
+   to the code a buyer is actually scanning for. */
+.regLabel {
+  font-size: var(--fs-xs);
+  color: var(--steel-400);
 }
 
 /* --- Link columns -------------------------------------------------------- */
@@ -201,15 +232,91 @@ a.contactItem:hover {
 @media (max-width: 900px) {
   .top {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-bottom: var(--space-7);
+  }
+
+  /* Stacked, the brand block and the link grid are two unrelated things
+     sharing one edge-to-edge column. A hairline separates them the way the
+     two-column layout separated them by distance. */
+  .navCols {
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--dark-border);
+  }
+}
+
+/*
+ * Phones. The link grid stays at two columns rather than collapsing to one:
+ * seventeen links stacked single-file ran to 1,179px of footer on a 375px
+ * screen, and the 44px touch targets that make each link tappable are exactly
+ * what made the stack unscrollable. Two columns halve the run without
+ * shrinking a single target.
+ */
+@media (max-width: 520px) {
+  .inner {
+    padding-block: var(--space-7) var(--space-5);
   }
 
   .navCols {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-4);
+  }
+
+  /*
+   * The heading has to clear the list it labels by more than the links clear
+   * each other, or it reads as the first item rather than the group title.
+   * The links settle at 16px apart and carry 8px of their own top padding, so
+   * 12px here lands the heading 20px clear — the same 1.25x step the desktop
+   * layout uses between its 16px heading gap and 12px list gap.
+   */
+  .colTitle {
+    margin-bottom: var(--space-3);
+  }
+
+  .brandCol {
+    gap: var(--space-3);
+  }
+
+  .contactList,
+  .registrations {
+    margin-top: 0;
+  }
+
+  .bottom {
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+  }
+
+  .bottomLinks {
+    gap: var(--space-6);
   }
 }
 
-@media (max-width: 520px) {
-  .navCols {
-    grid-template-columns: 1fr;
+/*
+ * On touch, every link already carries a 44px target whose padding does the
+ * separating. The list gap then lands on top of that and doubles the rhythm —
+ * 56px per row for a 20px label. Drop it to the smallest step and let the
+ * targets set the spacing.
+ */
+@media (pointer: coarse) {
+  /*
+   * Padding rather than a list gap, so the spacing is even. A gap sits outside
+   * each link box, which means it stacks on top of the dead space a min-height
+   * leaves around a short label but adds to nothing on a label that wraps to
+   * two lines and fills its box — the old rule alternated 26px and 20px down a
+   * single column. At 8px padding against a 36px floor both cases resolve to a
+   * uniform 16px between one label and the next, and the gap goes to zero.
+   */
+  .colLink {
+    padding-block: var(--space-2);
+  }
+
+  .colList {
+    gap: 0;
+  }
+
+  .contactList {
+    gap: var(--space-2);
   }
 }

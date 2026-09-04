@@ -21,10 +21,14 @@ const ProductCard = ({ product, index = 0, featured = false, className }) => (
     data-reveal
     style={{ "--reveal-delay": `${Math.min(index, 6) * 70}ms` }}
   >
+    {/* The featured card gets the full drawing sheet — frame, registration
+        marks, centre lines and the "representative geometry, not a specific
+        part" caption. Compact mode exists because that detail turns to noise
+        at thumbnail size, which the featured panel is not. */}
     <SectorPlate
       shape={categoryShapes[product.category]}
       label={product.title}
-      compact
+      compact={!featured}
       crop="tall"
       className={styles.plate}
     />
@@ -36,39 +40,38 @@ const ProductCard = ({ product, index = 0, featured = false, className }) => (
 
     <p className={styles.summary}>{product.summary}</p>
 
-    <div className={styles.specs}>
+    {/*
+      A description list, not a stack of divs: every row here is a term and its
+      value, and saying so gives screen readers the pairing the layout implies.
+
+      Processes and materials used to render as chips while tolerance and
+      records rendered as middot text — the same kind of content presented two
+      ways inside one card. Five chips wrapping to three rows also made every
+      card a different height, so the Materials row started at a different
+      point in each one and the three could not be read across.
+    */}
+    <dl className={styles.specs}>
       <div className={styles.specRow}>
-        <span className={styles.specLabel}>Processes</span>
-        <span className={styles.tags}>
-          {product.processes.map((process) => (
-            <span key={process} className={styles.tag}>
-              {process}
-            </span>
-          ))}
-        </span>
+        <dt className={styles.specLabel}>Processes</dt>
+        <dd className={styles.specValue}>{product.processes.join(" · ")}</dd>
       </div>
 
       <div className={styles.specRow}>
-        <span className={styles.specLabel}>Materials</span>
-        <span className={styles.tags}>
-          {product.materials.map((material) => (
-            <span key={material} className={styles.tag}>
-              {material}
-            </span>
-          ))}
-        </span>
+        <dt className={styles.specLabel}>Materials</dt>
+        <dd className={styles.specValue}>{product.materials.join(" · ")}</dd>
       </div>
 
       <div className={styles.specRow}>
-        <span className={styles.specLabel}>Tolerance</span>
-        <span className={styles.specValue}>{product.tolerance}</span>
+        <dt className={styles.specLabel}>Tolerance</dt>
+        <dd className={styles.specValue}>{product.tolerance}</dd>
       </div>
 
       <div className={styles.specRow}>
-        <span className={styles.specLabel}>Records</span>
-        <span className={styles.specValue}>{product.records.join(" · ")}</span>
+        <dt className={styles.specLabel}>Records</dt>
+        <dd className={styles.specValue}>{product.records.join(" · ")}</dd>
       </div>
-    </div>
+    </dl>
+
 
     <Link
       to={`/request-a-quote?product=${product.id}`}

@@ -1,5 +1,5 @@
 import CtaSection from "../components/sections/CtaSection";
-import company from "../data/company";
+import company, { hasWhatsapp } from "../data/company";
 import Button from "../components/ui/Button";
 import Icon from "../components/ui/Icon";
 import PageHero from "../components/ui/PageHero";
@@ -57,24 +57,28 @@ const Contact = () => (
             <Icon name="arrowUpRight" size={16} className={styles.cardGo} />
           </a>
 
-          <a
-            href={company.contact.whatsapp}
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-reveal
-            style={{ "--reveal-delay": "70ms" }}
-          >
-            <span className={styles.cardIcon}>
-              <Icon name="whatsapp" size={22} />
-            </span>
-            <span className={styles.cardLabel}>WhatsApp</span>
-            <span className={styles.cardValue}>{company.contact.whatsappLabel}</span>
-            <span className={styles.cardNote}>
-              Useful for quick clarifications once an inquiry is open.
-            </span>
-            <Icon name="arrowUpRight" size={16} className={styles.cardGo} />
-          </a>
+          {hasWhatsapp && (
+            <a
+              href={company.contact.whatsapp}
+              className={styles.card}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-reveal
+              style={{ "--reveal-delay": "70ms" }}
+            >
+              <span className={styles.cardIcon}>
+                <Icon name="whatsapp" size={22} />
+              </span>
+              <span className={styles.cardLabel}>WhatsApp</span>
+              <span className={styles.cardValue}>
+                {company.contact.whatsappLabel}
+              </span>
+              <span className={styles.cardNote}>
+                Useful for quick clarifications once an inquiry is open.
+              </span>
+              <Icon name="arrowUpRight" size={16} className={styles.cardGo} />
+            </a>
+          )}
 
         </div>
 

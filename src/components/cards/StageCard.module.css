@@ -81,12 +81,22 @@
 }
 
 @media (max-width: 600px) {
+  /* minmax(0, 1fr) for the same reason as the article and footer grids: a bare
+     fr track keeps its min-content floor and lets a long unbroken value push
+     the row wider than the phone. */
   .stage {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-3);
   }
 
   .number {
     padding-top: 0;
+  }
+
+  /* The chip stays on one line on desktop, where it fits. On a phone
+     "Carried out by: <a long owner name>" is wider than the screen, and
+     nowrap turned that into clipped text rather than a second line. */
+  .owner {
+    white-space: normal;
   }
 }

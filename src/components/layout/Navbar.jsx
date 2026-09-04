@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import company from "../../data/company";
+import company, { hasWhatsapp } from "../../data/company";
 import { primaryCta, primaryNav } from "../../data/navigation";
 import useScrollLock from "../../hooks/useScrollLock";
 import useScrolled from "../../hooks/useScrolled";
@@ -21,9 +21,20 @@ const Navbar = () => {
 
   useScrollLock(isMenuOpen);
 
-  // Close the drawer on navigation and on Escape.
-  useEffect(() => setIsMenuOpen(false), [pathname]);
+  /*
+   * Close the drawer on navigation, by comparing the path against the one the
+   * drawer was opened under. React's documented way to reset state when a
+   * value changes: an effect for this costs a second render every time the
+   * route changes, and only to reach a value already known during the first.
+   */
+  const [pathAtRender, setPathAtRender] = useState(pathname);
 
+  if (pathAtRender !== pathname) {
+    setPathAtRender(pathname);
+    setIsMenuOpen(false);
+  }
+
+  // Close the drawer on Escape.
   useEffect(() => {
     if (!isMenuOpen) return undefined;
     const onKeyDown = (event) => {
@@ -117,14 +128,16 @@ const Navbar = () => {
               <Icon name="mail" size={16} />
               {company.contact.email}
             </a>
-            <a
-              href={company.contact.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="whatsapp" size={16} />
-              {company.contact.whatsappLabel}
-            </a>
+            {hasWhatsapp && (
+              <a
+                href={company.contact.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="whatsapp" size={16} />
+                {company.contact.whatsappLabel}
+              </a>
+            )}
           </div>
         </div>
       </div>

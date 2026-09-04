@@ -11,7 +11,13 @@ export const siteConfig = {
     "Altosa Exim LLP is a merchant exporter and commission agent in Rajkot, India, sourcing engineering, automotive and electrical components against buyer drawings and specifications.",
   locale: "en_IN",
   twitterHandle: "",
-  ogImage: "/og-image.svg",
+  /*
+   * PNG, not the SVG that sits beside it: no major platform renders SVG for a
+   * link preview — LinkedIn, WhatsApp, Facebook, X, Slack and iMessage all
+   * ignore it and show a bare box. The SVG is kept as the source artwork the
+   * PNG is rendered from.
+   */
+  ogImage: "/og-image.png",
 
   /** Toggle whole sections without deleting code. */
   features: {

@@ -41,6 +41,8 @@ export const validateAll = (fields, values) =>
 export const initialValueFor = (field) => {
   if (field.type === "checkbox") return false;
   if (field.type === "checkbox-group") return [];
+  /* A file field holds a File object or nothing; "" would look like a value. */
+  if (field.type === "file") return null;
   return "";
 };
 

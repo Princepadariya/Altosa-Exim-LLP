@@ -20,6 +20,13 @@
   align-items: start;
 }
 
+/* Grid children default to a min-content floor, which lets the wide article
+   table push the whole column past the viewport. Pin it to zero so the table
+   scrolls inside its own wrapper instead. */
+.layout > * {
+  min-width: 0;
+}
+
 /* --- Contents rail -------------------------------------------------------- */
 
 .aside {
@@ -142,15 +149,19 @@
 
 @media (max-width: 1000px) {
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
+  /* No room for a sticky rail, so the aside stops sticking and falls in after
+     the article — a reader should reach the guide before the quote panel. */
   .aside {
     position: static;
-    order: -1;
+    margin-top: var(--space-8);
   }
 
-  .toc {
+  /* Hide the contents rail whole: hiding only the links leaves the heading
+     stranded above nothing. */
+  .tocNav {
     display: none;
   }
 }

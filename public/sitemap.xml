@@ -77,11 +77,13 @@
   </url>
   <url>
     <loc>https://altosaexim.com/data-handling/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://altosaexim.com/terms/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -117,26 +119,37 @@
   </url>
   <url>
     <loc>https://altosaexim.com/resources/what-to-include-in-an-rfq/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://altosaexim.com/resources/incoterms-2020-explained/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://altosaexim.com/resources/export-documents-explained/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://altosaexim.com/resources/reading-a-material-test-certificate/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://altosaexim.com/resources/merchant-exporter-or-commission-agent/</loc>
+    <lastmod>2026-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://altosaexim.com/resources/export-packing-and-marking/</loc>
+    <lastmod>2026-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

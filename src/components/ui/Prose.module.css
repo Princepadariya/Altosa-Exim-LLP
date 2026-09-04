@@ -128,3 +128,31 @@
   color: var(--text);
   white-space: nowrap;
 }
+
+.tableBlock {
+  min-width: 0;
+}
+
+/* The table keeps its own horizontal scroll on narrow screens; the hint is the
+   only affordance a touch device gets, so it is shown wherever the table cannot
+   fit in full. Hidden on pointer-precise widths where the table fits. */
+.tableHint {
+  display: none;
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+@media (max-width: 640px) {
+  .tableHint {
+    display: block;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3) var(--space-4);
+  }
+}

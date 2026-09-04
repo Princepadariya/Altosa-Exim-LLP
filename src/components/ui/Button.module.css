@@ -22,6 +22,9 @@
   overflow: hidden;
   isolation: isolate;
   white-space: nowrap;
+  /* The button clips its own overflow for the sheen effect, so a label wider
+     than the container would be silently cut rather than visibly broken. */
+  max-width: 100%;
   transition:
     transform var(--dur) var(--ease-out),
     box-shadow var(--dur) var(--ease-out),
@@ -50,12 +53,20 @@
   transform: translateX(120%);
 }
 
-.button:hover {
-  transform: translateY(-2px);
-}
-
+/*
+ * The hover lift used to be `transform: translateY(-2px)`, and it moved the
+ * button out from under itself: several ancestors on this site clip (the
+ * hero, PageHero, Section, the CTA panel and the footer all set overflow to
+ * hidden or clip), so wherever a button sat near one of those edges the two
+ * pixels it rose by were sliced off its top.
+ *
+ * The elevation is carried by the shadow instead, which every variant already
+ * changes on hover, and the arrow keeps its nudge further down this file. The
+ * affordance survives; nothing moves, so nothing can be clipped and the row
+ * does not jitter under the cursor.
+ */
 .button:active {
-  transform: translateY(0);
+  filter: brightness(0.94);
 }
 
 .button:disabled,
@@ -139,4 +150,19 @@
 
 .block {
   width: 100%;
+}
+
+/*
+ * Phones. `nowrap` suits a button sized to its label, but a few labels on this
+ * site are closer to sentences ("Buyer FAQ, including who your counterparty
+ * is"), and at 375px those ran past the edge and were clipped by the sheen's
+ * overflow:hidden. Wrapping needs the line-height too — the base is 1, which
+ * would collide two lines into each other.
+ */
+@media (max-width: 600px) {
+  .button {
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+  }
 }

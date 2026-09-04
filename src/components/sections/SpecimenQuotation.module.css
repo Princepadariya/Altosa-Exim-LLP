@@ -1,0 +1,167 @@
+/* The document itself. Sits on a subtle band, so it is paper against linen. */
+.doc {
+  overflow: clip;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* --- Specimen banner ------------------------------------------------------ */
+
+/*
+ * Deliberately the first thing in the document and deliberately not subtle.
+ * Everything below is illustrative, and a reader who scrolls into the middle
+ * of it should already have been told so.
+ */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.bannerIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--accent);
+}
+
+/* --- Title block ---------------------------------------------------------- */
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.docTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+.metaPair {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+.metaPair dt {
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.metaPair dd {
+  color: var(--text-muted);
+}
+
+/* --- Lines ---------------------------------------------------------------- */
+
+.lines {
+  list-style: none;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.line + .line {
+  border-top: 1px solid var(--border);
+}
+
+.lineNo {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+}
+
+.lineBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lineField {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* The specimen value. Set in the reading face at full contrast — this is the
+   line a buyer is here to look at. */
+.lineValue {
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/*
+ * The annotation, marked off by a rule rather than a box. It is commentary on
+ * the document, not part of it, and the rule says so without adding another
+ * card inside a card.
+ */
+.lineNote {
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--border-strong);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* --- Footnote ------------------------------------------------------------- */
+
+.foot {
+  padding: var(--space-5);
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+@media (max-width: 560px) {
+  .banner,
+  .head,
+  .line,
+  .foot {
+    padding: var(--space-4);
+  }
+
+  /* The line number moves above the field rather than beside it: at this width
+     the two-column grid left the body under 240px and every value wrapped to
+     four lines. */
+  .line {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .lineNote {
+    padding-left: var(--space-3);
+  }
+}

@@ -73,3 +73,9 @@
   letter-spacing: var(--tracking-wide);
   color: var(--accent);
 }
+
+/* The specimen sits below the scope list it illustrates, with enough air that
+   it reads as a separate exhibit rather than as the last list item. */
+.specimen {
+  margin-top: var(--space-7);
+}

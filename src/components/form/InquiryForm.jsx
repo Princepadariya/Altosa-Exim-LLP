@@ -41,10 +41,17 @@ const InquiryForm = ({ onSubmit }) => {
           field.name === "industry"
             ? {
                 ...field,
-                options: industries.map((industry) => ({
-                  value: industry.id,
-                  label: industry.title,
-                })),
+                options: [
+                  ...industries.map((industry) => ({
+                    value: industry.id,
+                    label: industry.title,
+                  })),
+                  /* Industry is required, and the six sectors are where the
+                     supplier base is strongest — not the limit of what can be
+                     sourced. Without this option a buyer whose part sits
+                     outside them cannot submit the form at all. */
+                  { value: "other", label: "Other industrial requirement" },
+                ],
               }
             : field,
         ),

@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom";
 
-import company from "../../data/company";
+import company, { hasWhatsapp } from "../../data/company";
 import { primaryCta } from "../../data/navigation";
 import useScrolled from "../../hooks/useScrolled";
+import { scrollToTop } from "../../utils/scroll";
 import cn from "../../utils/cn";
 import Button from "../ui/Button";
 import Icon from "../ui/Icon";
@@ -26,7 +27,7 @@ const FloatingActions = () => {
       <button
         type="button"
         className={cn(styles.toTop, isScrolled && styles.toTopVisible)}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={scrollToTop}
         aria-label="Back to top"
         tabIndex={isScrolled ? 0 : -1}
       >
@@ -42,15 +43,17 @@ const FloatingActions = () => {
             {primaryCta.label}
           </Button>
 
-          <a
-            href={company.contact.whatsapp}
-            className={styles.barSecondary}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={company.contact.whatsappLabel}
-          >
-            <Icon name="whatsapp" size={20} />
-          </a>
+          {hasWhatsapp && (
+            <a
+              href={company.contact.whatsapp}
+              className={styles.barSecondary}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={company.contact.whatsappLabel}
+            >
+              <Icon name="whatsapp" size={20} />
+            </a>
+          )}
         </div>
       )}
     </>

@@ -308,8 +308,13 @@ const Hero = () => {
                 />
               </g>
 
-              {/* --- Horizontal dimension: outside diameter --- */}
-              <g className={`${styles.dim} ${styles.dimH}`} opacity="0">
+              {/* --- Horizontal dimension: outside diameter ---
+                  Carried a .dimH hook purely so the mobile stylesheet could
+                  hide it, back when the title block was positioned over the
+                  foot of the sheet and would have sat on top of it. The block
+                  now stacks below the drawing at that width, so the dimension
+                  shows everywhere and the hook has nothing left to do. */}
+              <g className={styles.dim} opacity="0">
                 <path d={`M${CX - R_OUTER} ${CY + R_OUTER}v20`} opacity="0.3" />
                 <path d={`M${CX + R_OUTER} ${CY + R_OUTER}v20`} opacity="0.3" />
                 <path d={`M${CX - R_OUTER} 292h${R_OUTER * 2}`} />

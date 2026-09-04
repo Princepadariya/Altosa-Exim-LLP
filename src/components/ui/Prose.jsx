@@ -1,14 +1,7 @@
 import cn from "../../utils/cn";
+import { slugifyHeading } from "../../utils/slugify";
 import Notice from "./Notice";
 import styles from "./Prose.module.css";
-
-/** Turns a heading into a stable anchor id, so the contents list can link to it. */
-export const slugifyHeading = (text) =>
-  text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
 
 /**
  * Renders the structured article bodies in data/resources.js.
@@ -52,27 +45,32 @@ const Prose = ({ blocks, className }) => (
 
         case "table":
           return (
-            <div key={key} className={styles.tableWrap} data-reveal>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    {block.head.map((heading) => (
-                      <th key={heading} scope="col">
-                        {heading}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {block.rows.map((row) => (
-                    <tr key={row.join("|")}>
-                      {row.map((cell, cellIndex) => (
-                        <td key={`${cell}-${cellIndex}`}>{cell}</td>
+            <div key={key} className={styles.tableBlock} data-reveal>
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      {block.head.map((heading) => (
+                        <th key={heading} scope="col">
+                          {heading}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {block.rows.map((row) => (
+                      <tr key={row.join("|")}>
+                        {row.map((cell, cellIndex) => (
+                          <td key={`${cell}-${cellIndex}`}>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className={styles.tableHint} aria-hidden="true">
+                Scroll the table sideways to see every column
+              </p>
             </div>
           );
 

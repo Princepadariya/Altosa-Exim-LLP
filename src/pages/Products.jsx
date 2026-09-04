@@ -7,7 +7,7 @@ import PageHero from "../components/ui/PageHero";
 import Seo from "../components/ui/Seo";
 import { breadcrumbSchema } from "../utils/seo";
 
-const crumbs = [{ label: "Products", to: "/products" }];
+const crumbs = [{ label: "Capabilities", to: "/products" }];
 
 const Products = () => (
   <>

@@ -86,6 +86,16 @@ export const engagementComparison = [
     merchant: "With Altosa, up to the agreed Incoterms® 2020 point",
     agency: "With you and the manufacturer, per your contract",
   },
+  {
+    question: "If parts are rejected, who do you claim against?",
+    merchant: "Altosa — we pursue the manufacturer behind it",
+    agency: "The manufacturer, with Altosa coordinating the claim for you",
+  },
+  {
+    question: "Who holds the supplier relationship after the first order?",
+    merchant: "Altosa, so a change of supplier does not change your contract",
+    agency: "You do, directly — which is usually the point of choosing it",
+  },
 ];
 
 export const engagementNotice =

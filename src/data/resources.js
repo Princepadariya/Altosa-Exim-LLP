@@ -305,6 +305,133 @@ export const resources = [
     ],
     related: ["incoterms-2020-explained", "what-to-include-in-an-rfq"],
   },
+  {
+    slug: "export-packing-and-marking",
+    category: "logistics",
+    title: "How export packing is specified, and why it belongs in the quotation",
+    excerpt:
+      "\u201CExport packing\u201D means whatever the supplier already does. What actually protects the parts \u2014 and clears customs \u2014 is a method written down before production.",
+    readingTime: "6 min read",
+    updated: "September 2026",
+    body: [
+      {
+        type: "p",
+        text: "Packing is the line buyers skim. It is also where a technically perfect order turns into a claim: parts that left the factory to drawing arrive pitted with rust, or sit at a destination port because the pallet under them is not compliant. Neither failure is a manufacturing problem, and neither is expensive to prevent \u2014 but only if the method is agreed before production rather than assumed.",
+      },
+      { type: "h2", text: "\u201CExport packing\u201D is not a specification" },
+      {
+        type: "p",
+        text: "Written into a purchase order on its own, the phrase means whatever that supplier already does. For one it is a fumigated case with corrosion protection; for another it is the same carton used for a domestic delivery three hours away. Both suppliers believe they quoted export packing, and both are being truthful.",
+      },
+      {
+        type: "p",
+        text: "The way out is to state the method rather than the intent: what the parts sit in, how they are protected against moisture, what the timber under them complies with, and how each package is marked. Those four answers cost nothing to write down and settle almost every packing dispute before it starts.",
+      },
+      {
+        type: "table",
+        head: ["Method", "Typically used for", "Worth knowing"],
+        rows: [
+          [
+            "Seaworthy wooden case",
+            "Heavy or irregular machined and fabricated parts",
+            "Solid wood \u2014 must carry an ISPM 15 mark",
+          ],
+          [
+            "Plywood or OSB case",
+            "Medium-weight parts, repeat shipments",
+            "Processed board is outside ISPM 15",
+          ],
+          [
+            "Palletised cartons, strapped and wrapped",
+            "Fasteners, smaller turned parts, high piece counts",
+            "Pallet itself still falls under ISPM 15 if solid wood",
+          ],
+          [
+            "Steel or returnable stillage",
+            "Ongoing programmes with regular call-offs",
+            "Return logistics and ownership need agreeing up front",
+          ],
+        ],
+      },
+      { type: "h2", text: "ISPM 15, and why customs cares about your pallet" },
+      {
+        type: "p",
+        text: "ISPM 15 is the international standard governing solid wood packaging in traded goods. It exists to stop timber pests crossing borders inside crates and pallets, and it applies to the packaging rather than to what is inside it. Compliant wood is heat treated or fumigated and then stamped with the IPPC mark, the treatment code and the country and registration of the treatment facility.",
+      },
+      {
+        type: "p",
+        text: "The consequence of getting it wrong falls on the consignment, not the packer. Depending on the destination, non-compliant wood can mean treatment at the port at your cost, destruction of the packaging, or re-export of the whole shipment \u2014 with the parts inside it, however correct they are.",
+      },
+      {
+        type: "note",
+        text: "ISPM 15 covers solid wood. Processed materials \u2014 plywood, OSB, particleboard, corrugated card \u2014 are manufactured in ways that already destroy pests and fall outside the standard. A plywood case on a solid-wood pallet still needs a compliant pallet.",
+      },
+      { type: "h2", text: "Corrosion is the failure nobody quotes for" },
+      {
+        type: "p",
+        text: "A container crossing the Indian Ocean goes through repeated heating and cooling cycles, and the moisture in the air inside it condenses on whatever is coldest \u2014 usually the steel. Bare machined surfaces can leave a factory clean and arrive five weeks later with visible rust on exactly the faces that matter.",
+      },
+      {
+        type: "list",
+        items: [
+          "A rust-preventive oil or wax film on unplated machined surfaces",
+          "VCI film, paper or bags, which release a vapour-phase inhibitor inside a sealed package",
+          "Desiccant sized to the volume of the package, not added by the handful",
+          "Sealed liners for long transits or humid destinations",
+          "Separators so finished faces cannot rub against each other in transit",
+        ],
+      },
+      {
+        type: "p",
+        text: "Which of these applies depends on the finish, the transit time and the destination climate. A plated part and a bare ground shaft do not need the same protection, and paying for the heavier option on both is as avoidable as skipping it on the second.",
+      },
+      { type: "h2", text: "Marking: what belongs on the outside" },
+      {
+        type: "p",
+        text: "Marking is what lets a warehouse book your goods in without opening them, and what lets you find one item in a mixed consignment without unpacking all of it.",
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Purchase order number and, where you use one, the line item",
+          "Part number and drawing revision",
+          "Quantity in that package",
+          "Case number in the series \u2014 3 of 11, not simply \u201Ccase\u201D",
+          "Gross and net weight, and dimensions",
+          "Country of origin",
+          "Handling and sling marks where the package needs them",
+          "Consignee details as they appear on the shipping documents",
+        ],
+      },
+      {
+        type: "p",
+        text: "Where your goods-in process depends on a barcode or a specific label format, send the format with the RFQ. It is trivial to apply during packing and disproportionately expensive to add after arrival.",
+      },
+      { type: "h2", text: "Weights and dimensions price the freight" },
+      {
+        type: "p",
+        text: "Freight is charged on whichever is greater: actual weight or volumetric weight. Packing that is safe but wasteful in volume can cost more to ship than the packing itself saved, particularly on part-container and air consignments. Ask for gross and net weights and case dimensions with the quotation rather than after booking \u2014 they determine the freight cost, the handling equipment needed at the far end, and whether a consignment consolidates efficiently into a full container.",
+      },
+      { type: "h2", text: "What to put in the RFQ" },
+      {
+        type: "list",
+        items: [
+          "Destination country and port, so wood and treatment requirements can be checked",
+          "Whether the consignment is FCL, LCL or air",
+          "Expected total transit and storage time before the parts are used",
+          "Any packaging standard your business applies to inbound goods",
+          "Label or barcode formats your goods-in process expects",
+          "Whether packaging is returnable, and who owns it if it is",
+        ],
+      },
+      {
+        type: "note",
+        text: "Packing method is one of the lines a quotation states, alongside quantity, lead time, payment basis and the applicable Incoterms\u00AE 2020 rule. If a quotation you receive does not mention it, that is worth asking about before the order rather than after the container is sealed.",
+      },
+    ],
+    related: ["export-documents-explained", "incoterms-2020-explained"],
+  },
 ];
 
 export const getResource = (slug) =>

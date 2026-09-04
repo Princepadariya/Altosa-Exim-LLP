@@ -94,10 +94,21 @@ export const useInquiryForm = ({ fields, onSubmit } = {}) => {
 
   const buildMailto = useCallback((payload) => {
     const body = Object.entries(payload)
-      .filter(([, value]) => value !== "" && value !== false && value?.length !== 0)
+      .filter(
+        ([, value]) =>
+          value !== "" && value !== false && value !== null && value?.length !== 0,
+      )
       .map(([key, value]) => {
         const field = fieldsByName[key];
         const label = field?.label ?? key;
+
+        /* A mailto URL cannot carry an attachment, so the file is named in the
+           body and the buyer is asked to attach it. Dropping it silently would
+           lose the drawing the whole inquiry is about. */
+        if (typeof File !== "undefined" && value instanceof File) {
+          return `${label}: ${value.name} — PLEASE ATTACH THIS FILE BEFORE SENDING`;
+        }
+
         const printed = Array.isArray(value) ? value.join(", ") : value;
         return `${label}: ${printed}`;
       })
@@ -150,13 +161,43 @@ export const useInquiryForm = ({ fields, onSubmit } = {}) => {
           await onSubmit(payload);
           setDeliveredVia("handler");
         } else if (siteConfig.inquiryForm.endpoint) {
+          /*
+           * JSON cannot carry a File, so an inquiry with an attachment is sent
+           * as multipart instead. Content-Type is deliberately left unset in
+           * that branch — the browser has to add its own multipart boundary,
+           * and setting the header by hand strips it and breaks the parse at
+           * the far end.
+           */
+          const hasFile = fields.some(
+            (field) =>
+              field.type === "file" &&
+              typeof File !== "undefined" &&
+              payload[field.name] instanceof File,
+          );
+
+          let request;
+
+          if (hasFile) {
+            const form = new FormData();
+            Object.entries(payload).forEach(([key, value]) => {
+              if (value === null || value === "" || value === false) return;
+              if (Array.isArray(value)) form.append(key, value.join(", "));
+              else form.append(key, value);
+            });
+            request = { body: form, headers: { Accept: "application/json" } };
+          } else {
+            request = {
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+            };
+          }
+
           const response = await fetch(siteConfig.inquiryForm.endpoint, {
             method: siteConfig.inquiryForm.method,
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(payload),
+            ...request,
           });
 
           if (!response.ok) throw new Error(`Request failed: ${response.status}`);

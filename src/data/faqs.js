@@ -16,6 +16,27 @@ export const faqs = [
     category: "Commercial",
   },
   {
+    id: "commission-basis",
+    question: "How is your commission calculated?",
+    answer:
+      "Under a commission agency arrangement, on the agreed order value at a rate fixed in writing before the order — the rate, the value it applies to and the point at which it becomes payable are recorded with the order rather than settled afterwards. Under a merchant export arrangement there is no separate commission: Altosa's margin sits inside the quoted price and is agreed when that price is agreed. Which of the two applies is stated in the quotation, so you are never guessing which side of the transaction we are on.",
+    category: "Commercial",
+  },
+  {
+    id: "payment-terms",
+    question: "What are your payment terms?",
+    answer:
+      "The payment basis is stated in the quotation for that order rather than published here, because it moves with the arrangement, the order value and the destination. Quotations are normally structured either as an advance against order confirmation with the balance before dispatch or against shipping documents, or as an irrevocable letter of credit where the value justifies it. Under a commission agency arrangement you pay the manufacturer on the terms you agree with them directly, and the commission is handled separately. If your organisation is bound to a particular instrument, say so in the inquiry — it is easier to quote around it than to renegotiate after a price is agreed.",
+    category: "Commercial",
+  },
+  {
+    id: "currency",
+    question: "What currency do you quote in?",
+    answer:
+      "The quotation states its own currency, agreed with you rather than assumed. Indian export sales are most often denominated in USD or EUR; if your business needs a different one, say so in the inquiry. Which currency applies, the rate basis, and who carries any movement between quotation and payment are commercial terms like any other, and they are far easier to settle before a price is fixed than afterwards. The validity period on a quotation exists for the same reason \u2014 a price held open indefinitely is a price carrying a currency risk nobody agreed to.",
+    category: "Commercial",
+  },
+  {
     id: "drawings",
     question: "Can you work from drawings?",
     answer:
@@ -63,6 +84,20 @@ export const faqs = [
     answer:
       "The applicable Incoterms® 2020 rule and the named place it refers to are recorded in the quotation. Tell us your preferred rule in the inquiry if you have one. Incoterms® 2020 rules describe delivery terms only — they are not a substitute for a contract, quality agreement, payment terms, product compliance or legal advice.",
     category: "Commercial",
+  },
+  {
+    id: "rejected-parts",
+    question: "What happens if parts arrive out of specification?",
+    answer:
+      "Who you claim against follows the arrangement, which is one of the reasons it is agreed before the order. Under merchant export you contract with Altosa, so the claim sits with us and we pursue the manufacturer behind it. Under commission agency your contract is with the manufacturer, so the claim sits there and Altosa coordinates it on your behalf. The practical work is the same either way: the deviation is recorded against the drawing revision and the inspection records for that batch — which is precisely why the records to be produced are fixed before production rather than argued about after a dispute has started.",
+    category: "Quality",
+  },
+  {
+    id: "supplier-selection",
+    question: "How do you choose which supplier makes my part?",
+    answer:
+      "Against the drawing, not against a directory. The process the part actually needs, its material and its tolerance narrow the field first; then capacity at your quantity, the records the supplier can genuinely produce, and whether comparable work has run there before. Where more than one route is viable you are told that a choice exists and what separates the options — rather than handed one factory's answer as though it were the only one available.",
+    category: "Role",
   },
   {
     id: "confidentiality",

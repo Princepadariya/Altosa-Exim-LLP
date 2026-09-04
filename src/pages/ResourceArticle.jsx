@@ -9,7 +9,8 @@ import useReadingProgress from "../hooks/useReadingProgress";
 import cn from "../utils/cn";
 import Button from "../components/ui/Button";
 import PageHero from "../components/ui/PageHero";
-import Prose, { slugifyHeading } from "../components/ui/Prose";
+import Prose from "../components/ui/Prose";
+import { slugifyHeading } from "../utils/slugify";
 import Section from "../components/ui/Section";
 import Seo from "../components/ui/Seo";
 import styles from "./ResourceArticle.module.css";
@@ -114,7 +115,7 @@ const ResourceArticle = () => {
 
           <aside className={styles.aside}>
             {headings.length > 0 && (
-              <nav aria-label="On this page">
+              <nav className={styles.tocNav} aria-label="On this page">
                 <h2 className={styles.tocTitle}>On this page</h2>
                 <div className={styles.toc}>
                   {headings.map((heading) => (

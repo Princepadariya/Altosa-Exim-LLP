@@ -2,7 +2,7 @@
 
 export const primaryNav = [
   { label: "Industries", to: "/industries" },
-  { label: "Products", to: "/products" },
+  { label: "Capabilities", to: "/products" },
   { label: "Services", to: "/services" },
   { label: "How we work", to: "/how-we-work" },
   { label: "Quality", to: "/quality-and-compliance" },

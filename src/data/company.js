@@ -24,6 +24,12 @@ export const company = {
 
   contact: {
     email: "exim@altosaeximllp.com",
+    /*
+     * Still the scaffold placeholder. Until a real number replaces it, every
+     * WhatsApp affordance on the site is hidden by the `hasWhatsapp` flag
+     * below rather than rendered as a live link into an empty chat — a dead
+     * contact route costs more trust than a missing one.
+     */
     whatsapp: "https://wa.me/919999999999",
     whatsappLabel: "Message us on WhatsApp",
   },
@@ -76,5 +82,16 @@ export const company = {
     },
   ],
 };
+
+/**
+ * The number shipped with the scaffold. Anything containing it is treated as
+ * unset, so replacing `contact.whatsapp` above turns every WhatsApp button,
+ * footer link and contact card back on with no other change.
+ */
+const WHATSAPP_PLACEHOLDER = "919999999999";
+
+export const hasWhatsapp = !company.contact.whatsapp.includes(
+  WHATSAPP_PLACEHOLDER,
+);
 
 export default company;

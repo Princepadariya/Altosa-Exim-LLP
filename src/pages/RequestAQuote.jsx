@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import InquiryForm from "../components/form/InquiryForm";
-import company from "../data/company";
+import company, { hasWhatsapp } from "../data/company";
 import { rfqChecklist, rfqNextSteps } from "../data/inquiryFields";
 import Button from "../components/ui/Button";
 import Icon from "../components/ui/Icon";
@@ -104,15 +104,17 @@ const RequestAQuote = () => (
                 <Icon name="mail" size={17} />
                 {company.contact.email}
               </a>
-              <a
-                href={company.contact.whatsapp}
-                className={styles.contactLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon name="whatsapp" size={17} />
-                {company.contact.whatsappLabel}
-              </a>
+              {hasWhatsapp && (
+                <a
+                  href={company.contact.whatsapp}
+                  className={styles.contactLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name="whatsapp" size={17} />
+                  {company.contact.whatsappLabel}
+                </a>
+              )}
             </div>
             <p className={styles.timezone}>
               {company.timezone.label}. {company.timezone.note}

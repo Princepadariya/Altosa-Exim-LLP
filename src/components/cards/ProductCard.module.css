@@ -21,26 +21,71 @@
   margin-bottom: var(--space-1);
 }
 
-/* The lead item in the homepage mosaic: laid out across two columns and set
-   on the darker surface so it reads as the entry point, not just a wider card. */
+/*
+ * The lead item in the homepage mosaic: the drawing as a full-height panel on
+ * the left, everything else stacked on the right.
+ *
+ * Two earlier arrangements both left the card mostly empty. Implicit placement
+ * dropped the specs into the third row, stranding ~500px of blank right-hand
+ * column above it and a 231px gap between the summary and the link. Splitting
+ * the copy across both columns and centring the specs only moved that void:
+ * the left stack ran to ~470px of content while the four spec rows came to
+ * 161px, so the right column was half empty by construction.
+ *
+ * The fix is to stop dividing the text. All of it goes in one column, which
+ * sets the card's height; the drawing spans every row and stretches to match,
+ * so neither column can be left holding empty space.
+ */
 .featured {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-areas:
+    "plate head"
+    "plate summary"
+    "plate specs"
+    "plate link";
+  /* Tight between the stacked rows, generous between the two columns: one gap
+     value made the vertical rhythm as wide as the column gutter. */
+  gap: var(--space-5) clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
   padding: var(--space-7);
   background: var(--bg-subtle);
   border-color: var(--border-strong);
 }
 
-.featured .plate,
-.featured .head,
-.featured .summary {
-  grid-column: 1;
+/*
+ * Stretched to the full height of the text column. The SVG keeps its own
+ * aspect ratio inside (it letterboxes rather than distorting), so the drawing
+ * simply sits centred on a taller sheet — which is what a drawing sheet with
+ * margin around the part should look like anyway.
+ */
+.featured .plate {
+  grid-area: plate;
+  align-self: stretch;
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Inherits the 3/2 above: a 21/9 crop here would letterbox the tall viewBox
-   and shrink the drawing rather than widening it. */
+.featured .head {
+  grid-area: head;
+}
+
+.featured .summary {
+  grid-area: summary;
+}
+
+.featured .specs {
+  grid-area: specs;
+  margin-top: 0;
+}
+
+.featured .link {
+  grid-area: link;
+  /* The row gap already spaces it; the base margin doubled up. */
+  margin-top: 0;
+}
 
 .featured .title {
   font-size: var(--fs-2xl);
@@ -50,16 +95,42 @@
   font-size: var(--fs-base);
 }
 
-/* Specs and the link share the right-hand column.
-   Spans four rows now that the plate is also in column one. */
-.featured .specs {
-  grid-column: 2;
-  grid-row: 1 / span 4;
-  margin-top: 0;
+.specRow {
+  display: grid;
+  /* minmax(0, 1fr), never a bare 1fr: an unbroken value would otherwise set a
+     min-content floor and push the column past the card. */
+  grid-template-columns: 5.75rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-3);
 }
 
-.featured .link {
-  grid-column: 1;
+.specRow:first-child {
+  padding-top: 0;
+}
+
+.specRow:last-child {
+  padding-bottom: 0;
+}
+
+.specRow + .specRow {
+  border-top: 1px solid var(--border);
+}
+
+.specLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.specValue {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
 }
 
 .featured:hover {
@@ -71,6 +142,13 @@
     display: flex;
     flex-direction: column;
     padding: var(--space-6);
+  }
+
+  /* Stacked, the specs sit under the body again, so the separator that the
+     two-column layout does not need comes back. */
+  .featured .specs {
+    padding-top: var(--space-4);
+    border-top: 1px dashed var(--border);
   }
 }
 
@@ -134,48 +212,16 @@
   color: var(--text-muted);
 }
 
+/*
+ * Base spec block for the single-column card: pushed to the bottom so the
+ * link lines up across a row of cards, and separated from the body above it.
+ * No gap — the rows carry their own padding and hairline rules.
+ */
 .specs {
   display: grid;
-  gap: var(--space-3);
   margin-top: auto;
   padding-top: var(--space-4);
   border-top: 1px dashed var(--border);
-}
-
-.specRow {
-  display: grid;
-  grid-template-columns: 6.5rem 1fr;
-  gap: var(--space-3);
-  align-items: start;
-}
-
-.specLabel {
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--text-soft);
-  padding-top: 2px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.tag {
-  padding: 0.2rem 0.55rem;
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-}
-
-.specValue {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
 }
 
 .link {
@@ -207,8 +253,9 @@
 }
 
 @media (max-width: 560px) {
+  /* The label stacks above its value; minmax keeps the same overflow guard. */
   .specRow {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
   }
 }

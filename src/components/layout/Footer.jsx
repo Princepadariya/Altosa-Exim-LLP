@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import company from "../../data/company";
+import company, { hasWhatsapp } from "../../data/company";
 import { footerNav } from "../../data/navigation";
 import Icon from "../ui/Icon";
 import styles from "./Footer.module.css";
@@ -34,32 +34,44 @@ const Footer = () => {
                 <Icon name="mail" size={16} className={styles.contactIcon} />
                 {company.contact.email}
               </a>
-              <a
-                href={company.contact.whatsapp}
-                className={styles.contactItem}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon name="whatsapp" size={16} className={styles.contactIcon} />
-                {company.contact.whatsappLabel}
-              </a>
+              {hasWhatsapp && (
+                <a
+                  href={company.contact.whatsapp}
+                  className={styles.contactItem}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    name="whatsapp"
+                    size={16}
+                    className={styles.contactIcon}
+                  />
+                  {company.contact.whatsappLabel}
+                </a>
+              )}
               <span className={styles.contactItem}>
                 <Icon name="clock" size={16} className={styles.contactIcon} />
                 {company.timezone.label}
               </span>
             </div>
 
-            <div className={styles.registrations}>
+            {/* The reassuring half of the timezone fact. The label alone tells a
+                buyer five hours away that they have probably missed us; the note
+                tells them it does not matter. */}
+            <p className={styles.timezoneNote}>{company.timezone.note}</p>
+
+            {/* Each code carries its expansion in the markup rather than in a
+                title attribute: title needs a hover, phones have none, and the
+                footer is read on a phone more often than anywhere else. Three
+                bare acronyms mean nothing to a buyer outside India. */}
+            <ul className={styles.registrations}>
               {company.registrations.map((registration) => (
-                <span
-                  key={registration.code}
-                  className={styles.regChip}
-                  title={registration.label}
-                >
-                  {registration.code}
-                </span>
+                <li key={registration.code} className={styles.regChip}>
+                  <span className={styles.regCode}>{registration.code}</span>
+                  <span className={styles.regLabel}>{registration.label}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
           <div className={styles.navCols}>
@@ -82,16 +94,23 @@ const Footer = () => {
 
         <div className={styles.bottom}>
           <p className={styles.disclaimer}>
-            © {year} {company.legalName}. {company.role} registered in{" "}
+            {/* Not "{company.role} registered in {city}": there is no merchant
+                exporter or commission agent registration to hold. The firm is
+                registered as an LLP, for IEC and for GST — the chips above say
+                so — and claiming a fourth category the site cannot evidence is
+                the exact move its own "verifiable over claimed" value rules
+                out. */}
+            © {year} {company.legalName} — {company.role.toLowerCase()}, based in{" "}
             {company.address.full}. Incoterms® is a registered trademark of the
             International Chamber of Commerce; Incoterms® 2020 rules describe
             delivery terms only.
           </p>
 
           <div className={styles.bottomLinks}>
-            <Link to="/glossary">Glossary</Link>
-            {/* The readable sitemap, not the XML one — that is linked from
-                the page itself for search engines. */}
+            {/* Glossary is not repeated here: it already sits in the Buyer
+                resources column above, where a reader looking for it is
+                actually looking. The readable sitemap, not the XML one — that
+                is linked from the page itself for search engines. */}
             <Link to="/sitemap">Sitemap</Link>
           </div>
         </div>

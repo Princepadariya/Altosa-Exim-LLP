@@ -6,6 +6,10 @@
  */
 
 import { isEmail, isNotEmpty, minLength } from "../utils/validation";
+import countries from "./countries";
+
+/** Attachment ceiling. Most form services reject more than this anyway. */
+export const MAX_ATTACHMENT_MB = 10;
 
 export const incoterms = [
   "EXW — Ex Works",
@@ -82,7 +86,7 @@ export const inquiryFieldGroups = [
       },
       {
         name: "phone",
-        label: "Phone or WhatsApp",
+        label: "Phone or WhatsApp (with country code)",
         type: "tel",
         autoComplete: "tel",
         required: false,
@@ -121,11 +125,30 @@ export const inquiryFieldGroups = [
             : "Please describe the part in a little more detail.",
       },
       {
-        name: "material",
-        label: "Material, grade or standard",
+        name: "drawingReference",
+        label: "Drawing or specification reference",
         type: "text",
         required: false,
-        placeholder: "e.g. EN-GJS-400-15 / ASTM A536",
+        placeholder: "e.g. PH-4820 rev C",
+        hint: "Name the revision too — a drawing without one cannot be frozen.",
+      },
+      {
+        /* Split from the old combined "Material, grade or standard" field. The
+           grade and the standard are two different facts: the standard is what
+           decides which tests the mill actually ran, and merging them let a
+           buyer supply one and believe they had given both. */
+        name: "material",
+        label: "Material or grade",
+        type: "text",
+        required: false,
+        placeholder: "e.g. EN-GJS-400-15",
+      },
+      {
+        name: "standard",
+        label: "Applicable standard",
+        type: "text",
+        required: false,
+        placeholder: "e.g. ASTM A536",
       },
       {
         name: "quantity",
@@ -159,18 +182,23 @@ export const inquiryFieldGroups = [
     description: "Destination and timing shape standards, documents and logistics.",
     fields: [
       {
+        /* A list rather than free text: the destination decides which standards,
+           documents and wood-packaging rules apply, and "UAE", "U.A.E." and
+           "Dubai" arriving as three different strings makes that check
+           guesswork. The submitted value is the ISO code. */
         name: "country",
         label: "Destination country",
-        type: "text",
-        autoComplete: "country-name",
+        type: "select",
+        autoComplete: "country",
         required: true,
-        placeholder: "e.g. Germany",
+        options: countries,
+        placeholder: "Select a destination",
         validate: (value) =>
-          isNotEmpty(value) ? null : "Please enter the destination country.",
+          isNotEmpty(value) ? null : "Please select the destination country.",
       },
       {
         name: "portOfDischarge",
-        label: "Port, airport or delivery city",
+        label: "Destination city, port or airport",
         type: "text",
         required: false,
         placeholder: "e.g. Hamburg",
@@ -190,6 +218,31 @@ export const inquiryFieldGroups = [
         required: false,
         options: timelines,
         placeholder: "Select a timeframe",
+      },
+      {
+        /* Kept alongside the bracket above rather than replacing it: the bracket
+           is what a buyer can always answer, the date is what they answer when
+           a programme has a real deadline attached to it. */
+        name: "targetDate",
+        label: "Target delivery date",
+        type: "text",
+        required: false,
+        placeholder: "e.g. October 2026",
+        hint: "If a fixed date drives this requirement, name it.",
+      },
+      {
+        name: "attachment",
+        label: "Drawing, specification or requirement document",
+        type: "file",
+        required: false,
+        accept:
+          ".pdf,.dwg,.dxf,.step,.stp,.igs,.iges,.png,.jpg,.jpeg,.xlsx,.xls,.doc,.docx,.zip",
+        maxSizeMb: MAX_ATTACHMENT_MB,
+        hint: `PDF, DWG, DXF, STEP, image, spreadsheet or ZIP, up to ${MAX_ATTACHMENT_MB} MB.`,
+        validate: (value) =>
+          !value || value.size <= MAX_ATTACHMENT_MB * 1024 * 1024
+            ? null
+            : `That file is over ${MAX_ATTACHMENT_MB} MB. Send the requirement without it and email the file separately — we will match it to your inquiry.`,
       },
       {
         name: "notes",

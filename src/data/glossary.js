@@ -112,6 +112,42 @@ export const glossary = [
     definition:
       "The party legally responsible for customs clearance and destination-market conformity at the destination. Usually the buyer.",
   },
+  {
+    term: "Letter of credit",
+    letter: "L",
+    definition:
+      "A bank undertaking to pay the seller once documents matching the credit's terms are presented. Payment depends on the documents being correct, not on the goods being correct, which is why the document list is negotiated as carefully as the price.",
+  },
+  {
+    term: "Proforma invoice",
+    letter: "P",
+    definition:
+      "A quotation issued in invoice form, stating goods, quantity, value and terms before an order exists. Buyers commonly use it to raise a purchase order, open a letter of credit or apply for an import licence.",
+  },
+  {
+    term: "Packing list",
+    letter: "P",
+    definition:
+      "The document stating what is in each package: contents, quantities, case numbers, and gross and net weights. It travels with the shipment and is what customs and the receiving warehouse check the consignment against.",
+  },
+  {
+    term: "HS code",
+    letter: "H",
+    definition:
+      "Harmonised System code. The internationally agreed classification number for a product, which determines the duty rate and any restrictions at the destination. The first six digits are common worldwide; countries add further digits of their own.",
+  },
+  {
+    term: "Demurrage and detention",
+    letter: "D",
+    definition:
+      "Charges that begin once free time runs out \u2014 demurrage while a container sits inside the terminal, detention while it is held outside it. Both accrue daily and are usually the importer's cost, so clearing customs promptly is a commercial matter as much as an administrative one.",
+  },
+  {
+    term: "Tooling amortisation",
+    letter: "T",
+    definition:
+      "Spreading the one-off cost of dies, patterns or fixtures across the pieces they produce, rather than invoicing it separately up front. Whether tooling is amortised, paid for outright, and who then owns it, is agreed before the first order.",
+  },
 ];
 
 export const glossaryLetters = [

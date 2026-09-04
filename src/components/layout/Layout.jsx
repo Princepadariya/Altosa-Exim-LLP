@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import useReveal from "../../hooks/useReveal";
+import useSmoothScroll from "../../hooks/useSmoothScroll";
 import FloatingActions from "./FloatingActions";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -12,6 +13,7 @@ import ScrollToTop from "./ScrollToTop";
  */
 const Layout = () => {
   useReveal();
+  useSmoothScroll();
 
   return (
     <>

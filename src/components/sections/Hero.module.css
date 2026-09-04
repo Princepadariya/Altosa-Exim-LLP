@@ -595,20 +595,86 @@
     min-height: auto;
   }
 
+  /*
+   * The title block is absolutely positioned over the sheet, which works on a
+   * tall desktop panel. At 375px it measured 160px against a 419px panel and
+   * covered the bottom 176px of the drawing — 38% of the sheet — so the part
+   * appeared squashed into the top half with the lower dimension line lost
+   * behind it. Below this width the panel becomes a column: the drawing keeps
+   * its own aspect ratio and full height, and the block sits under it.
+   */
   .visual {
-    aspect-ratio: 4 / 5;
-    max-height: 27rem;
+    aspect-ratio: auto;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* The sheet scales down far enough that the finest annotation layer would
-     render around 7px — illegible, and it reads as noise rather than detail.
-     Drop it and enlarge what stays. */
-  .zone,
-  .note,
-  /* The title block takes a larger share of the narrow panel, so the
-     bottom dimension would sit behind it. */
-  .dimH {
+  .sheet {
+    position: relative;
+    inset: auto;
+    height: auto;
+    /* Matches the viewBox, so the drawing fills the width instead of
+       letterboxing inside a box of a different shape. */
+    aspect-ratio: 42 / 46;
+    /*
+     * The sheet is 460 units tall but the drawing itself stops at 302 — the
+     * band below it is empty paper that the title block covers on a desktop
+     * panel. Stacking the block exposed that band as ~114px of dead space and
+     * pushed the panel to 526px. The negative margin crops it back: margins in
+     * percent resolve against the container width, so this scales with the
+     * panel instead of being pinned to one screen size. It stops ~26px clear
+     * of the lowest dimension line.
+     */
+    margin-bottom: -30%;
+  }
+
+  /* Full-bleed at the foot of the panel: its own border and radius would draw
+     a second card inside the one it already sits in. */
+  .titleBlock {
+    position: static;
+    translate: none;
+    border: 0;
+    border-top: 1px solid var(--dark-border-strong);
+    border-radius: 0;
+    backdrop-filter: none;
+  }
+
+  /* Zone coordinates go: they are 8px of alphabet down the sheet edges, and
+     at this width they read as speckle rather than as detail. */
+  .zone {
     display: none;
+  }
+
+  /*
+   * The general note stays — it is the line that says the tolerances and the
+   * geometry are the buyer's, which is the whole argument of the drawing. It
+   * was dropped because 9.5 user units render at about 7px once the sheet is
+   * scaled to a phone. Enlarged instead, with the second line nudged down so
+   * the wider type does not close up the gap between them.
+   */
+  /*
+   * Enlarged and lifted. At 9.5 user units the note rendered around 7px once
+   * the sheet is scaled to a phone, which is why it used to be hidden — but it
+   * is the line that says the tolerances and the geometry are the buyer's,
+   * which is the whole argument the drawing makes.
+   *
+   * The lift clears the '6 x O18 THRU' callout, which the second line came
+   * within a few units of once the type grew. The note moves rather than the
+   * callout because that callout's leader line is anchored to a specific bolt
+   * hole: shifting its group would pull the leader off the dot it points at.
+   * Tighter tracking keeps the wider type off the callout horizontally too.
+   */
+  .note {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    transform: translateY(-12px);
+  }
+
+  /* -6, not -12: the second line keeps a 20-unit gap below the first, where
+     the authored 14 would have closed up at this size. */
+  .note + .note {
+    transform: translateY(-6px);
   }
 
   .dim {
@@ -635,6 +701,16 @@
     font-size: 0.6875rem;
     letter-spacing: 0.04em;
     padding: 0.4rem 0.75rem 0.4rem 0.55rem;
+  }
+
+  /*
+   * The label takes a row of its own, so the flags always start on a fresh
+   * line. Left to wrap naturally the strip broke wherever the flags happened
+   * to run out — the label and the first few flags sharing line one, the rest
+   * and the "+15 more" spilling onto line two.
+   */
+  .shipsToLabel {
+    flex-basis: 100%;
   }
 
   /* Two badges per row rather than three stacked. At space-5 the pair came to

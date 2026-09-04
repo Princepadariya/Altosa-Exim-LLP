@@ -1,5 +1,6 @@
 import CtaSection from "../components/sections/CtaSection";
 import ProcessSection from "../components/sections/ProcessSection";
+import SpecimenQuotation from "../components/sections/SpecimenQuotation";
 import { incotermsNotice, quotationScope } from "../data/process";
 import Button from "../components/ui/Button";
 import Icon from "../components/ui/Icon";
@@ -110,6 +111,14 @@ const HowWeWork = () => (
               </li>
             ))}
           </ol>
+
+          {/* The list above says which fields a quotation carries; the specimen
+              shows one carrying them. The claim that scope is settled before a
+              number is sent was asserted across several pages and demonstrated
+              on none of them. */}
+          <div className={styles.specimen}>
+            <SpecimenQuotation />
+          </div>
 
           <Notice style={{ marginTop: "var(--space-6)" }} icon="receipt">
             {incotermsNotice}

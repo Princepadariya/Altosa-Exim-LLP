@@ -92,7 +92,11 @@ const Home = () => (
       plate={{ number: "09", label: "Guides" }}
     />
 
-    <FaqSection limit={6} />
+    {/* 8, not 6: the two commercial questions added below "who am I buying
+        from" — how the commission is calculated and what the payment basis is —
+        are the ones a first-time export buyer asks before anything else, and at
+        6 they fell off the homepage entirely. */}
+    <FaqSection limit={8} />
     <CtaSection />
   </>
 );

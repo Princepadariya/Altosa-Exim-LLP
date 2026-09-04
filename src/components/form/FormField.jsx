@@ -4,8 +4,8 @@ import styles from "./FormField.module.css";
 
 /**
  * Renders one field from the inquiry schema. Handles text, email, tel,
- * textarea, select, a single consent checkbox and a multi-select chip group,
- * wiring labels, hints and errors together for screen readers.
+ * textarea, select, file, a single consent checkbox and a multi-select chip
+ * group, wiring labels, hints and errors together for screen readers.
  */
 const FormField = ({
   field,
@@ -91,12 +91,17 @@ const FormField = ({
                   disabled={disabled}
                   onChange={() => onToggle(field.name, option)}
                 />
-                <Icon
-                  name="check"
-                  size={13}
-                  strokeWidth={3}
-                  className={styles.chipTick}
-                />
+                {/* Always rendered, so the label sits in the same place whether or
+                    not the option is chosen, and so the control reads as a
+                    checkbox rather than as a tag. */}
+                <span className={styles.chipBox} aria-hidden="true">
+                  <Icon
+                    name="check"
+                    size={12}
+                    strokeWidth={3}
+                    className={styles.chipTick}
+                  />
+                </span>
                 {option}
               </label>
             );
@@ -160,7 +165,28 @@ const FormField = ({
         </select>
       )}
 
-      {!["textarea", "select"].includes(field.type) && (
+      {field.type === "file" && (
+        <div className={styles.fileRow}>
+          <input
+            {...shared}
+            type="file"
+            className={styles.fileInput}
+            accept={field.accept}
+            onChange={(event) => onChange(field.name, event.target.files?.[0] ?? null)}
+          />
+          <label htmlFor={id} className={cn(styles.fileButton, showError && styles.invalid)}>
+            <Icon name="plus" size={15} />
+            {value ? "Choose a different file" : "Choose a file"}
+          </label>
+          {value && (
+            <span className={styles.fileName}>
+              {value.name} ({Math.max(1, Math.round(value.size / 1024))} KB)
+            </span>
+          )}
+        </div>
+      )}
+
+      {!["textarea", "select", "file"].includes(field.type) && (
         <input
           {...shared}
           type={field.type}

@@ -39,8 +39,16 @@
 }
 
 @media (max-width: 900px) {
+  /* minmax(0, 1fr), not 1fr: a bare fr track keeps a min-content floor, so a
+     wide child (a table, a document block) stretches the column past the
+     viewport instead of scrolling or wrapping inside it. The two-column rule
+     above already guards against this; the collapse used to undo it. */
   .split {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .split > * {
+    min-width: 0;
   }
 
   .sticky {
