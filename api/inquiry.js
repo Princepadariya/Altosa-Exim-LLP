@@ -6,11 +6,21 @@
  * ships in the browser bundle, the buyer's drawing never touches a third
  * party, and the payload shape is ours to change.
  *
- * Written against the Web handler signature (Request in, Response out) rather
- * than Node's (req, res). That is what gives us `request.formData()`, and with
- * it multipart parsing — the attachment included — without pulling in a body
- * parser. Nodemailer below is the only dependency, and it is server-side only:
- * nothing here is bundled into the page.
+ * Written against Node's (req, res) signature.
+ *
+ * It was first written against the Web signature — `(Request) => Response` —
+ * because that brings `request.formData()` and with it multipart parsing for
+ * free. This deployment does not honour it: the function was invoked, returned
+ * a Response object nobody read, and never wrote to `res`. Every call hung
+ * until the platform gave up, which a GET measured as a 504 after the full
+ * 300-second maximum duration. Nothing in the logs, because nothing failed —
+ * the function simply never finished. The Node signature is the one this
+ * runtime actually calls, so it is the one to write against.
+ *
+ * Multipart is still parsed without a body parser: the raw bytes are handed to
+ * `new Response(buffer, ...).formData()`, the same undici implementation the
+ * Web signature would have used, just reached deliberately. Nodemailer is the
+ * only dependency and is server-side: nothing here is bundled into the page.
  *
  * Delivery is plain SMTP with an app password, so no email service sits in the
  * path either — the inquiry goes from this function straight to the mailbox
@@ -53,15 +63,6 @@ const MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024;
  * a request carrying one arrived by script rather than through the page.
  */
 const HONEYPOT_FIELD = "website";
-
-const json = (body, status) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-
-/* Answered with 200 so a scripted submitter learns nothing from the response. */
-const silentlyAccept = () => json({ ok: true }, 200);
 
 const escapeHtml = (value) =>
   String(value)
@@ -109,17 +110,46 @@ const isBlank = (value) =>
   (Array.isArray(value) && value.length === 0);
 
 /**
+ * The raw request body as a Buffer.
+ *
+ * Vercel parses JSON and urlencoded bodies onto `req.body` before we are
+ * called, and leaves anything else — multipart included — as a Buffer or as an
+ * unread stream, depending on the runtime version. All three are handled here
+ * rather than assuming one, because guessing wrong reads an empty body and
+ * loses the buyer's attachment silently.
+ */
+const rawBody = async (req) => {
+  if (Buffer.isBuffer(req.body)) return req.body;
+  if (typeof req.body === "string") return Buffer.from(req.body);
+
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  return Buffer.concat(chunks);
+};
+
+/**
  * Pulls the fields and the attachment out of either body format. The form
  * sends multipart when a file is attached and JSON when it is not.
  */
-const readSubmission = async (request) => {
-  const contentType = request.headers.get("content-type") || "";
+const readSubmission = async (req) => {
+  const contentType = req.headers["content-type"] || "";
 
   if (!contentType.includes("multipart/form-data")) {
-    return { values: await request.json(), attachment: null };
+    if (req.body && typeof req.body === "object" && !Buffer.isBuffer(req.body)) {
+      return { values: req.body, attachment: null };
+    }
+    return { values: JSON.parse((await rawBody(req)).toString("utf8")), attachment: null };
   }
 
-  const form = await request.formData();
+  /*
+   * Undici parses multipart for us given the bytes and the boundary, which the
+   * content-type header carries. This is the same parser the Web signature
+   * would have used behind `request.formData()`.
+   */
+  const form = await new Response(await rawBody(req), {
+    headers: { "content-type": contentType },
+  }).formData();
+
   const values = {};
   let attachment = null;
 
@@ -184,10 +214,14 @@ const buildEmail = (values) => {
   };
 };
 
-export default async function handler(request) {
-  if (request.method !== "POST") {
-    return json({ ok: false, error: "Method not allowed" }, 405);
-  }
+export default async function handler(req, res) {
+  const send = (status, payload) => {
+    res.statusCode = status;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(payload));
+  };
+
+  if (req.method !== "POST") return send(405, { ok: false, error: "Method not allowed" });
 
   const host = process.env.SMTP_HOST;
   const user = process.env.SMTP_USER;
@@ -204,23 +238,24 @@ export default async function handler(request) {
      * one that silently vanished is not.
      */
     console.error("Inquiry endpoint is missing SMTP_HOST, SMTP_USER or SMTP_PASS");
-    return json({ ok: false, error: "Endpoint not configured" }, 500);
+    return send(500, { ok: false, error: "Endpoint not configured" });
   }
 
   let values;
   let attachment;
 
   try {
-    ({ values, attachment } = await readSubmission(request));
+    ({ values, attachment } = await readSubmission(req));
   } catch (error) {
     console.error("Could not read inquiry body", error);
-    return json({ ok: false, error: "Malformed request" }, 400);
+    return send(400, { ok: false, error: "Malformed request" });
   }
 
-  if (values[HONEYPOT_FIELD]) return silentlyAccept();
+  /* Answered 200 so a scripted submitter learns nothing from the response. */
+  if (values[HONEYPOT_FIELD]) return send(200, { ok: true });
 
   if (!isEmail(values.email)) {
-    return json({ ok: false, error: "A valid email address is required" }, 422);
+    return send(422, { ok: false, error: "A valid email address is required" });
   }
 
   /*
@@ -230,11 +265,11 @@ export default async function handler(request) {
    */
   const consent = values.consent;
   if (consent !== true && consent !== "true" && consent !== "on") {
-    return json({ ok: false, error: "Consent is required" }, 422);
+    return send(422, { ok: false, error: "Consent is required" });
   }
 
   if (attachment && attachment.size > MAX_ATTACHMENT_BYTES) {
-    return json({ ok: false, error: "Attachment is too large" }, 413);
+    return send(413, { ok: false, error: "Attachment is too large" });
   }
 
   const { html, text } = buildEmail(values);
@@ -280,8 +315,8 @@ export default async function handler(request) {
     transport.close();
   } catch (error) {
     console.error("Inquiry email failed", error);
-    return json({ ok: false, error: "Could not send the inquiry" }, 502);
+    return send(502, { ok: false, error: "Could not send the inquiry" });
   }
 
-  return json({ ok: true }, 200);
+  return send(200, { ok: true });
 }
