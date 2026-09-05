@@ -1,3 +1,21 @@
-# SPA fallback for Netlify-style hosts. On Vercel use vercel.json rewrites;
-# on Apache/Nginx point every unmatched path at /index.html.
+# SPA fallback, in Netlify's format.
+#
+# The app is a single-page bundle: React Router owns every path, but a host
+# only ever has index.html on disk. Without a fallback a visitor landing
+# straight on /about — from a link, a bookmark or a search result — asks for a
+# file that does not exist and gets a 404. Only / works, because only / is a
+# real file.
+#
+# Each host needs this said in its own dialect, and none of them read another's:
+#
+#   Netlify, Cloudflare Pages   this file
+#   Vercel                      vercel.json -> rewrites
+#   GitHub Pages                a copy of index.html named 404.html
+#   Apache / Nginx              try_files, or an ErrorDocument at index.html
+#
+# The Vercel rewrite excludes /api/ so the inquiry function still answers there
+# rather than being handed the HTML page. It carries no comment of its own:
+# vercel.json is validated against a strict schema that rejects any key it does
+# not recognise, including the "//" convention, so the reasoning lives here.
+
 /*  /index.html  200

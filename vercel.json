@@ -1,22 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "//": [
-    "Client-side routing. The app is a single-page bundle: React Router owns",
-    "every path, but the server has only ever been given index.html. A visitor",
-    "landing straight on /about — from a link, a bookmark or a search result —",
-    "asked Vercel for a file that does not exist and got a 404. Only / worked,",
-    "because only / is a real file.",
-    "",
-    "The rewrite hands index.html to any path so the router can resolve it in",
-    "the browser. It is a rewrite and not a redirect on purpose: the URL must",
-    "stay as typed, or the router would have nothing left to route on.",
-    "",
-    "api/ is excluded explicitly. Vercel resolves functions in its filesystem",
-    "phase, before rewrites, so a bare catch-all would work today — but that is",
-    "a detail of phase ordering, and the inquiry endpoint quietly answering",
-    "with the HTML page instead of sending an email is not a failure anyone",
-    "would enjoy diagnosing. Saying it outright costs nothing."
-  ],
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
 }
