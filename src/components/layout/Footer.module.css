@@ -82,6 +82,7 @@
 /* Standalone links here have no card behind them to enlarge the hit area, and
    at 22px they fell under the 24px minimum for touch. */
 @media (pointer: coarse) {
+
   a.contactItem,
   .colLink,
   .bottomLinks a {
@@ -269,7 +270,7 @@ a.contactItem:hover {
    * where the centred container already pulls this edge inboard — which costs
    * nothing, whereas under-reserving costs the link.
    */
-  margin-right: calc(46px + 1rem);
+  /* margin-right: calc(46px + 1rem); */
   white-space: nowrap;
   color: var(--steel-400);
 }
@@ -298,6 +299,7 @@ a.contactItem:hover {
  * heartbeat. The long tail to 100% is the rest between beats.
  */
 @keyframes heartbeat {
+
   0%,
   40%,
   100% {
@@ -305,7 +307,7 @@ a.contactItem:hover {
   }
 
   14% {
-    transform: scale(1.25);
+    transform: scale(1.2);
   }
 
   21% {
@@ -417,6 +419,7 @@ a.contactItem:hover {
  * targets set the spacing.
  */
 @media (pointer: coarse) {
+
   /*
    * Padding rather than a list gap, so the spacing is even. A gap sits outside
    * each link box, which means it stacks on top of the dead space a min-height
@@ -451,8 +454,6 @@ a.contactItem:hover {
  */
 @media (max-width: 760px) {
   .inner {
-    padding-bottom: calc(
-      var(--space-5) + var(--action-bar-h) + env(safe-area-inset-bottom)
-    );
+    padding-bottom: calc(var(--space-5) + var(--action-bar-h) + env(safe-area-inset-bottom));
   }
 }
