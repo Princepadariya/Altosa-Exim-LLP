@@ -148,6 +148,36 @@ export const glossary = [
     definition:
       "Spreading the one-off cost of dies, patterns or fixtures across the pieces they produce, rather than invoicing it separately up front. Whether tooling is amortised, paid for outright, and who then owns it, is agreed before the first order.",
   },
+  {
+    term: "Telegraphic transfer (T/T)",
+    letter: "T",
+    definition:
+      "A bank-to-bank wire transfer, and the ordinary way an advance or a balance is settled. Fast and inexpensive, but it carries no guarantee of its own — whatever protection exists comes from what the payment is made against, such as shipping documents.",
+  },
+  {
+    term: "Documents against payment (D/P)",
+    letter: "D",
+    definition:
+      "A bank collection in which the shipping documents are released to the buyer only when the invoice is paid. Neither side hands over value before the other, but no bank guarantees payment, which is what separates it from a letter of credit.",
+  },
+  {
+    term: "Open account",
+    letter: "O",
+    definition:
+      "Goods shipped and invoiced with payment due after arrival. It places the exposure entirely on the supplier, and is a feature of established relationships rather than an opening position.",
+  },
+  {
+    term: "Discrepancy",
+    letter: "D",
+    definition:
+      "Any mismatch between a document presented under a letter of credit and what the credit demanded — a name spelled differently, a date past the latest one stated, a document missing. Each one carries a fee and delays payment, and most are caused by wording nobody checked before the credit was issued.",
+  },
+  {
+    term: "SWIFT charge codes (OUR / SHA / BEN)",
+    letter: "S",
+    definition:
+      "Who pays the bank charges on an international transfer: the sender, both sides, or the beneficiary. Under BEN, intermediary banks deduct along the way and the beneficiary receives less than the invoice states, which reads as a short payment and holds up the shipment until it is reconciled.",
+  },
 ];
 
 export const glossaryLetters = [

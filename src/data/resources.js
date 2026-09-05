@@ -199,7 +199,7 @@ export const resources = [
         text: "Document requirements differ by destination and are reviewed per inquiry. Destination-market conformity remains a decision for the importer of record.",
       },
     ],
-    related: ["incoterms-2020-explained", "reading-a-material-test-certificate"],
+    related: ["how-payment-works", "incoterms-2020-explained", "reading-a-material-test-certificate"],
   },
 
   {
@@ -303,7 +303,110 @@ export const resources = [
         text: "Neither arrangement is inherently better. What matters is that it is agreed before the order and recorded in the quotation, rather than left implied until something goes wrong.",
       },
     ],
-    related: ["incoterms-2020-explained", "what-to-include-in-an-rfq"],
+    related: ["how-payment-works", "incoterms-2020-explained", "what-to-include-in-an-rfq"],
+  },
+  {
+    slug: "how-payment-works",
+    category: "commercial",
+    title: "How payment works on an export order from India",
+    excerpt:
+      "Who you pay, when, and against what document. The instruments a buyer meets on an Indian order, and what each one actually protects.",
+    readingTime: "6 min read",
+    updated: "September 2026",
+    body: [
+      {
+        type: "p",
+        text: "Price is the question buyers ask first. Payment is the one they ask second, and it is the one that decides whether a first order with an unfamiliar supplier is a reasonable risk or an act of faith. The answer has two parts: who your counterparty is, and which instrument sits between you.",
+      },
+      { type: "h2", text: "First, establish who you are paying" },
+      {
+        type: "p",
+        text: "This is settled before any discussion of terms, and it is decided by the arrangement rather than by preference. Under merchant export you pay the exporter, against the exporter's invoice, and your recourse is to the exporter. Under a commission agency you pay the manufacturer directly on terms you agree with them, and the agent's commission is handled separately.",
+      },
+      {
+        type: "p",
+        text: "The distinction is not administrative. It determines whose bank account receives the funds, who is answerable if the parts are wrong, and who you are actually in contract with. A buyer who has not established this before sending money has skipped the only question that matters.",
+      },
+      { type: "h2", text: "The four instruments you will meet" },
+      {
+        type: "p",
+        text: "Bank transfer, split into an advance and a balance, is the common arrangement on a first order of moderate value. A percentage — usually somewhere between a quarter and a half — is paid against order confirmation, and the remainder before dispatch or against shipping documents. It is quick and cheap, and it asks the buyer to fund production before seeing a finished part.",
+      },
+      {
+        type: "p",
+        text: "A letter of credit replaces trust with a bank's undertaking. Your bank commits to pay on presentation of documents that comply exactly with the terms you set. Both sides are protected: the supplier knows payment is assured if they ship correctly, and you know the money moves only against documents you specified. It costs fees on both sides and takes real administrative effort, which is why it earns its place on higher-value orders rather than every order.",
+      },
+      {
+        type: "p",
+        text: "Documents against payment sits between the two. The supplier ships and sends the documents through the banking system; your bank releases them to you only on payment. There is no bank guarantee behind it — if you decline, the goods are already on the water and the supplier's problem — but neither side hands over value before the other.",
+      },
+      {
+        type: "p",
+        text: "Open account means you pay after the goods arrive. It is entirely in the buyer's favour and is a feature of established relationships with a payment history behind them. It is not something to expect on a first order, and a supplier who offers it immediately is telling you something about how they price risk.",
+      },
+      {
+        type: "table",
+        head: ["Instrument", "Who carries the exposure", "Cost and effort", "Where it fits"],
+        rows: [
+          ["Advance and balance", "Mostly the buyer", "Low — bank transfer fees only", "First orders of moderate value"],
+          ["Letter of credit", "Shared, via the banks", "Fees both sides, significant paperwork", "Higher value, or no history between the parties"],
+          ["Documents against payment", "Shared, without a guarantee", "Modest bank collection charges", "Some history, moderate value"],
+          ["Open account", "The supplier", "Minimal", "Established, repeat relationships"],
+        ],
+      },
+      { type: "h2", text: "What “balance against shipping documents” really means" },
+      {
+        type: "p",
+        text: "The phrase sounds like a formality. It is the buyer's protection in an arrangement that otherwise asks a lot of them. An original negotiable bill of lading is a document of title: cargo cannot be collected at the destination without it. So a balance paid against a scanned bill of lading is not paid blind — it is paid against proof that the goods exist, have been handed to a carrier, and are described on a document naming the port, the vessel and the quantity.",
+      },
+      {
+        type: "p",
+        text: "That is also why the originals move separately from the cargo, and why they are released once the balance clears. Whoever holds them controls the shipment.",
+      },
+      { type: "h2", text: "If you use a letter of credit, read the draft before it is issued" },
+      {
+        type: "p",
+        text: "Letters of credit rarely fail because someone behaved dishonestly. They fail on discrepancies: a company name spelled differently on the invoice than on the credit, a document the credit demanded that nobody thought to produce, a shipment date a week past the latest one written in. Banks check documents against the words of the credit, not against what everyone intended.",
+      },
+      {
+        type: "p",
+        text: "Each discrepancy costs a fee and delays payment; amendments cost more and take longer. The cheapest hour anyone spends on a letter of credit is the one where the supplier reads the draft and confirms every document it demands can actually be produced, before your bank issues it.",
+      },
+      { type: "h2", text: "Currency and bank charges" },
+      {
+        type: "p",
+        text: "Indian export orders are usually quoted and settled in US dollars, sometimes in euros. Two details are worth agreeing rather than discovering: which currency the price is fixed in, and who bears the bank charges.",
+      },
+      {
+        type: "p",
+        text: "On an international transfer the charges can fall on the sender, be shared, or be taken from the amount transferred. Under the last of those, intermediary banks deduct along the way and the beneficiary receives less than the invoice states — which then reads as a short payment and holds up the shipment while it is reconciled. Agreeing the allocation in advance costs nothing and prevents that entirely.",
+      },
+      { type: "h2", text: "What to get in writing before the first payment" },
+      {
+        type: "list",
+        items: [
+          "The split, and what triggers each stage — order confirmation, pre-shipment inspection, dispatch, or presentation of documents.",
+          "The instrument, named specifically rather than as “usual terms”.",
+          "The currency, and how long the quoted price holds.",
+          "Who bears the bank charges at each end.",
+          "What happens to the balance if inspection finds the parts out of specification.",
+          "The bank account details, confirmed through a channel you already trust.",
+        ],
+      },
+      {
+        type: "note",
+        text: "That last point is not paranoia. Payment-diversion fraud works by intercepting an email thread and sending revised bank details at the moment a balance falls due. Confirm account details by a route that is not the email chain the invoice arrived on, and treat any late change of details as wrong until proven otherwise.",
+      },
+      {
+        type: "p",
+        text: "None of this is exotic, and none of it is specific to India. It is simply the part of an order that is easiest to leave vague and most expensive to leave vague. A payment basis written into the quotation, in the same document as the price and the delivery term, is what keeps it from becoming a conversation held under pressure later.",
+      },
+    ],
+    related: [
+      "merchant-exporter-or-commission-agent",
+      "export-documents-explained",
+      "incoterms-2020-explained",
+    ],
   },
   {
     slug: "export-packing-and-marking",
