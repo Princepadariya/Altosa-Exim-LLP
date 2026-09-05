@@ -8,6 +8,7 @@ import Home from "./pages/Home";
  * Routes. The homepage is bundled eagerly since it is the common entry point;
  * every other page is code-split so a first visit stays small.
  */
+const Admin = lazy(() => import("./pages/Admin"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Faq = lazy(() => import("./pages/Faq"));
@@ -61,6 +62,12 @@ const App = () => (
 
           <Route path="*" element={<NotFound />} />
         </Route>
+
+        {/* Outside <Layout> on purpose: the inbox is a tool, and the nav,
+            footer and quote CTA belong to a buyer's journey rather than to
+            whoever is answering it. Lazy like every other route, so the
+            Supabase client never lands in a visitor's bundle. */}
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Suspense>
   </BrowserRouter>

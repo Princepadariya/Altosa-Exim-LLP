@@ -42,6 +42,13 @@
 
 import nodemailer from "nodemailer";
 
+import {
+  ATTACHMENT_BUCKET,
+  attachmentPath,
+  getServiceClient,
+  toRow,
+} from "./_supabase.js";
+
 /*
  * A seam for the test suite, which exercises this handler end to end without
  * opening an SMTP conversation. Production never reassigns it.
@@ -214,6 +221,62 @@ const buildEmail = (values) => {
   };
 };
 
+/**
+ * Writes the inquiry to Supabase: the file into the storage bucket, the row
+ * into the table with the path to it.
+ *
+ * Every failure is caught and reported rather than thrown. The caller treats
+ * storage as best-effort, because the email is what actually reaches a person.
+ * Returns a small result so the response can say what happened.
+ */
+const storeInquiry = async (values, attachment, bytes, req) => {
+  const supabase = getServiceClient();
+  if (!supabase) return { stored: false, reason: "not configured" };
+
+  try {
+    const row = toRow(values, {
+      sourcePage: values.sourcePage ?? req.headers.referer ?? null,
+    });
+
+    if (attachment && bytes) {
+      const path = attachmentPath(attachment.name || "attachment");
+      const { error } = await supabase.storage
+        .from(ATTACHMENT_BUCKET)
+        .upload(path, bytes, {
+          contentType: attachment.type || "application/octet-stream",
+          upsert: false,
+        });
+
+      if (error) {
+        /* Losing the drawing must not lose the inquiry. Record the row without
+           it — the file is still attached to the email that goes out next. */
+        console.error("Attachment upload failed", error.message);
+      } else {
+        row.attachment_path = path;
+        row.attachment_name = attachment.name || "attachment";
+        row.attachment_size = attachment.size;
+        row.attachment_type = attachment.type || null;
+      }
+    }
+
+    const { data, error } = await supabase
+      .from("inquiries")
+      .insert(row)
+      .select("id")
+      .single();
+
+    if (error) {
+      console.error("Inquiry insert failed", error.message);
+      return { stored: false, reason: error.message };
+    }
+
+    return { stored: true, id: data?.id ?? null };
+  } catch (error) {
+    console.error("Inquiry storage failed", error);
+    return { stored: false, reason: "exception" };
+  }
+};
+
 export default async function handler(req, res) {
   const send = (status, payload) => {
     res.statusCode = status;
@@ -272,6 +335,18 @@ export default async function handler(req, res) {
     return send(413, { ok: false, error: "Attachment is too large" });
   }
 
+  /*
+   * Store before sending, so the record exists even if the mailbox is
+   * unreachable — but never let storing cost us the email. Supabase being
+   * down, misconfigured or absent is logged and stepped over: an inquiry that
+   * reached a human is not lost, one that reached neither is.
+   */
+  const attachmentBytes = attachment
+    ? Buffer.from(await attachment.arrayBuffer())
+    : null;
+
+  const stored = await storeInquiry(values, attachment, attachmentBytes, req);
+
   const { html, text } = buildEmail(values);
   const who = values.company || values.fullName || values.email;
 
@@ -288,12 +363,11 @@ export default async function handler(req, res) {
     text,
   };
 
-  if (attachment) {
+  if (attachment && attachmentBytes) {
+    /* Reuses the bytes already read for storage rather than draining the file
+       a second time. */
     message.attachments = [
-      {
-        filename: attachment.name || "attachment",
-        content: Buffer.from(await attachment.arrayBuffer()),
-      },
+      { filename: attachment.name || "attachment", content: attachmentBytes },
     ];
   }
 
@@ -315,8 +389,24 @@ export default async function handler(req, res) {
     transport.close();
   } catch (error) {
     console.error("Inquiry email failed", error);
+
+    /*
+     * A failed send is only a failed inquiry if nothing else caught it. When
+     * the row is already in Supabase the requirement is recorded and can be
+     * answered from the admin panel, so telling the buyer it failed would
+     * invite a duplicate submission of something we already hold. Reported as
+     * success to them, and loudly in the logs, because a silent reliance on
+     * someone opening the panel is the part that needs noticing.
+     */
+    if (stored.stored) {
+      console.error(
+        `Inquiry ${stored.id} was stored but not emailed — it will not be seen until someone opens the admin panel`,
+      );
+      return send(200, { ok: true, delivered: "stored" });
+    }
+
     return send(502, { ok: false, error: "Could not send the inquiry" });
   }
 
-  return send(200, { ok: true });
+  return send(200, { ok: true, delivered: stored.stored ? "stored+email" : "email" });
 }

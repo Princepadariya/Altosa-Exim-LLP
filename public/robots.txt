@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# The inquiry inbox. Sign-in protected and never linked from the site, so a
+# crawler would only reach it by guessing — but a disallow keeps the path out
+# of search results and out of the logs of anyone reading them.
+Disallow: /admin
+
 Sitemap: https://altosaexim.com/sitemap.xml
