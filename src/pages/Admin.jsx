@@ -313,6 +313,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [reveal, setReveal] = useState(false);
 
   const submit = async (event) => {
     event.preventDefault();
@@ -324,44 +325,78 @@ const SignIn = () => {
   };
 
   return (
-    <div className={styles.signInPage}>
-      <form className={styles.signIn} onSubmit={submit}>
-        <span className={styles.signInMark} aria-hidden="true">AE</span>
-        <h1 className={styles.signInTitle}>Inquiry inbox</h1>
-        <p className={styles.signInHint}>
-          Sign in with the Supabase account invited to this project.
-        </p>
+    <div className={styles.authPage}>
+      {/* The plate grid and grain the site's dark sections already use, so the
+          way in looks like part of the building rather than a login screen
+          bolted to the side of it. */}
+      <span className={styles.authGrid} aria-hidden="true" />
+      <span className="grain" aria-hidden="true" />
 
-        <label className={styles.field}>
-          <span className={styles.fieldLabel}>Email</span>
-          <input
-            className={styles.input}
-            type="email"
-            autoComplete="username"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </label>
+      <div className={styles.authInner}>
+        <div className={styles.lockup}>
+          <span className={styles.lockupMark} aria-hidden="true">AE</span>
+          <span className={styles.lockupText}>
+            <span className={styles.lockupName}>ALTOSA EXIM</span>
+            <span className={styles.lockupSub}>Rajkot, Gujarat, India</span>
+          </span>
+        </div>
 
-        <label className={styles.field}>
-          <span className={styles.fieldLabel}>Password</span>
-          <input
-            className={styles.input}
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </label>
+        <form className={styles.authCard} onSubmit={submit}>
+          <h1 className={styles.authTitle}>Inquiry inbox</h1>
+          <p className={styles.authHint}>
+            Staff access. Sign in to read requirements sent through the site.
+          </p>
 
-        {error && <p className={styles.error} role="alert">{error}</p>}
+          <label className={styles.field}>
+            <span className={styles.fieldLabel}>Email</span>
+            <input
+              className={styles.input}
+              type="email"
+              autoComplete="username"
+              placeholder="you@altosaeximllp.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </label>
 
-        <button className={styles.primaryButton} type="submit" disabled={busy}>
-          {busy ? "Signing in…" : "Sign in"}
-        </button>
-      </form>
+          <label className={styles.field}>
+            <span className={styles.fieldLabel}>Password</span>
+            <span className={styles.passwordWrap}>
+              <input
+                className={styles.input}
+                type={reveal ? "text" : "password"}
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+              {/* Typing blind into an unfamiliar screen is where a good share
+                  of "wrong password" actually comes from. */}
+              <button
+                className={styles.reveal}
+                type="button"
+                onClick={() => setReveal((shown) => !shown)}
+                aria-label={reveal ? "Hide password" : "Show password"}
+              >
+                {reveal ? "Hide" : "Show"}
+              </button>
+            </span>
+          </label>
+
+          {error && (
+            <p className={styles.authError} role="alert">
+              {error}
+            </p>
+          )}
+
+          <button className={styles.primaryButton} type="submit" disabled={busy}>
+            {busy ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
+
+        <p className={styles.authFoot}>Internal tool · not linked from the public site</p>
+      </div>
     </div>
   );
 };
@@ -462,8 +497,8 @@ const InquiryPage = ({ id, backTo }) => {
           Back to inbox
         </Link>
         <div className={styles.notFound}>
-          <h1 className={styles.signInTitle}>Inquiry not found</h1>
-          <p className={styles.signInHint}>
+          <h1 className={styles.authTitle}>Inquiry not found</h1>
+          <p className={styles.authHint}>
             It may have been deleted, or the link may be wrong.
           </p>
         </div>
@@ -1113,18 +1148,26 @@ const Admin = () => {
 
       <main className={styles.page}>
         {!isSupabaseConfigured ? (
-          <div className={styles.signInPage}>
-            <div className={styles.signIn}>
-              <span className={styles.signInMark} aria-hidden="true">AE</span>
-              <h1 className={styles.signInTitle}>Not configured</h1>
-              <p className={styles.signInHint}>
-                Set <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>{" "}
-                in the deployment environment, then redeploy. See <code>.env.example</code>.
-              </p>
+          <div className={styles.authPage}>
+            <span className={styles.authGrid} aria-hidden="true" />
+            <div className={styles.authInner}>
+              <div className={styles.authCard}>
+                <h1 className={styles.authTitle}>Not configured</h1>
+                {/* The one screen that talks about deployment, because it is a
+                    deploy fault rather than a sign-in and the person reading it
+                    needs to know where to look. It names the file rather than
+                    the vendor: the file is the actionable part. */}
+                <p className={styles.authHint}>
+                  This deployment is missing its database credentials. Set the
+                  variables listed in <code>.env.example</code> in the hosting
+                  environment, then redeploy.
+                </p>
+              </div>
             </div>
           </div>
         ) : checking ? (
-          <div className={styles.signInPage}>
+          <div className={styles.authPage}>
+            <span className={styles.authGrid} aria-hidden="true" />
             <p className={styles.checking}>Checking your session…</p>
           </div>
         ) : !session ? (

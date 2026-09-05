@@ -56,60 +56,122 @@
   --ink: var(--text-soft);
 }
 
-/* --- Sign in -------------------------------------------------------------- */
+/* --- The way in ----------------------------------------------------------- */
 
-.signInPage {
+/*
+ * Dark, where the inbox behind it is light.
+ *
+ * Partly because it marks the boundary — you are outside the tool until you
+ * sign in — and partly because the site already has a dark register, used in
+ * the footer and the assurance sections, with a plate grid and a film grain
+ * over it. Reusing that here makes the way in look like part of the building.
+ */
+.authPage {
+  /*
+   * Fixed to the viewport rather than negatively margined out of the page's
+   * padding. The padding is not symmetrical — more at the bottom than the top,
+   * and different again below 640px — so cancelling it with margins left a
+   * strip of the light page showing under the dark ground on a phone. Pinning
+   * to the viewport is immune to whatever the parent's padding happens to be.
+   *
+   * It scrolls internally so a short screen can still reach the button.
+   */
+  position: fixed;
+  inset: 0;
+  z-index: 1;
   display: grid;
   place-items: center;
-  min-height: 88dvh;
+  padding: var(--space-6) var(--space-4);
+  overflow-y: auto;
+  background: var(--ink-950);
+  color: var(--dark-text);
 }
 
-.signIn {
+/* The drawing-plate grid, faded out towards the edges so it reads as texture
+   rather than as graph paper. */
+.authGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000, transparent);
+  pointer-events: none;
+}
+
+.authInner {
+  position: relative;
+  z-index: 1;
+  width: min(25rem, 100%);
+}
+
+.lockup {
   display: flex;
-  flex-direction: column;
-  width: min(24rem, 100%);
-  padding: var(--space-7) var(--space-6) var(--space-6);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.mark,
-.signInMark,
-.monogram,
-.monogramLarge {
+.lockupMark {
   display: grid;
   place-items: center;
+  width: 42px;
+  height: 42px;
   font-family: var(--font-mono);
+  font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--azure-800);
-  background: var(--azure-100);
+  color: var(--azure-300);
+  background: rgba(15, 141, 168, 0.16);
+  border: 1px solid rgba(102, 210, 230, 0.28);
   border-radius: var(--radius);
 }
 
-.signInMark {
-  width: 44px;
-  height: 44px;
-  margin-bottom: var(--space-4);
-  font-size: var(--fs-sm);
+.lockupText {
+  display: flex;
+  flex-direction: column;
 }
 
-.signInTitle {
+.lockupName {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.16em;
+  color: var(--dark-text);
+}
+
+.lockupSub {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+.authCard {
+  padding: var(--space-6);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  /* No border. On a dark ground the shadow alone separates the card, and a
+     hairline would only draw a second edge just inside the first. */
+  box-shadow: var(--shadow-dark);
+  color: var(--text);
+}
+
+.authTitle {
   margin-bottom: var(--space-2);
   font-size: var(--fs-xl);
   letter-spacing: -0.01em;
 }
 
-.signInHint {
+.authHint {
   margin-bottom: var(--space-5);
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: 1.65;
 }
 
-.signInHint code {
+.authHint code {
   font-family: var(--font-mono);
   font-size: 0.88em;
   padding: 0.1em 0.3em;
@@ -118,9 +180,79 @@
   word-break: break-all;
 }
 
-.checking {
-  font-size: var(--fs-sm);
+/* Room for the reveal control, so a long password never runs under it. */
+.passwordWrap {
+  position: relative;
+  display: block;
+}
+
+.passwordWrap .input {
+  padding-right: 4rem;
+}
+
+.reveal {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  transform: translateY(-50%);
+  padding: 0.3rem 0.55rem;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
   color: var(--text-soft);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.reveal:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.authError {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: var(--space-4);
+  padding: 0.65rem 0.85rem;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: #8c1d1d;
+  background: #fdf0f0;
+  border-left: 3px solid #c05050;
+  border-radius: var(--radius-sm);
+}
+
+.authCard .primaryButton {
+  width: 100%;
+  min-height: 44px;
+}
+
+.authFoot {
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--steel-400);
+}
+
+.checking {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--steel-400);
+}
+
+.notFound {
+  padding: var(--space-8);
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 /* --- Fields --------------------------------------------------------------- */
