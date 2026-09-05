@@ -1,7 +1,12 @@
 /*
  * The inquiry inbox. A tool, not a page of the site — so it borrows the design
  * tokens for colour and type but none of the marketing layout: no hero, no
- * generous section rhythm, no plate numbers. Density is the point here.
+ * generous section rhythm, no plate numbers.
+ *
+ * Built for a few hundred rows rather than a few. That means a table instead
+ * of cards (one line per inquiry, scannable down a column), a filter bar that
+ * stays put, and a detail panel that opens beside the results rather than
+ * replacing them.
  */
 
 .page {
@@ -42,9 +47,10 @@
   word-break: break-all;
 }
 
-/* --- Controls ------------------------------------------------------------- */
+/* --- Shared controls ------------------------------------------------------ */
 
 .label {
+  display: block;
   margin-bottom: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
@@ -55,16 +61,21 @@
 
 .input,
 .textarea,
-.search {
+.search,
+.select {
   width: 100%;
-  padding: 0.6rem 0.75rem;
-  margin-bottom: var(--space-4);
+  padding: 0.5rem 0.7rem;
   font: inherit;
   font-size: var(--fs-sm);
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
+}
+
+.input,
+.textarea {
+  margin-bottom: var(--space-4);
 }
 
 .textarea {
@@ -73,22 +84,22 @@
 
 .input:focus-visible,
 .textarea:focus-visible,
-.search:focus-visible {
+.search:focus-visible,
+.select:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .primaryButton,
 .secondaryButton {
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 0.9rem;
   font: inherit;
   font-size: var(--fs-sm);
   font-weight: 500;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  /* Comfortably past the 24px minimum without making a dense tool feel like a
-     marketing page. */
-  min-height: 40px;
+  min-height: 38px;
+  white-space: nowrap;
 }
 
 .primaryButton {
@@ -97,18 +108,19 @@
   border: 1px solid var(--accent);
 }
 
-.primaryButton:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-
 .secondaryButton {
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border-strong);
 }
 
-.secondaryButton:hover,
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.secondaryButton:hover:not(:disabled),
 .primaryButton:hover:not(:disabled) {
   filter: brightness(0.96);
 }
@@ -123,10 +135,10 @@
   border-radius: var(--radius-sm);
 }
 
-/* --- Inbox chrome --------------------------------------------------------- */
+/* --- Header --------------------------------------------------------------- */
 
 .inbox {
-  max-width: 84rem;
+  max-width: 100rem;
   margin: 0 auto;
 }
 
@@ -136,7 +148,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 
 .barTitle {
@@ -155,17 +167,72 @@
   gap: var(--space-3);
 }
 
+/* --- Filter bar ----------------------------------------------------------- */
+
+.toolbar {
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.searchWrap {
+  margin-bottom: var(--space-4);
+}
+
 .search {
-  width: 18rem;
-  max-width: 40vw;
-  margin-bottom: 0;
+  font-size: var(--fs-base);
+}
+
+/*
+ * auto-fit with a floor rather than a fixed column count: six controls sit in
+ * one row on a wide screen and reflow to two or three on a laptop without a
+ * breakpoint deciding it. The 10rem floor is the width at which a date input
+ * still shows a full date.
+ */
+.controlRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-3);
+  align-items: end;
+  margin-bottom: var(--space-4);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.controlLabel {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.clear {
+  align-self: end;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  background: none;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  min-height: 38px;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .filter,
@@ -175,8 +242,8 @@
   gap: 0.4rem;
   padding: 0.35rem 0.7rem;
   font: inherit;
-  font-size: var(--fs-xs);
   font-family: var(--font-mono);
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   border-radius: var(--radius-full);
@@ -185,7 +252,7 @@
 
 .filter {
   color: var(--text-muted);
-  background: var(--surface);
+  background: var(--bg-subtle);
   border: 1px solid var(--border);
 }
 
@@ -199,122 +266,184 @@
   opacity: 0.7;
 }
 
-/* --- List and detail ------------------------------------------------------ */
+/* --- Results -------------------------------------------------------------- */
 
 /*
- * minmax(0, …) on both tracks: the detail pane holds a buyer's free text,
- * which can contain a long unbroken reference, and a bare fr would let it set
- * the column's minimum width and push the list off the screen.
+ * minmax(0, …) on both tracks. The table holds a buyer's free text, which can
+ * carry a long unbroken part number; a bare 1fr would let that set the
+ * column's minimum width and push the detail pane off the screen.
  */
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.splitOpen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+  gap: var(--space-4);
   align-items: start;
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  max-height: 72vh;
-  overflow-y: auto;
-}
-
-.row,
-.rowSelected {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  font: inherit;
-  text-align: left;
+.tableWrap {
+  min-width: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  /* The table is wider than a phone. It scrolls inside this box rather than
+     making the whole page scroll sideways. */
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--text-soft);
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+.row,
+.rowOn {
   cursor: pointer;
 }
 
-.rowSelected {
-  border-color: var(--accent);
-  box-shadow: inset 3px 0 0 var(--accent);
+.row:hover {
+  background: var(--bg-subtle);
 }
 
-.rowTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.rowName {
-  font-weight: 600;
-  font-size: var(--fs-sm);
-}
-
-.rowStatus {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
-  border-radius: var(--radius-full);
-  background: var(--bg-muted);
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-/* New is the only status that should catch the eye across a long list. */
-.rowStatus[data-status="new"] {
+.rowOn {
   background: var(--azure-100);
-  color: var(--azure-800);
 }
 
-.rowMeta {
+.row:focus-visible,
+.rowOn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.cellDate {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
-  color: var(--text-soft);
+  white-space: nowrap;
+  color: var(--text-muted);
 }
 
-.rowSummary {
-  font-size: var(--fs-sm);
+.cellCompany {
+  display: block;
+  font-weight: 600;
+}
+
+.cellEmail {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-soft);
+  overflow-wrap: anywhere;
+}
+
+.cellCountry {
+  white-space: nowrap;
   color: var(--text-muted);
-  /* Two lines of the requirement is enough to recognise a row; the rest is a
-     click away. */
+}
+
+.cellSummary {
+  min-width: 16rem;
+  max-width: 34rem;
+  color: var(--text-muted);
+  /* Two lines is enough to recognise a requirement; the rest is one click
+     away, and letting it run would make every row a different height. */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.pane {
-  position: sticky;
-  top: var(--space-5);
-  padding: var(--space-5);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+.cellFile {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: var(--radius-full);
+  background: var(--bg-muted);
+  color: var(--text-muted);
+}
+
+/* New is the only status that should catch the eye down a long column. */
+.status[data-status="new"] {
+  background: var(--azure-100);
+  color: var(--azure-800);
 }
 
 .empty {
-  padding: var(--space-5);
+  padding: var(--space-7) var(--space-5);
   font-size: var(--fs-sm);
   color: var(--text-soft);
   text-align: center;
 }
 
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.pagerLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-soft);
+}
+
 /* --- Detail --------------------------------------------------------------- */
+
+.pane {
+  position: sticky;
+  top: var(--space-4);
+  max-height: calc(100dvh - var(--space-8));
+  overflow-y: auto;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
 
 .detailHead {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-3);
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border);
 }
 
 .detailName {
@@ -326,18 +455,39 @@
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--text-soft);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--text);
+  background: var(--bg-subtle);
 }
 
 .detailDate {
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
 }
 
 .fields {
   display: grid;
-  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
-  gap: 0;
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
   margin-bottom: var(--space-5);
 }
 
@@ -347,13 +497,13 @@
 
 .fieldLabel,
 .fieldValue {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0.45rem 0;
   font-size: var(--fs-sm);
+  border-bottom: 1px solid var(--border);
 }
 
 .fieldLabel {
-  padding-right: var(--space-4);
+  padding-right: var(--space-3);
   color: var(--text-soft);
 }
 
@@ -396,28 +546,37 @@
 
 /* --- Narrow screens ------------------------------------------------------- */
 
-@media (max-width: 900px) {
-  .split {
+@media (max-width: 1100px) {
+  /* Below this the detail pane squeezes the table into unreadability, so it
+     goes underneath instead of beside. */
+  .splitOpen {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .list {
-    max-height: none;
-  }
-
-  /* Sticky is useful beside a list; stacked underneath it just pins the pane
+  /* Sticky is useful beside a table. Stacked below one it just pins the panel
      over the rows the reader is trying to scroll. */
   .pane {
     position: static;
+    max-height: none;
   }
+}
 
-  .search {
-    width: 100%;
-    max-width: none;
+@media (max-width: 760px) {
+  .page {
+    padding: var(--space-5) var(--space-3);
   }
 
   .barActions {
     flex-wrap: wrap;
-    width: 100%;
+  }
+
+  /* A sticky header inside a horizontally scrolling table drifts out of line
+     with its own columns on a narrow screen. */
+  .table th {
+    position: static;
+  }
+
+  .cellSummary {
+    min-width: 12rem;
   }
 }
