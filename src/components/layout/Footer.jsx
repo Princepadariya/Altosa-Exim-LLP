@@ -113,6 +113,25 @@ const Footer = () => {
                 is linked from the page itself for search engines. */}
             <Link to="/sitemap">Sitemap</Link>
           </div>
+
+          {/* The heart is decoration, not content: a screen reader announcing
+              "black heart suit" mid-sentence is noise, so the glyph is hidden
+              and the word it stands in for is read instead. */}
+          <p className={styles.credit}>
+            Made with{" "}
+            <span className={styles.heart} aria-hidden="true">
+              &#10084;
+            </span>
+            <span className="visually-hidden">love</span> by{" "}
+            <a
+              href="https://www.codelixitsolutions.com/"
+              className={styles.creditLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Codelix
+            </a>
+          </p>
         </div>
       </div>
     </footer>

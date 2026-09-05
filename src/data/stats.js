@@ -19,6 +19,13 @@ import { totalCountries } from "./markets";
  */
 export const yearsInBusiness = new Date().getFullYear() - company.founded;
 
+/*
+ * Quantities only. An IEC / GST card used to close this strip: the one entry
+ * that was not a figure, three counting numbers followed by a pair of
+ * acronyms. The registration is stated twice elsewhere on the same page — in
+ * the hero badges, and expanded into full names in the footer's chips — so
+ * removing it here cost the site nothing and let the band say one thing.
+ */
 export const stats = [
   {
     id: "years",
@@ -40,12 +47,6 @@ export const stats = [
     suffix: "+",
     label: "Destination markets",
     note: "Discussed across the Middle East, Europe, Americas, Africa and APAC",
-  },
-  {
-    id: "registrations",
-    display: "IEC / GST",
-    label: "Registered exporter",
-    note: "Evidenced during a qualified commercial discussion",
   },
 ];
 

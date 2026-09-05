@@ -18,6 +18,30 @@
   padding-block: calc(var(--section-y) * 0.6);
 }
 
+/*
+ * Adjacent sections that share a background.
+ *
+ * Where the tone changes, both paddings earn their place: the seam is a real
+ * edge and each colour needs room on its own side of it. Where it does not,
+ * there is no seam at all — the two paddings simply add up into one 205px
+ * field of identical ground, which reads as a rendering fault rather than as
+ * rhythm. It was worst at the foot of the sitemap, where a single line of text
+ * was left stranded above the closing call to action.
+ *
+ * One boundary should buy one gap, so the second section drops its top padding
+ * and the first section's bottom padding becomes the whole of the separation.
+ *
+ * Written as three pairs rather than a blanket `.section + .section` because
+ * only same-tone neighbours have the problem — and the :not() chain is what
+ * makes "light" expressible at all, light being the absence of a tone class
+ * rather than a class of its own.
+ */
+.section:not(.subtle):not(.dark) + .section:not(.subtle):not(.dark),
+.subtle + .subtle,
+.dark + .dark {
+  padding-block-start: 0;
+}
+
 /* --- Plate marker --------------------------------------------------------- */
 
 /* Sits in the outer margin on wide screens, where a plate number sits on a

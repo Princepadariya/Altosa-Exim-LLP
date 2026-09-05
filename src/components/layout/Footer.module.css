@@ -204,12 +204,24 @@ a.contactItem:hover {
 
 /* --- Bottom bar ---------------------------------------------------------- */
 
+/*
+ * Three columns on one row: disclaimer, Sitemap, credit.
+ *
+ * Grid rather than the old wrapped flex row. Stacking Sitemap above the credit
+ * put two unrelated items in a column whose only shared property was being on
+ * the right, and wrapping flex would have decided their arrangement by
+ * available width — which is how they ended up stacked in the first place. A
+ * fixed track count decides it once.
+ *
+ * The first track is minmax(0, 1fr) rather than 1fr: the disclaimer is a long
+ * unbroken sentence, and a bare 1fr floors at min-content, so the paragraph
+ * would push the two auto tracks off the right edge instead of wrapping.
+ */
 .bottom {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-4) var(--space-6);
   padding-top: var(--space-6);
   font-size: var(--fs-xs);
   color: var(--steel-400);
@@ -227,6 +239,93 @@ a.contactItem:hover {
 
 .bottomLinks a:hover {
   color: var(--steel-200);
+}
+
+/*
+ * Plain inline flow, not a flex row. As flex items the words become anonymous
+ * boxes whose surrounding whitespace is dropped, so every space in the
+ * sentence would have to be re-created by `gap` — which then also applies
+ * either side of the visually-hidden span. Ordinary text spacing is what this
+ * is; let the text engine do it.
+ */
+.credit {
+  /*
+   * A grid item fills its track by default, and the track is not always this
+   * paragraph's width — a spanning item contributes its min-content to every
+   * track it crosses, so once the disclaimer spans the row the credit's track
+   * is wider than its text. Left-aligned in an over-wide box the credit reads
+   * as floating mid-row rather than sitting at the edge. Hug the end instead.
+   */
+  justify-self: end;
+  /*
+   * Keep out of the floating back-to-top button's corner. That button is fixed
+   * to the bottom-right of the viewport, so at the foot of the page it lands on
+   * the end of this row and swallowed the Codelix link whole — the anchor was
+   * there and correct, and simply could not be clicked.
+   *
+   * 46px is the button's size and 1rem its smallest offset, both from
+   * FloatingActions.module.css. Reserving the largest case rather than matching
+   * the button's responsive offset over-reserves a little on wide screens,
+   * where the centred container already pulls this edge inboard — which costs
+   * nothing, whereas under-reserving costs the link.
+   */
+  margin-right: calc(46px + 1rem);
+  white-space: nowrap;
+  color: var(--steel-400);
+}
+
+/*
+ * A literal, not a token: the palette has no red at all — it is steel, azure
+ * and ink by design — and one decorative glyph is not a reason to add a
+ * semantic colour the rest of the site would then be free to misuse. Picked
+ * against --ink-950 rather than pure red, which vibrates on near-black.
+ */
+.heart {
+  display: inline-block;
+  color: #ff4d5a;
+  /* The glyph's own line box is taller than the text's; without this it
+     drags the credit's baseline down by a pixel or two. */
+  line-height: 1;
+  animation: heartbeat 1.6s ease-in-out infinite;
+  /* transform on an inline box is ignored — the scale below would do nothing
+     without the inline-block above. Kept together deliberately. */
+  transform-origin: center;
+}
+
+/*
+ * Two beats and a rest, not a single pulse: a heart that swells evenly reads
+ * as a throb, and the double thump at 14%/28% is what makes it read as a
+ * heartbeat. The long tail to 100% is the rest between beats.
+ */
+@keyframes heartbeat {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.25);
+  }
+
+  21% {
+    transform: scale(1);
+  }
+
+  28% {
+    transform: scale(1.18);
+  }
+}
+
+.creditLink {
+  color: var(--steel-300);
+  font-weight: 500;
+  text-underline-offset: 0.2em;
+}
+
+.creditLink:hover {
+  color: var(--white);
+  text-decoration: underline;
 }
 
 @media (max-width: 900px) {
@@ -290,6 +389,24 @@ a.contactItem:hover {
 
   .bottomLinks {
     gap: var(--space-6);
+  }
+}
+
+/*
+ * Below the point where three tracks would squeeze the disclaimer into a
+ * column of two or three words, the row folds rather than the paragraph: the
+ * disclaimer takes a full-width row of its own and the two short items keep
+ * their side-by-side relationship underneath, pushed to opposite edges.
+ * Still three partitions — two rows instead of one.
+ */
+@media (max-width: 860px) {
+  .bottom {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .disclaimer {
+    grid-column: 1 / -1;
   }
 }
 
