@@ -815,62 +815,72 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Detail --------------------------------------------------------------- */
+/* --- One inquiry, on its own page ----------------------------------------- */
 
-.pane {
-  position: sticky;
-  top: var(--space-4);
-  max-height: calc(100dvh - var(--space-7));
-  overflow-y: auto;
-  padding: var(--space-5);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
-.detailHead {
+.back:hover {
+  color: var(--accent);
+}
+
+/* The icon set has no left arrow, so the right one is turned around. */
+.backIcon {
+  transform: rotate(180deg);
+}
+
+.pageHead {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   margin-bottom: var(--space-4);
 }
 
 .monogramLarge {
   flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  font-size: var(--fs-sm);
+  width: 52px;
+  height: 52px;
+  font-size: var(--fs-base);
 }
 
-.detailWho {
+.pageWho {
   flex: 1;
   min-width: 0;
 }
 
-.detailName {
-  font-size: var(--fs-lg);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+.pageTitle {
+  font-size: var(--fs-2xl);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   overflow-wrap: anywhere;
 }
 
-.detailSub {
+.pageSub {
+  margin-top: 0.15rem;
   font-size: var(--fs-sm);
   color: var(--text-soft);
 }
 
-.detailMeta {
+/* Contact facts as a single wrapping strip: they are what someone reaches for
+   first, and each is short enough that stacking them wastes a screen. */
+.pageMeta {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-5);
   border-bottom: 1px solid var(--border);
 }
 
-.detailEmail,
-.detailWhen {
+.metaItem {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -879,146 +889,95 @@
   overflow-wrap: anywhere;
 }
 
-.detailEmail {
+a.metaItem {
   color: var(--accent);
 }
 
-.detailEmail:hover {
+a.metaItem:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-/* The attachment is the thing most often wanted from a detail view, so it is
-   one target rather than a label beside a button. */
-.attachment {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  width: 100%;
-  padding: var(--space-3);
-  margin-bottom: var(--space-5);
-  font: inherit;
-  text-align: left;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease-out);
-}
-
-.attachment:hover {
-  background: var(--azure-100);
-  border-color: var(--azure-200);
-}
-
-.attachmentIcon {
+/*
+ * The inquiry beside its triage panel. minmax(0, …) on the reading column
+ * because a buyer's free text can carry a long unbroken part number, and a
+ * bare fr would let that set the column's minimum width and push the panel off
+ * the screen.
+ */
+.pageBody {
   display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  color: var(--accent);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: var(--space-5);
+  align-items: start;
 }
 
-.attachmentText {
-  flex: 1;
+.pageMain {
   min-width: 0;
 }
 
-.attachmentName {
-  display: block;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  overflow-wrap: anywhere;
-}
-
-.attachmentMeta {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  color: var(--text-soft);
-}
-
-.attachmentGo {
-  flex-shrink: 0;
-  color: var(--accent);
-}
-
-.fields {
-  display: grid;
-  grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr);
-  margin-bottom: var(--space-5);
-}
-
-.fieldRow {
-  display: contents;
-}
-
-.fieldKey,
-.fieldValue {
-  padding: 0.5rem 0;
-  font-size: var(--fs-sm);
-  border-bottom: 1px solid var(--border);
-}
-
-.fieldKey {
-  padding-right: var(--space-3);
-  color: var(--text-soft);
-}
-
-.fieldValue {
-  color: var(--text);
-  /* Buyers paste part numbers and URLs with no spaces in them. */
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-
-.triage {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
-}
-
-/* Five statuses shown at once rather than hidden in a menu: changing one is
-   the most frequent action here, and a menu makes it two clicks and a read. */
-.statusPicker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+.group {
+  padding: var(--space-5);
   margin-bottom: var(--space-4);
-}
-
-.statusPick,
-.statusPickOn {
-  padding: 0.3rem 0.65rem;
-  font: inherit;
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease-out);
-}
-
-.statusPick {
-  color: var(--text-muted);
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
-.statusPick:hover {
-  border-color: var(--dot);
-  color: var(--ink);
+.groupTitle {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
 }
 
-.statusPickOn {
-  color: var(--ink);
-  background: var(--tint);
-  border: 1px solid var(--dot);
+.pageSide {
+  min-width: 0;
 }
+
+.triageCard {
+  position: sticky;
+  top: var(--space-4);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.triageCard .primaryButton,
+.triageCard .ghostButton {
+  width: 100%;
+}
+
+.triageCard .ghostButton {
+  margin-top: var(--space-2);
+}
+
+.notFound {
+  padding: var(--space-8);
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 1000px) {
+  /* Below this the triage panel squeezes the reading column, so it goes
+     underneath. Sticky is useful beside content; stacked below it, it just
+     pins the panel over what the reader is scrolling. */
+  .pageBody {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .triageCard {
+    position: static;
+  }
+}
+
 
 /* --- Narrow screens ------------------------------------------------------- */
 
@@ -1072,4 +1031,140 @@
   .skeleton {
     animation: none;
   }
+}
+
+/* --- Attachment, fields and triage ---------------------------------------- */
+
+/* The attachment is the thing most often wanted from an inquiry, so it is one
+   target rather than a label beside a button. */
+.attachment {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  font: inherit;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.attachment:hover {
+  background: var(--azure-100);
+  border-color: var(--azure-200);
+}
+
+.attachmentIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--accent);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.attachmentText {
+  flex: 1;
+  min-width: 0;
+}
+
+.attachmentName {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.attachmentMeta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-soft);
+}
+
+.attachmentGo {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+}
+
+.fieldRow {
+  display: contents;
+}
+
+.fieldKey,
+.fieldValue {
+  padding: 0.55rem 0;
+  font-size: var(--fs-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+/* The last pair in a group needs no rule under it; the card edge is the rule. */
+.fieldRow:last-child .fieldKey,
+.fieldRow:last-child .fieldValue {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.fieldKey {
+  padding-right: var(--space-4);
+  color: var(--text-soft);
+}
+
+.fieldValue {
+  color: var(--text);
+  /* Buyers paste part numbers and URLs with no spaces in them. */
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+/* Five statuses shown at once rather than hidden in a menu: changing one is the
+   most frequent action here, and a menu makes it two clicks and a read. */
+.statusPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0.4rem 0 var(--space-4);
+}
+
+.statusPick,
+.statusPickOn {
+  padding: 0.3rem 0.65rem;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.statusPick {
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.statusPick:hover {
+  color: var(--ink);
+  border-color: var(--dot);
+}
+
+.statusPickOn {
+  color: var(--ink);
+  background: var(--tint);
+  border: 1px solid var(--dot);
 }

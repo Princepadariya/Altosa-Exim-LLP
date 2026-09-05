@@ -68,6 +68,9 @@ const App = () => (
             whoever is answering it. Lazy like every other route, so the
             Supabase client never lands in a visitor's bundle. */}
         <Route path="/admin" element={<Admin />} />
+        {/* One inquiry on a page of its own, so a requirement has an address
+            that can be bookmarked, reopened or sent to whoever is quoting it. */}
+        <Route path="/admin/:id" element={<Admin />} />
       </Routes>
     </Suspense>
   </BrowserRouter>
