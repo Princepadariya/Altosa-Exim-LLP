@@ -33,20 +33,26 @@ export const siteConfig = {
   },
 
   /**
-   * Inquiry form delivery. The form UI, validation and state handling are
-   * complete; only the network call is left to you.
+   * Inquiry form delivery.
    *
-   * Wire it in ONE of two ways:
-   *   1. Set `endpoint` to a URL that accepts a JSON POST (Formspree,
-   *      Web3Forms, your own API route). No other change needed.
-   *   2. Leave `endpoint` null and pass your own `onSubmit(values)` to
-   *      <InquiryForm />. It must return a promise; reject to show an error.
+   * Posts to our own serverless function at api/inquiry.js, which emails the
+   * inquiry to the sales inbox. The path is relative on purpose: the function
+   * is served from this same origin, so there is no cross-origin request, no
+   * third-party form service, and — the part that matters — no API key in the
+   * browser bundle. The credentials live only in the Vercel environment.
    *
-   * With neither wired, the form validates and then falls back to opening a
-   * prefilled email to `company.contact.email` so no inquiry is ever lost.
+   * That function sends over plain SMTP with an app password, so no email
+   * service sits in the path either. It needs SMTP_HOST, SMTP_USER and
+   * SMTP_PASS set in the deployment; see .env.example. Without them it returns
+   * 500 rather than pretending to have sent anything.
+   *
+   * Two other routes remain wired for local work or a change of provider:
+   *   - pass your own `onSubmit(values)` to <InquiryForm />; it takes priority
+   *   - set `endpoint` to null to fall back to a prefilled mailto, so an
+   *     inquiry is never dropped on the floor
    */
   inquiryForm: {
-    endpoint: null,
+    endpoint: "/api/inquiry",
     method: "POST",
     /** Extra fields merged into every submission (e.g. an access key). */
     extraFields: {},

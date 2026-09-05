@@ -8,8 +8,20 @@
 import { isEmail, isNotEmpty, minLength } from "../utils/validation";
 import countries from "./countries";
 
-/** Attachment ceiling. Most form services reject more than this anyway. */
-export const MAX_ATTACHMENT_MB = 10;
+/*
+ * Attachment ceiling.
+ *
+ * Set by the delivery path, not by taste: a Vercel serverless function rejects
+ * a request body over 4.5 MB before our code ever runs, and multipart framing
+ * plus twenty form fields have to fit under that alongside the file. Four
+ * leaves the margin.
+ *
+ * A buyer with a larger drawing is not turned away — the validator tells them
+ * to send the requirement without it and email the file separately, which is
+ * a worse experience than an upload but a far better one than a submission
+ * that fails at the edge with nothing to explain it.
+ */
+export const MAX_ATTACHMENT_MB = 4;
 
 export const incoterms = [
   "EXW — Ex Works",
