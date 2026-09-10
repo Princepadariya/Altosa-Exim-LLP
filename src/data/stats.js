@@ -65,8 +65,6 @@ export const stats = [
  * own "verifiable over claimed" value rules out.
  */
 export const heroBadges = [
-  { code: "IEC", label: "Registered exporter" },
-  { code: "GST", label: "Registered business" },
   { code: `${totalCountries}+`, label: "Destination markets" },
 ];
 

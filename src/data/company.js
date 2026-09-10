@@ -59,7 +59,7 @@ export const company = {
   ],
 
   vision:
-    "To be the sourcing partner international buyers trust when a specification matters more than a catalogue.",
+    "To be the Indian merchant exporter international buyers come back to — not because we were the cheapest quote, but because the part arrived right.",
   mission:
     "To connect global buyers with capable Indian manufacturers through specification-first sourcing, transparent commercial terms and coordinated export execution.",
 
@@ -70,7 +70,7 @@ export const company = {
     },
     {
       title: "Specification first",
-      body: "Fit, material, standard, tolerances and documentation are settled before a number is quoted — because a price sent before the questions is a price that changes later.",
+      body: "Fit, material, standard, tolerances and documentation are settled before a number is quoted — because a price sent before the quotation is a price that changes later.",
     },
     {
       title: "Verifiable over claimed",

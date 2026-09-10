@@ -11,12 +11,12 @@ export const industries = [
   {
     id: "automotive",
     number: "01",
-    title: "Automotive & vehicle components",
+    title: "Automotive & Mobility",
     summary:
-      "Machined housings, hubs, forged parts and cast components for vehicle assemblies and aftermarket supply.",
+      "Machined housings, hubs, forged and cast components for passenger vehicles, commercial vehicles and two-wheelers.",
     icon: "gear",
     intro:
-      "Automotive work divides sharply between programme supply, where a drawing is frozen and volumes are known years out, and aftermarket supply, where a part is often reverse-engineered from a sample. Both are sourced the same way here — against a specification rather than from a catalogue — but they carry very different tooling economics, so the quantity you state changes the answer more than it does in most sectors.",
+      "Automotive work divides sharply between programme supply — where a drawing is frozen and volumes are known years out — and aftermarket supply, where a part is often reverse-engineered from a sample. Both are sourced the same way here: against a specification rather than from a catalogue. But they carry very different tooling economics, so the quantity you state changes the answer more than it does in most sectors.",
     components: [
       "Machined housings and hubs",
       "Forged steering and suspension parts",
@@ -35,7 +35,7 @@ export const industries = [
     considerations: [
       {
         title: "Volume decides the process",
-        body: "A part machined from bar at 200 pieces may be forged or cast at 20,000. Say whether the quantity is a trial, an annual requirement or a programme, because tooling only pays back at the larger number.",
+        body: "A part machined from bar at 200 pieces may be forged or cast at 20,000. Say whether the quantity is a trial, an annual requirement or a programme — tooling only pays back at the larger number.",
       },
       {
         title: "Aftermarket usually starts from a sample",
@@ -48,53 +48,136 @@ export const industries = [
     ],
   },
   {
-    id: "electrical",
+    id: "agriculture",
     number: "02",
-    title: "Electrical & power distribution",
+    title: "Agricultural Equipment",
     summary:
-      "Copper parts, terminals, busbars, contacts, lugs and precision components for electrical assemblies.",
-    icon: "bolt",
+      "Castings, forgings, wear parts and machined components for tractors, implements, seeding and harvesting equipment.",
+    icon: "tractor",
     intro:
-      "Electrical components are dominated by two variables that sit outside the drawing geometry: the conductivity of the base material and the plating on top of it. A dimensionally perfect terminal in the wrong copper grade, or with the wrong plating thickness, fails in service rather than at inspection — which is why both belong in the inquiry rather than in a later clarification.",
+      "Agricultural parts are built around wear resistance and shock loading rather than tight tolerance. A tillage tine in the wrong hardness wears out before the season ends — which is why hardness specification and heat treatment details matter more here than dimensional tolerances that are generous by engineering standards. Seasonal demand cycles also mean lead time planning is as important as the part specification itself.",
     components: [
-      "Copper terminals and lugs",
-      "Busbars and connectors",
-      "Switchgear contacts",
-      "Brass electrical inserts",
-      "Precision-machined conductive parts",
+      "Tractor and implement castings",
+      "Forged linkage and hitch parts",
+      "Tillage tines and wear blades",
+      "Seeder and planter components",
+      "Machined gearbox and PTO parts",
     ],
-    materials: ["Electrolytic copper", "Brass", "Bronze", "Tin & silver plating"],
+    materials: ["Ductile iron", "Forged carbon steel", "Hardened alloy steel", "Boron steel"],
     applications: [
-      "Switchgear and control panels",
-      "Power distribution assemblies",
-      "Transformer and motor terminations",
-      "Cable accessories and jointing hardware",
+      "Tractor linkages and three-point hitch assemblies",
+      "Tillage and harvesting implements",
+      "Seeding and planting equipment",
+      "Replacement wear parts and consumables",
     ],
-    standards: ["IS 613 ETP", "ASTM C11000", "Cu-ETP", "CuZn39Pb3 / C36000"],
+    standards: ["IS 1865 SG grades", "ASTM A536", "EN-GJS-500-7", "IS 2062", "Hardness per drawing"],
     considerations: [
       {
-        title: "Name the copper grade, not just \"copper\"",
-        body: "Electrolytic tough pitch copper and free-cutting brass machine very differently and conduct very differently. The grade drives both price and performance.",
+        title: "Hardness is the specification",
+        body: "State the required hardness and where it is measured. Surface and core hardness on a case-hardened part are different requirements — both belong in the inquiry.",
       },
       {
-        title: "Plating thickness is a specification",
-        body: "State the coating, its thickness range and whether you need a thickness report. Tin plating for a contact surface is not the same requirement as tin plating for corrosion protection.",
+        title: "Wear parts often start from a sample",
+        body: "Replacement parts frequently arrive without a drawing. That is workable, and the reverse-engineering work is quoted before it begins, not billed after.",
       },
       {
-        title: "Copper pricing moves",
-        body: "Quotations for copper-intensive parts usually carry a shorter validity than steel parts, because the metal content tracks the market.",
+        title: "Seasonality affects lead time",
+        body: "Agricultural demand arrives in bursts before planting and harvesting seasons. Building the target delivery window into the inquiry avoids quoting against a date that cannot be met.",
+      },
+    ],
+  },
+  {
+    id: "highway-offhighway",
+    number: "03",
+    title: "Highway/off-highway Heavy Duty truck & trailer",
+    summary:
+      "Forged, cast and machined components for trucks, trailers, axles, heavy-duty drivetrains and off-highway equipment.",
+    icon: "structure",
+    intro:
+      "Heavy truck and trailer components carry high dynamic loads and are expected to last well beyond a single overhaul interval. The combination of load cycles, road shock and corrosion exposure means that material grade and heat treatment are not supplementary data — they are the specification. A machined kingpin in the wrong steel behaves differently in fatigue, and that difference shows up in the field rather than at incoming inspection.",
+    components: [
+      "Kingpins and fifth wheel components",
+      "Axle housings and hubs",
+      "Brake drum and disc assemblies",
+      "Trailer chassis brackets and couplings",
+      "Heavy-duty suspension and steering parts",
+    ],
+    materials: ["Forged alloy steel", "Ductile iron", "Structural steel", "Hardened carbon steel"],
+    applications: [
+      "Long-haul truck drivetrains and chassis",
+      "Trailer axle and coupling systems",
+      "Off-highway haulers and dump equipment",
+      "Replacement and aftermarket heavy components",
+    ],
+    standards: ["IS 2062 E250/E350", "ASTM A536", "SAE J429", "DIN 74050 (kingpins)", "ISO 1726 (fifth wheel)"],
+    considerations: [
+      {
+        title: "Load rating is not optional data",
+        body: "State the axle load rating and duty cycle alongside the drawing. A component sized for a 9-tonne axle fitted to a 16-tonne one will fail predictably — the load data changes the material and section, not just the price.",
+      },
+      {
+        title: "Aftermarket kingpins need dimensional confirmation",
+        body: "Kingpin dimensions are nominally standardised but tolerance stacks vary between OEMs. A worn pin from the vehicle is worth sending alongside the drawing.",
+      },
+      {
+        title: "Surface treatment for corrosion matters",
+        body: "Heavy vehicle components in tropical or coastal operating environments need corrosion protection stated in the inquiry — phosphate, paint or zinc plating to a specified thickness, not 'standard finish'.",
+      },
+    ],
+  },
+  {
+    id: "oil-gas",
+    number: "04",
+    title: "Oil & Gas Industry",
+    summary:
+      "Flanges, fittings, valve bodies, pressure components and high-tensile fasteners for upstream, midstream and downstream applications.",
+    icon: "valve",
+    intro:
+      "Oil and gas components operate under pressure, temperature and aggressive media — conditions where a part that passes dimensional inspection but misses a material or traceability requirement fails at a certification audit rather than in a testing bay. The documentation trail matters as much as the part itself, and that makes the inquiry stage the right time to establish what certifications, heat numbers and test reports the end application requires.",
+    components: [
+      "Weld neck and slip-on flanges",
+      "Pipe fittings and elbows",
+      "Valve bodies and bonnets",
+      "Pressure vessel components",
+      "High-tensile fasteners for pressure joints",
+    ],
+    materials: [
+      "Carbon steel A105 / A350",
+      "Stainless steel 316 / 316L",
+      "Alloy steel F22 / F11",
+      "Duplex SS 2205",
+    ],
+    applications: [
+      "Wellhead and Christmas tree assemblies",
+      "Pressure piping and manifold systems",
+      "Refinery and petrochemical plant fitout",
+      "Offshore and onshore pipeline connections",
+    ],
+    standards: ["ASME B16.5 / B16.47", "ASTM A105 / A350 LF2", "ASME B16.9", "API 6A", "NACE MR0175 / ISO 15156"],
+    considerations: [
+      {
+        title: "MTRs are part of the deliverable",
+        body: "Material test reports, heat numbers and third-party inspection are not extras in oil and gas — they are part of what is being bought. State the documentation requirement in the inquiry so it is costed, not chased at shipment.",
+      },
+      {
+        title: "NACE compliance changes the material",
+        body: "Sour service applications require NACE-compliant material and hardness limits. A standard A105 flange and a NACE-compliant one are different products from different heats — confirm which one before quoting.",
+      },
+      {
+        title: "Third-party inspection needs lead time",
+        body: "TPI agencies book against a schedule. If your end client requires witnessed testing or source inspection, name the agency in the inquiry — last-minute bookings delay shipment.",
       },
     ],
   },
   {
     id: "general-engineering",
-    number: "03",
-    title: "General engineering & industrial",
+    number: "05",
+    title: "Industrial Equipment & Engineering Components",
     summary:
-      "Bolts, nuts, washers, threaded parts and drawing-based precision components across mixed requirements.",
+      "Bolts, nuts, washers, threaded parts and drawing-based precision components across mixed industrial requirements.",
     icon: "caliper",
     intro:
-      "This is the broadest category and the most common starting point: a mixed list of parts that do not belong to one process or one factory. It is also where a sourcing partner earns its commission most visibly, because a list of fifteen drawings sent to one manufacturer gets fifteen answers shaped by what that manufacturer already makes.",
+      "This is the broadest category and the most common starting point: a mixed list of parts that do not belong to one process or one factory. It is also where a sourcing partner earns its commission most visibly, because a list of fifteen drawings sent to one manufacturer gets fifteen answers shaped by what that manufacturer already makes — not what the buyer actually needs.",
     components: [
       "Bolts, nuts and washers",
       "Threaded rods and studs",
@@ -122,123 +205,6 @@ export const industries = [
       {
         title: "Consolidation saves more than unit price",
         body: "Shipping fifteen parts in one container against fifteen separate consignments is often the larger saving, and it is a reason to quote the whole list together.",
-      },
-    ],
-  },
-  {
-    id: "construction",
-    number: "04",
-    title: "Construction & infrastructure",
-    summary:
-      "Structural fasteners, flanges, pipe fittings and heavy-duty threaded parts.",
-    icon: "structure",
-    intro:
-      "Construction hardware is usually specified by standard rather than by drawing, and it is frequently governed by destination-market conformity rules that sit outside the supplier's control. That makes the destination question unusually important here: a structural fastener acceptable in one market may need marking or certification that is not available for another.",
-    components: [
-      "Structural fasteners and anchor bolts",
-      "Flanges and pipe fittings",
-      "Heavy-duty threaded parts",
-      "Scaffolding and formwork components",
-      "Galvanised hardware",
-    ],
-    materials: ["Structural steel", "Stainless steel", "Hot-dip galvanised steel"],
-    applications: [
-      "Structural steel connections",
-      "Pipework and utility infrastructure",
-      "Formwork, scaffolding and site hardware",
-      "Civil and industrial projects",
-    ],
-    standards: ["IS 2062", "ASTM A325 / A490", "EN 14399", "ASME B16.5 flanges"],
-    considerations: [
-      {
-        title: "Destination conformity is checked first",
-        body: "Marking and certification requirements differ by market and are reviewed before an inquiry is accepted. Where the answer is no, we say so.",
-      },
-      {
-        title: "Galvanising changes the thread",
-        body: "Hot-dip coatings are thick enough to affect thread fit. Whether nuts are over-tapped, and to what allowance, needs stating.",
-      },
-      {
-        title: "Project quantities move in steps",
-        body: "Construction requirements often arrive as phased call-offs. Say so — it changes how the batch and the price are structured.",
-      },
-    ],
-  },
-  {
-    id: "agriculture",
-    number: "05",
-    title: "Agriculture & off-highway",
-    summary:
-      "Castings, forgings and machined parts for tractors, implements and off-highway equipment.",
-    icon: "tractor",
-    intro:
-      "Off-highway parts are built around wear and shock loading rather than tight tolerance. Hardness, section thickness and heat treatment usually govern whether a part survives its duty cycle, and those are the details worth pinning down first — a dimensionally correct tine in the wrong hardness simply wears out sooner.",
-    components: [
-      "Tractor and implement castings",
-      "Forged linkage and hitch parts",
-      "Machined gearbox components",
-      "Wear parts and tines",
-      "Off-highway equipment hardware",
-    ],
-    materials: ["Ductile iron", "Forged carbon steel", "Hardened alloy steel"],
-    applications: [
-      "Tractor linkages and hitch assemblies",
-      "Tillage and harvesting implements",
-      "Construction and earthmoving attachments",
-      "Replacement wear parts",
-    ],
-    standards: ["IS 1865 SG grades", "ASTM A536", "EN-GJS-500-7", "Hardness per drawing"],
-    considerations: [
-      {
-        title: "Hardness is the specification",
-        body: "State the required hardness and where it is measured. Surface and core hardness on a case-hardened part are different requirements.",
-      },
-      {
-        title: "Wear parts are often reverse-engineered",
-        body: "Replacement parts frequently arrive as a sample rather than a drawing. That is workable, and the drawing work is quoted before it begins.",
-      },
-      {
-        title: "Seasonality affects lead time",
-        body: "Agricultural demand is seasonal at both ends. Building the target delivery window into the inquiry avoids quoting against an unrealistic date.",
-      },
-    ],
-  },
-  {
-    id: "pumps-valves",
-    number: "06",
-    title: "Pumps, valves & fluid handling",
-    summary:
-      "Cast and machined bodies, flanges, fittings and precision-turned components.",
-    icon: "valve",
-    intro:
-      "Fluid-handling parts combine a casting, a machining operation and, frequently, a pressure test — three stages where a part can fail for unrelated reasons. Porosity that passes visual inspection can fail under pressure, so the test requirement belongs in the quotation rather than being assumed from the application.",
-    components: [
-      "Cast pump and valve bodies",
-      "Machined impellers and covers",
-      "Flanges and couplings",
-      "Precision-turned fluid fittings",
-      "Sealing and gland components",
-    ],
-    materials: ["Cast iron", "Stainless steel", "Bronze", "Brass"],
-    applications: [
-      "Pump and valve manufacturing",
-      "Water and wastewater infrastructure",
-      "Process and chemical handling",
-      "Irrigation and general fluid systems",
-    ],
-    standards: ["ASME B16.5", "IS 210 FG grades", "ASTM A216 WCB", "EN 1092-1"],
-    considerations: [
-      {
-        title: "State the pressure test",
-        body: "Hydrostatic test pressure and hold time, and whether a test certificate is required, should be named in the inquiry rather than inferred.",
-      },
-      {
-        title: "Flange standard, not just size",
-        body: "ASME, EN and IS flanges of nominally the same size differ in bolt circle and thickness. Name the standard and the class.",
-      },
-      {
-        title: "Porosity is a casting risk",
-        body: "For pressure-containing parts, agree acceptance criteria and any NDT requirement before production, not at rejection.",
       },
     ],
   },

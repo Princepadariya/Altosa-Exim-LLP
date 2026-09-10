@@ -400,20 +400,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className={styles.tbMeta}>
-                <div className={styles.tbCell}>
-                  <span className={styles.tbKey}>Units</span>
-                  <span className={styles.tbValue}>mm</span>
-                </div>
-                <div className={styles.tbCell}>
-                  <span className={styles.tbKey}>Scale</span>
-                  <span className={styles.tbValue}>1:2</span>
-                </div>
-                <div className={styles.tbCell}>
-                  <span className={styles.tbKey}>Rev</span>
-                  <span className={styles.tbValue}>A</span>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

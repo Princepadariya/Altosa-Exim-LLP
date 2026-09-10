@@ -103,10 +103,6 @@ const About = () => (
           <Icon name="badge" size={16} className={styles.factIcon} />
           {company.entityType}
         </span>
-        <span className={styles.fact}>
-          <Icon name="clock" size={16} className={styles.factIcon} />
-          Operating since {company.founded}
-        </span>
       </div>
     </Section>
 
