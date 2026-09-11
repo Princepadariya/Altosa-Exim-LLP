@@ -114,7 +114,7 @@
 }
 
 .dark .plateNumber {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .dark .plateRule {
@@ -157,7 +157,7 @@
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(15, 141, 168, 0.16),
+    rgba(211, 95, 36, 0.16),
     transparent 65%
   );
   pointer-events: none;

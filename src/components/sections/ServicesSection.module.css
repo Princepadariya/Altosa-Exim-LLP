@@ -32,7 +32,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--azure-400);
+  background: var(--signal-400);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-slow) var(--ease-out);
@@ -64,12 +64,12 @@
 }
 
 .service:hover .number {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .icon {
   flex-shrink: 0;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .title {
@@ -113,7 +113,7 @@
   top: 0.62em;
   width: 5px;
   height: 1px;
-  background: var(--azure-400);
+  background: var(--signal-400);
 }
 
 /* --- Light tone ----------------------------------------------------------- */

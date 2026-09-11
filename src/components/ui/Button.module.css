@@ -86,7 +86,7 @@
 
 .primary:hover {
   --btn-bg: var(--accent-hover);
-  box-shadow: 0 20px 46px -14px rgba(15, 141, 168, 0.62);
+  box-shadow: 0 20px 46px -14px rgba(211, 95, 36, 0.62);
 }
 
 .secondary {

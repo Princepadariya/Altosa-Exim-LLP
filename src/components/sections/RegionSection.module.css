@@ -29,7 +29,7 @@
   place-items: center;
   width: 2.5rem;
   flex-shrink: 0;
-  color: var(--azure-400);
+  color: var(--signal-400);
   border-bottom: 1px solid var(--dark-border-strong);
   padding-bottom: 0.55rem;
   transition: transform var(--dur) var(--ease-emphasis);

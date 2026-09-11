@@ -112,7 +112,7 @@
 }
 
 .onDark .item:hover .index {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .onDark .title {
@@ -120,7 +120,7 @@
 }
 
 .onDark .iconWrap {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .onDark .body {

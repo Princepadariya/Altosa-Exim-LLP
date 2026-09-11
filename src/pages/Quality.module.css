@@ -58,7 +58,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-sm);
   letter-spacing: 0.08em;
-  color: var(--azure-400);
+  color: var(--signal-400);
   border: 1px solid var(--dark-border-strong);
   border-radius: var(--radius-full);
 }

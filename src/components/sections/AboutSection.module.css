@@ -71,7 +71,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 /* Set as a pull quote: the serif carries it, and the opening mark hangs

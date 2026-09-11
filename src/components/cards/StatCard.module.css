@@ -18,10 +18,10 @@
   font-variant-numeric: lining-nums tabular-nums;
 }
 
-/* --azure-400, not --accent: --accent is the light-surface value and lands at
+/* --signal-400, not --accent: --accent is the light-surface value and lands at
    ~3.5:1 on this near-black band. This is ~8:1. */
 .suffix {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 /* --- Measure rule --------------------------------------------------------- */
@@ -60,7 +60,7 @@
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: var(--azure-400);
+  background: var(--signal-400);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 1.6s var(--ease-out);

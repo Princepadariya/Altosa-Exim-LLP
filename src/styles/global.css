@@ -78,8 +78,6 @@ h5 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: var(--lh-snug);
-  /* Gentler than the geometric sans this replaced: a serif at display sizes
-     falls apart if you pull it as tight. */
   letter-spacing: var(--tracking-snug);
   text-wrap: balance;
 }
