@@ -31,21 +31,28 @@
   --steel-100: #e4e2de;
   --steel-050: #f2f0ec;
 
-  /* Signal azure. --azure-600 is the light-surface accent (4.6:1 on white,
-     so it is legible as text); --azure-400 is the dark-surface accent. */
-  /* Petrol teal rather than sky blue. Deeper and less default, and it holds up
-     against warm paper where a bright cyan looks like a UI element.
-     --azure-600 is the light-surface accent (5.3:1 on paper), --azure-400 the
-     luminous one for dark bands. */
-  --azure-900: #04323d;
-  --azure-800: #06485a;
-  --azure-700: #08596b;
-  --azure-600: #0c7186;
-  --azure-500: #0f8da8;
-  --azure-400: #2ab4d1;
-  --azure-300: #66d2e6;
-  --azure-200: #b3e9f2;
-  --azure-100: #e2f6fa;
+  /*
+   * Marking orange.
+   *
+   * The blue accent shared a hue with the blueprint linework, which sounded
+   * like system coherence and in practice meant the page had no colour of its
+   * own: every interactive element disappeared into the drawings behind it.
+   * This is the other half of a drawing office — the red pencil a checker
+   * marks a sheet with. Linework stays cool because it is the medium; every
+   * human mark and every action is orange, and the two never compete.
+   *
+   * --signal-600 is the light-surface accent (5.1:1 on the paper, so it is
+   * legible as text); --signal-400 is the luminous one for dark bands.
+   */
+  --signal-900: #3d1705;
+  --signal-800: #5c220a;
+  --signal-700: #8a3410;
+  --signal-600: #b5491a;
+  --signal-500: #d35f24;
+  --signal-400: #f07a33;
+  --signal-300: #f79f66;
+  --signal-200: #fbcaa8;
+  --signal-100: #fdece0;
 
   --blueprint: #7dd3fc;
   --blueprint-deep: #0369a1;
@@ -55,33 +62,39 @@
   --white: #ffffff;
 
   /* --- Semantic: light surfaces ---------------------------------------- */
-  /* Warm paper, not screen white. Cards stay pure white so they lift off the
-     page slightly — the depth comes from the paper/card difference rather than
-     from a shadow on every element. */
-  --bg: #faf8f4;
-  --bg-subtle: #f3f0e9;
-  --bg-muted: #e9e5dc;
+  /*
+   * Cool drawing stock, not warm cream.
+   *
+   * The warm paper and brass-adjacent family it implied is the most heavily
+   * reused palette in generated work; against it the site read as an artisan
+   * brand rather than an engineering one. This is the grey-white of drawing
+   * stock: cool, slightly cold under the orange, and the ground a technical
+   * document is actually printed on. Cards stay pure white so they lift off
+   * it without needing a shadow on every element.
+   */
+  --bg: #f3f5f6;
+  --bg-subtle: #e8ecee;
+  --bg-muted: #dae0e3;
   --surface: var(--white);
-  --surface-sunken: #f7f4ee;
-  --border: #e6e1d7;
-  --border-strong: #d2ccbf;
+  --surface-sunken: #eef1f3;
+  --border: #dce1e4;
+  --border-strong: #c2c9cd;
 
   /* Headings sit near-black for authority; body copy is deliberately softer so
-     the two read as separate voices rather than one flat grey. */
-  /* Neutral ink on warm paper — the newsprint pairing. Blue-grey text on a warm
-     ground reads muddy, so these carry no cast. All clear AA on --bg:
-     text 16.5:1, muted 7.4:1, soft 4.7:1. */
-  --text: #14151a;
-  --text-muted: #4e525b;
-  /* #6c6f77 cleared AA on --bg (4.74) but fell to 4.42 on the darker
-     --bg-subtle bands, where most eyebrows and labels actually sit. This
-     clears 4.5 on both: 5.03 on --bg, 4.68 on --bg-subtle. */
-  --text-soft: #686b73;
+     the two read as separate voices rather than one flat grey.
+     Graphite rather than the old warm-neutral ink: the stock is cool now, and
+     a neutral text on it reads slightly yellow by comparison. All clear AA on
+     --bg — text 15.8:1, muted 7.1:1 — and --text-soft is set against the
+     darker --bg-subtle bands where most labels actually sit, not against --bg,
+     so it clears 4.5 on both. */
+  --text: #16191c;
+  --text-muted: #4a5257;
+  --text-soft: #626b70;
   --text-inverse: var(--white);
 
-  --accent: var(--azure-600);
-  --accent-hover: var(--azure-700);
-  --accent-soft: var(--azure-100);
+  --accent: var(--signal-600);
+  --accent-hover: var(--signal-700);
+  --accent-soft: var(--signal-100);
 
   /* --- Semantic: dark surfaces (used by .is-dark sections) -------------- */
   --dark-bg: var(--ink-980);
@@ -96,7 +109,7 @@
   --dark-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 
   /* --- Gradients -------------------------------------------------------- */
-  --gradient-accent: linear-gradient(135deg, var(--azure-600), var(--azure-400));
+  --gradient-accent: linear-gradient(135deg, var(--signal-600), var(--signal-400));
   --gradient-ink: linear-gradient(160deg, var(--ink-850), var(--ink-980) 72%);
   --gradient-hairline: linear-gradient(
     90deg,
@@ -107,12 +120,25 @@
   );
 
   /* --- Typography ------------------------------------------------------- */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  /* An editorial serif against the mono readouts and CAD linework: the pairing
-     is what stops the page reading as a generic sans template. Revert this one
-     line to go back to a geometric sans display. */
-  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  /*
+   * One superfamily, which is the whole idea.
+   *
+   * This was Inter for body and an editorial serif for display. Both are the
+   * reach an assistant makes when asked to look considered: Inter is the
+   * default sans of generated work, and a literary serif on an industrial
+   * supplier is borrowed prestige — it says heritage publishing, not Rajkot
+   * forging. Neither belonged to this company.
+   *
+   * IBM Plex was drawn for an engineering brand, and the mono cut has been
+   * carrying the labels here all along. Running the sans beside it makes the
+   * page read as one technical document rather than three fonts introduced to
+   * each other. Display contrast comes from size and weight, not from a
+   * second family.
+   */
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, monospace;
 
@@ -133,8 +159,8 @@
   --lh-normal: 1.5;
   --lh-relaxed: 1.7;
 
-  --tracking-tight: -0.025em;
-  --tracking-snug: -0.015em;
+  --tracking-tight: -0.032em;
+  --tracking-snug: -0.022em;
   --tracking-wide: 0.06em;
   --tracking-widest: 0.16em;
 
@@ -160,10 +186,15 @@
   --container-narrow: 58rem;
 
   /* --- Radii & elevation ------------------------------------------------ */
-  --radius-sm: 4px;
-  --radius: 8px;
-  --radius-lg: 14px;
-  --radius-xl: 22px;
+  /* Drawn, not rounded. A 14px corner on every panel is the house style of
+     every SaaS template, and it fought the one thing here that is actually
+     distinctive: CAD sheets, hairlines and mono readouts. These are tight
+     enough to read as cut edges and still soft enough not to look unfinished.
+     --radius-full is untouched, because pills should stay pills. */
+  --radius-sm: 2px;
+  --radius: 5px;
+  --radius-lg: 7px;
+  --radius-xl: 12px;
   --radius-full: 999px;
 
   /* Warm-neutral, to match the paper. A navy-tinted shadow on a warm ground
@@ -172,24 +203,32 @@
   --shadow:
     0 1px 2px rgba(38, 32, 22, 0.05),
     0 6px 18px -6px rgba(38, 32, 22, 0.12);
+  /* Tightened from a 44px blur at -20px spread. The wide, soft version read
+     as a card floating off the page, which is the gesture every marketing
+     template uses. A drawing lies flat on the desk; it does not hover. */
   --shadow-lg:
     0 1px 2px rgba(38, 32, 22, 0.05),
-    0 20px 44px -20px rgba(38, 32, 22, 0.22);
+    0 10px 24px -14px rgba(38, 32, 22, 0.18);
   --shadow-xl:
     0 2px 4px rgba(38, 32, 22, 0.06),
     0 36px 80px -30px rgba(38, 32, 22, 0.32);
-  --shadow-accent: 0 14px 36px -14px rgba(15, 141, 168, 0.5);
+  --shadow-accent: 0 14px 36px -14px rgba(211, 95, 36, 0.5);
   --shadow-dark: 0 24px 60px -28px rgba(0, 0, 0, 0.75);
 
   /* --- Motion ----------------------------------------------------------- */
   /* One lift distance for every card-style hover. These had drifted to -4, -5
      and -6px across different components, so the same gesture read slightly
-     differently depending on where you were on the page. */
-  --lift: -5px;
+     differently depending on where you were on the page.
+
+     Now -2px rather than -5px. The accent rule that wipes across the top edge
+     is the real feedback on these cards; a five-pixel jump on top of it made
+     every hover feel like the same stock component. Kept non-zero so the card
+     still acknowledges the cursor. */
+  --lift: -2px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-spring: cubic-bezier(0.34, 1.42, 0.64, 1);
+  --ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 160ms;
   --dur: 280ms;
   --dur-slow: 620ms;

@@ -1,0 +1,143 @@
+/* A contents page, not a card wall.
+   Shares the rule-and-mono language of the industries index deliberately: a
+   reader who has learned one list on this site can read the other without
+   re-learning it. */
+
+.index {
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.index li {
+  border-bottom: 1px solid var(--border);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr) 2.5rem;
+  align-items: baseline;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-4);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+/* The rule that wipes in under the row on hover, as on the industries index. */
+.row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.row:hover,
+.row:focus-visible {
+  background: var(--surface-sunken);
+}
+
+.row:hover::after,
+.row:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Category over reading time, stacked: the two are different kinds of fact and
+   setting them on one line made the reading time look like part of the topic. */
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.category {
+  color: var(--accent);
+}
+
+.reading {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-soft);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+}
+
+.excerpt {
+  max-width: 62ch;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-soft);
+  transition:
+    transform var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+.row:hover .go {
+  color: var(--accent);
+  transform: translateX(5px);
+}
+
+@media (max-width: 860px) {
+  /* The meta column moves above the title rather than shrinking: at this width
+     a 12rem column leaves the excerpt too narrow to read. */
+  .row {
+    grid-template-columns: minmax(0, 1fr) 2rem;
+    gap: var(--space-3) var(--space-4);
+    padding-inline: var(--space-2);
+  }
+
+  .meta {
+    flex-direction: row;
+    gap: var(--space-3);
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .go {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row::after,
+  .go {
+    transition: none;
+  }
+
+  .row:hover .go {
+    transform: none;
+  }
+}

@@ -52,7 +52,7 @@ a.card:hover::before {
   color: var(--accent);
   background: var(--bg-subtle);
   border-radius: var(--radius);
-  transition: transform var(--dur) var(--ease-spring);
+  transition: transform var(--dur) var(--ease-emphasis);
 }
 
 a.card:hover .cardIcon {

@@ -23,16 +23,16 @@
   border-top: 1px solid var(--dark-border);
 }
 
+/* No tile — see IndustryCard. On the dark band the icon carries itself. */
 .iconWrap {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 2.5rem;
   flex-shrink: 0;
-  color: var(--azure-400);
-  border: 1px solid var(--dark-border-strong);
-  border-radius: var(--radius);
-  transition: transform var(--dur) var(--ease-spring);
+  color: var(--signal-400);
+  border-bottom: 1px solid var(--dark-border-strong);
+  padding-bottom: 0.55rem;
+  transition: transform var(--dur) var(--ease-emphasis);
 }
 
 .highlight:hover .iconWrap {

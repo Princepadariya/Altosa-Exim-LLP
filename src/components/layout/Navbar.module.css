@@ -516,7 +516,7 @@
 }
 
 .menuOverview:hover {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 .menuList {
@@ -543,7 +543,7 @@
 }
 
 .menuLink:global(.active) {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 /* --- Drawer groups -------------------------------------------------------- */
@@ -610,7 +610,7 @@
 
 .drawerSubLink:hover,
 .drawerSubLink:global(.active) {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 @media (max-width: 1080px) {

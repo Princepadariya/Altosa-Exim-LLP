@@ -48,7 +48,6 @@ const Hero = () => {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <span className="grain" aria-hidden="true" />
-      <span className={styles.vignette} aria-hidden="true" />
 
       <div className={`container ${styles.inner}`}>
         <div className={styles.copy}>
@@ -165,7 +164,7 @@ const Hero = () => {
                     y1="0"
                     x2="0"
                     y2="7"
-                    stroke="rgba(42, 180, 209, 0.55)"
+                    stroke="rgba(240, 122, 51, 0.55)"
                     strokeWidth="1"
                   />
                 </pattern>

@@ -27,7 +27,7 @@
   inset: 0;
   background: radial-gradient(
     circle at 80% 0%,
-    rgba(102, 210, 230, 0.12),
+    rgba(247, 159, 102, 0.12),
     transparent 60%
   );
   opacity: 0;
@@ -52,8 +52,8 @@
   font-size: 0.6875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--blueprint);
-  border: 1px solid rgba(102, 210, 230, 0.35);
+  color: var(--signal-400);
+  border: 1px solid rgba(240, 122, 51, 0.38);
   border-radius: var(--radius-full);
 }
 
