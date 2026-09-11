@@ -47,6 +47,12 @@ export const glossary = [
       "A first-off sample produced and measured against the drawing, approved before the production batch runs.",
   },
   {
+    term: "PPAP",
+    letter: "P",
+    definition:
+      "Production Part Approval Process. The automotive submission that evidences a part can be made repeatably to the drawing — dimensional results, material and performance testing, and the process documentation behind them. Submission levels differ in how much of that package is sent to the customer rather than retained at the supplier.",
+  },
+  {
     term: "FCL / LCL",
     letter: "F",
     definition:

@@ -93,27 +93,22 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://altosaexim.com/industries/electrical/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://altosaexim.com/industries/general-engineering/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://altosaexim.com/industries/construction/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://altosaexim.com/industries/agriculture/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://altosaexim.com/industries/pumps-valves/</loc>
+    <loc>https://altosaexim.com/industries/highway-offhighway/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://altosaexim.com/industries/oil-gas/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://altosaexim.com/industries/general-engineering/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

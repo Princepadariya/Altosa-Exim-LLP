@@ -120,7 +120,7 @@ export const siteMap = [
       {
         label: "Industries",
         to: "/industries",
-        note: "The six sectors the supplier base covers most often",
+        note: "The sectors the supplier base covers most often",
         childrenFrom: "industries",
       },
       { label: "Product capabilities", to: "/products", note: "Processes, tolerances and lead times" },
@@ -178,7 +178,7 @@ export default primaryNav;
  *
  * Only two top-level items carry one, and both for the same reason: they are
  * index pages in front of a set of real pages that had no other route in. The
- * six sector pages and the six buyer guides were reachable only by landing on
+ * sector pages and the buyer guides were reachable only by landing on
  * the index first and clicking through, which is a page of friction in front
  * of content a buyer often arrives already knowing they want.
  *

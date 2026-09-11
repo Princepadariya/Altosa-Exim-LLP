@@ -8,7 +8,7 @@ export const siteConfig = {
   titleTemplate: "%s | Altosa Exim LLP",
   defaultTitle: "Industrial Sourcing & Export Partner in India | Altosa Exim LLP",
   defaultDescription:
-    "Altosa Exim LLP is a merchant exporter and commission agent in Rajkot, India, sourcing engineering, automotive and electrical components against buyer drawings and specifications.",
+    "Altosa Exim LLP is a merchant exporter and commission agent in Rajkot, India, sourcing engineering, automotive, heavy vehicle and oil and gas components against buyer drawings and specifications.",
   locale: "en_IN",
   twitterHandle: "",
   /*

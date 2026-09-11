@@ -50,12 +50,17 @@ const IndustriesSection = ({
                 {industry.number}
               </span>
 
-              <SectorPlate
-                shape={industryShapes[industry.id]}
-                label={industry.title}
-                compact
-                className={styles.thumb}
-              />
+              {/* Wrapper, not the plate itself: SectorPlate renders nothing
+                  for an unmapped shape, and a missing child would shift every
+                  later cell one grid track to the left. */}
+              <span className={styles.thumb}>
+                <SectorPlate
+                  shape={industryShapes[industry.id]}
+                  label={industry.title}
+                  compact
+                  className={styles.plate}
+                />
+              </span>
 
               <span className={styles.main}>
                 <span className={styles.title}>{industry.title}</span>

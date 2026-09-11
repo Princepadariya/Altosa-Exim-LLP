@@ -21,6 +21,15 @@ const paths = {
       <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" />
     </>
   ),
+  truck: (
+    <>
+      <path d="M2 16V6h11v10" />
+      <path d="M13 10h4l3 3.5V16" />
+      <circle cx="6.5" cy="18" r="2" />
+      <circle cx="17" cy="18" r="2" />
+      <path d="M8.5 16h6" />
+    </>
+  ),
   tractor: (
     <>
       <circle cx="7" cy="17" r="3" />

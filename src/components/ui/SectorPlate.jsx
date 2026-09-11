@@ -89,6 +89,47 @@ const geometry = {
     </>
   ),
 
+  /* Laser-cut and folded sheet panel, plan view: bend lines dashed, mounting
+     holes and a cut-out. */
+  bracket: (
+    <>
+      <rect x="58" y="72" width="204" height="92" rx="4" />
+      <path d="M108 72v92M212 72v92" opacity="0.4" strokeDasharray="6 4" />
+      <circle cx="82" cy="94" r="6" />
+      <circle cx="82" cy="142" r="6" />
+      <circle cx="238" cy="94" r="6" />
+      <circle cx="238" cy="142" r="6" />
+      <rect className="accent" x="140" y="104" width="40" height="28" rx="3" />
+    </>
+  ),
+
+  /* Wear blade or tillage tine, side profile. The accent marks the hardened
+     working edge, which is the part of it that is actually specified. */
+  wear: (
+    <>
+      <path d="M72 80h112l64 38-64 38H72Z" />
+      <circle cx="104" cy="118" r="9" />
+      <circle cx="146" cy="118" r="9" />
+      <path className="accent" d="M184 80l64 38-64 38" strokeWidth="2.6" />
+    </>
+  ),
+
+  /* Wheel hub and brake drum, plan view. */
+  hub: (
+    <>
+      <circle cx={CX} cy={CY} r="58" opacity="0.35" />
+      <circle cx={CX} cy={CY} r="52" />
+      <circle cx={CX} cy={CY} r="34" opacity="0.4" strokeDasharray="4 4" />
+      <circle cx="194" cy={CY} r="7" />
+      <circle cx="177" cy="89" r="7" />
+      <circle cx="143" cy="89" r="7" />
+      <circle cx="126" cy={CY} r="7" />
+      <circle cx="143" cy="147" r="7" />
+      <circle cx="177" cy="147" r="7" />
+      <circle className="accent" cx={CX} cy={CY} r="15" />
+    </>
+  ),
+
   /* Valve body with flanged ports, section. */
   valve: (
     <>

@@ -14,7 +14,7 @@ const Industries = () => (
   <>
     <Seo
       title="Industries We Source For"
-      description="Automotive, electrical, general engineering, construction, agriculture and fluid-handling components sourced from India against your drawing or specification."
+      description="Automotive, agricultural, heavy vehicle, oil and gas and general engineering components sourced from India against your drawing or specification."
       schema={breadcrumbSchema([{ label: "Industries", to: "/industries" }])}
     />
 
@@ -36,7 +36,7 @@ const Industries = () => (
       showCta={false}
       heading={{
         eyebrow: "Sector coverage",
-        title: "Six sectors our supplier base covers most often.",
+        title: "The sectors our supplier base covers most often.",
         lead: "Each sector below describes the kind of components our supplier base handles most often. Availability for any specific part is confirmed against your drawing or specification, not assumed from this list.",
       }}
     />
