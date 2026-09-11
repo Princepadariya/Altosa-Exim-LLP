@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import cn from "../../utils/cn";
 import Icon from "../ui/Icon";
 import SectorPlate from "../ui/SectorPlate";
-import { categoryShapes } from "../../data/partShapes";
+import { categoryShapes, productShapes } from "../../data/partShapes";
 import { productCategories } from "../../data/products";
 import styles from "./ProductCard.module.css";
 
@@ -26,7 +26,7 @@ const ProductCard = ({ product, index = 0, featured = false, className }) => (
         part" caption. Compact mode exists because that detail turns to noise
         at thumbnail size, which the featured panel is not. */}
     <SectorPlate
-      shape={categoryShapes[product.category]}
+      shape={productShapes[product.id] ?? categoryShapes[product.category]}
       label={product.title}
       compact={!featured}
       crop="tall"

@@ -10,7 +10,7 @@ export const company = {
   role: "Merchant Exporter & Commission Agent",
   tagline: "Reliable industrial sourcing. Ready for global requirements.",
   description:
-    "Altosa Exim LLP connects international buyers with capable Indian suppliers across engineering, automotive and electrical supply chains — sourced against your drawings, specifications and commercial needs.",
+    "Altosa Exim LLP connects international buyers with capable Indian suppliers across engineering, automotive, heavy vehicle and oil and gas supply chains — sourced against your drawings, specifications and commercial needs.",
 
   founded: 2018,
   entityType: "Limited Liability Partnership (LLP)",

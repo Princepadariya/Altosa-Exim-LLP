@@ -22,11 +22,14 @@
 
 .thumb {
   width: 7rem;
+}
+
+.plate {
   aspect-ratio: 2 / 1;
   transition: border-color var(--dur) var(--ease-out);
 }
 
-.row:hover .thumb {
+.row:hover .plate {
   border-color: var(--azure-400);
 }
 

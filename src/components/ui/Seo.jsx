@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import siteConfig from "../../data/siteConfig";
@@ -11,6 +12,19 @@ import { buildTitle, canonicalFor, organizationSchema } from "../../utils/seo";
  */
 const Seo = ({ title, description, image, noIndex = false, schema }) => {
   const { pathname } = useLocation();
+
+  /*
+   * index.html carries a static title and description so a crawler that does
+   * not run JS still gets one. React hoists this component's tags into <head>
+   * but does not dedupe them against those, which left every page shipping two
+   * descriptions — with the generic one first, where a crawler reads it in
+   * preference to the page's own. Dropped once, on first mount.
+   */
+  useEffect(() => {
+    document
+      .querySelectorAll("head [data-fallback]")
+      .forEach((tag) => tag.remove());
+  }, []);
 
   const fullTitle = buildTitle(title);
   const metaDescription = description ?? siteConfig.defaultDescription;

@@ -24,7 +24,7 @@ import styles from "./InquiryForm.module.css";
  * pass `onSubmit` here, or set `siteConfig.inquiryForm.endpoint`. With
  * neither, it falls back to a prefilled email so no inquiry is lost.
  *
- * Deep links prefill context: /request-a-quote?industry=electrical
+ * Deep links prefill context: /request-a-quote?industry=oil-gas
  * or ?product=castings arrive from the industry and product cards.
  */
 const InquiryForm = ({ onSubmit }) => {
@@ -46,7 +46,7 @@ const InquiryForm = ({ onSubmit }) => {
                     value: industry.id,
                     label: industry.title,
                   })),
-                  /* Industry is required, and the six sectors are where the
+                  /* Industry is required, and the listed sectors are where the
                      supplier base is strongest — not the limit of what can be
                      sourced. Without this option a buyer whose part sits
                      outside them cannot submit the form at all. */

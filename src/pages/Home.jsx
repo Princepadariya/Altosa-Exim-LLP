@@ -23,7 +23,7 @@ const Home = () => (
   <>
     <Seo
       title={null}
-      description="Altosa Exim LLP is a merchant exporter and commission agent in Rajkot, India, sourcing engineering, automotive and electrical components against buyer drawings and specifications."
+      description="Altosa Exim LLP is a merchant exporter and commission agent in Rajkot, India, sourcing engineering, automotive, heavy vehicle and oil and gas components against buyer drawings and specifications."
     />
 
     <Hero />
