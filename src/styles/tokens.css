@@ -160,10 +160,15 @@
   --container-narrow: 58rem;
 
   /* --- Radii & elevation ------------------------------------------------ */
-  --radius-sm: 4px;
-  --radius: 8px;
-  --radius-lg: 14px;
-  --radius-xl: 22px;
+  /* Drawn, not rounded. A 14px corner on every panel is the house style of
+     every SaaS template, and it fought the one thing here that is actually
+     distinctive: CAD sheets, hairlines and mono readouts. These are tight
+     enough to read as cut edges and still soft enough not to look unfinished.
+     --radius-full is untouched, because pills should stay pills. */
+  --radius-sm: 2px;
+  --radius: 5px;
+  --radius-lg: 7px;
+  --radius-xl: 12px;
   --radius-full: 999px;
 
   /* Warm-neutral, to match the paper. A navy-tinted shadow on a warm ground
@@ -172,9 +177,12 @@
   --shadow:
     0 1px 2px rgba(38, 32, 22, 0.05),
     0 6px 18px -6px rgba(38, 32, 22, 0.12);
+  /* Tightened from a 44px blur at -20px spread. The wide, soft version read
+     as a card floating off the page, which is the gesture every marketing
+     template uses. A drawing lies flat on the desk; it does not hover. */
   --shadow-lg:
     0 1px 2px rgba(38, 32, 22, 0.05),
-    0 20px 44px -20px rgba(38, 32, 22, 0.22);
+    0 10px 24px -14px rgba(38, 32, 22, 0.18);
   --shadow-xl:
     0 2px 4px rgba(38, 32, 22, 0.06),
     0 36px 80px -30px rgba(38, 32, 22, 0.32);
@@ -184,12 +192,17 @@
   /* --- Motion ----------------------------------------------------------- */
   /* One lift distance for every card-style hover. These had drifted to -4, -5
      and -6px across different components, so the same gesture read slightly
-     differently depending on where you were on the page. */
-  --lift: -5px;
+     differently depending on where you were on the page.
+
+     Now -2px rather than -5px. The accent rule that wipes across the top edge
+     is the real feedback on these cards; a five-pixel jump on top of it made
+     every hover feel like the same stock component. Kept non-zero so the card
+     still acknowledges the cursor. */
+  --lift: -2px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-spring: cubic-bezier(0.34, 1.42, 0.64, 1);
+  --ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 160ms;
   --dur: 280ms;
   --dur-slow: 620ms;

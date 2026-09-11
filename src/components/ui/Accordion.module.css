@@ -38,7 +38,7 @@
   transition:
     background-color var(--dur) var(--ease-out),
     border-color var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-spring);
+    transform var(--dur) var(--ease-emphasis);
 }
 
 .indicator::before,

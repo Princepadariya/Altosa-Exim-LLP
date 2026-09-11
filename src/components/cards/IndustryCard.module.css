@@ -21,7 +21,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
+  height: 1px;
   background: linear-gradient(90deg, var(--accent), var(--azure-300));
   transform: scaleX(0);
   transform-origin: left;
@@ -46,30 +46,22 @@
 }
 
 .number {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-widest);
   color: var(--text-soft);
 }
 
-.iconWrap {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius);
-  background: var(--bg-subtle);
-  color: var(--ink-800);
-  transition:
-    background-color var(--dur) var(--ease-out),
-    color var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-spring);
+/* 2 / 1 matches the compact crop, so the part fills the sheet rather than
+   letterboxing inside it. */
+.plate {
+  aspect-ratio: 2 / 1;
+  transition: border-color var(--dur) var(--ease-out);
 }
 
-.card:hover .iconWrap {
-  background: var(--ink-900);
-  color: var(--azure-400);
-  transform: rotate(-6deg) scale(1.06);
+.card:hover .plate {
+  border-color: var(--azure-400);
 }
 
 .title {

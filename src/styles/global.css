@@ -113,6 +113,35 @@ p {
   color: var(--white);
 }
 
+/* The one piece of UI chrome that sits inside the brand colour field while
+   someone is actually typing. Left at the browser default it is a black bar
+   on a warm ground, which is the only part of a form that still looks stock. */
+input,
+textarea,
+select,
+[contenteditable] {
+  caret-color: var(--accent);
+}
+
+/* Underlines set to clear the descenders rather than cut through them. The
+   browser default sits tight to the baseline and thickens with the font, and
+   at this body size it reads as a strikethrough on any word with a g or a y. */
+a:not([class]),
+.prose a {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+}
+
+/* Figures in the mono readouts are measurements, so they should hold their
+   column the way figures on a drawing do. Proportional digits make 01 and 04
+   different widths, which is visible the moment two sit in a list. */
+code,
+kbd,
+samp,
+pre {
+  font-variant-numeric: tabular-nums;
+}
+
 /* ==========================================================================
    Utilities
    ========================================================================== */
@@ -178,14 +207,6 @@ p {
   opacity: 0.5;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-}
-
-/* Amber-to-flame gradient on a display word. */
-.gradient-text {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 /* Hairline rule that fades out at both ends, for dark bands. */

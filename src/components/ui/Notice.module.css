@@ -3,7 +3,7 @@
   gap: var(--space-4);
   padding: var(--space-5);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
+  border-left: 1px solid var(--accent);
   border-radius: var(--radius);
   background: var(--bg-subtle);
   font-size: var(--fs-sm);

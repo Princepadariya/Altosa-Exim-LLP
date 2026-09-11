@@ -58,6 +58,7 @@
 }
 
 .number {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-lg);
   font-weight: 500;

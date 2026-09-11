@@ -19,7 +19,7 @@
   visibility: hidden;
   transition:
     opacity var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-spring),
+    transform var(--dur) var(--ease-emphasis),
     visibility var(--dur),
     background-color var(--dur) var(--ease-out);
 }
