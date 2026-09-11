@@ -302,7 +302,7 @@ export const industries = [
       "Sheet metal and fabricated assemblies",
       "Mixed-requirement component packages",
     ],
-    materials: ["Mild steel", "Stainless steel", "Alloy steel", "Aluminium"],
+    materials: ["Mild steel", "Stainless steel", "Alloy steel", "Aluminium", "Copper & brass"],
     applications: [
       "Machine builders and OEM sub-assemblies",
       "Maintenance and spares packages",

@@ -24,7 +24,13 @@ export const products = [
     processes: ["CNC turning", "CNC milling", "VMC machining", "Grinding"],
     materials: ["Carbon steel", "Alloy steel", "Stainless steel", "Aluminium", "Brass"],
     tolerance: "Confirmed against your drawing",
-    industries: ["automotive", "oil-gas", "general-engineering"],
+    industries: [
+      "automotive",
+      "agriculture",
+      "highway-offhighway",
+      "oil-gas",
+      "general-engineering",
+    ],
     records: ["Dimensional report", "Material test certificate"],
   },
   {
@@ -36,7 +42,7 @@ export const products = [
     processes: ["Closed-die forging", "Open-die forging", "Heat treatment", "Machining"],
     materials: ["Carbon steel", "Alloy steel", "Stainless steel"],
     tolerance: "Per forging standard and drawing",
-    industries: ["automotive", "agriculture", "highway-offhighway"],
+    industries: ["automotive", "agriculture", "highway-offhighway", "oil-gas"],
     records: ["Material test certificate", "Hardness report", "Heat treatment record"],
   },
   {
@@ -48,7 +54,7 @@ export const products = [
     processes: ["Sand casting", "Investment casting", "Shot blasting", "Machining"],
     materials: ["Grey iron", "Ductile iron", "Aluminium", "Bronze"],
     tolerance: "Per casting standard and drawing",
-    industries: ["oil-gas", "agriculture", "automotive", "highway-offhighway"],
+    industries: ["automotive", "agriculture", "highway-offhighway", "oil-gas"],
     records: ["Chemical composition", "Mechanical properties", "Dimensional report"],
   },
   {
@@ -60,7 +66,7 @@ export const products = [
     processes: ["Cold forging", "Thread rolling", "Heat treatment", "Plating"],
     materials: ["Mild steel", "Alloy steel", "Stainless steel", "Hot-dip galvanised"],
     tolerance: "To the standard stated in your inquiry",
-    industries: ["oil-gas", "highway-offhighway", "general-engineering"],
+    industries: ["highway-offhighway", "oil-gas", "general-engineering"],
     records: ["Material test certificate", "Coating thickness report"],
   },
   {
@@ -84,7 +90,7 @@ export const products = [
     processes: ["Laser cutting", "Press braking", "Welding", "Powder coating"],
     materials: ["Mild steel", "Stainless steel", "Aluminium"],
     tolerance: "Per fabrication drawing",
-    industries: ["general-engineering", "highway-offhighway"],
+    industries: ["highway-offhighway", "general-engineering"],
     records: ["Weld inspection", "Coating thickness report"],
   },
   {
@@ -108,7 +114,7 @@ export const products = [
     processes: ["Casting", "Forging", "Hardening", "Finish machining"],
     materials: ["Hardened alloy steel", "Ductile iron", "Manganese steel"],
     tolerance: "From sample or reverse-engineered drawing",
-    industries: ["agriculture", "automotive", "highway-offhighway"],
+    industries: ["automotive", "agriculture", "highway-offhighway"],
     records: ["Hardness report", "Dimensional report"],
   },
 ];
