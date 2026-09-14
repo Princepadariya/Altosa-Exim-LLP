@@ -9,6 +9,30 @@
   background: var(--bg-subtle);
 }
 
+/*
+ * Drafting grid.
+ *
+ * The dark bands already sit on one, drawn behind the hero sheet and the
+ * sector plates. Without it the paper sections read as a different site
+ * joined to the top one, which is most of why the middle of a page felt
+ * generic while the hero did not.
+ *
+ * Pitched at 34px and held at the threshold of visible. It should register as
+ * tooth in the paper when you look for it and disappear when you do not, so
+ * resist raising the alpha: at 0.05 it stops being paper and becomes a
+ * pattern, which is a different and much cheaper effect.
+ */
+.section:not(.dark)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(20, 21, 26, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 21, 26, 0.028) 1px, transparent 1px);
+  background-size: 34px 34px;
+  pointer-events: none;
+}
+
 .dark {
   background: var(--dark-bg);
   color: var(--dark-text);
@@ -63,6 +87,7 @@
 }
 
 .plateNumber {
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -89,7 +114,7 @@
 }
 
 .dark .plateNumber {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .dark .plateRule {
@@ -132,7 +157,7 @@
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(15, 141, 168, 0.16),
+    rgba(211, 95, 36, 0.16),
     transparent 65%
   );
   pointer-events: none;

@@ -27,9 +27,9 @@
 
 /* One source for every status colour on the page. */
 [data-status="new"] {
-  --dot: var(--azure-500);
-  --tint: var(--azure-100);
-  --ink: var(--azure-800);
+  --dot: var(--signal-500);
+  --tint: var(--signal-100);
+  --ink: var(--signal-800);
 }
 
 [data-status="reading"] {
@@ -219,7 +219,7 @@
   line-height: 1.5;
   color: #8c1d1d;
   background: #fdf0f0;
-  border-left: 3px solid #c05050;
+  border-left: 1px solid #c05050;
   border-radius: var(--radius-sm);
 }
 
@@ -305,7 +305,7 @@
 .search:focus-visible {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(15, 141, 168, 0.15);
+  box-shadow: 0 0 0 3px rgba(211, 95, 36, 0.15);
 }
 
 /* The native arrow is removed and one of ours drawn over, so a select stops
@@ -361,8 +361,8 @@
 }
 
 .primaryButton:hover:not(:disabled) {
-  background: var(--azure-600);
-  border-color: var(--azure-600);
+  background: var(--signal-600);
+  border-color: var(--signal-600);
   box-shadow: var(--shadow-accent);
 }
 
@@ -523,8 +523,8 @@
 }
 
 .clear:hover {
-  background: var(--azure-100);
-  border-color: var(--azure-200);
+  background: var(--signal-100);
+  border-color: var(--signal-200);
 }
 
 /*
@@ -743,8 +743,8 @@
 /* A left rule rather than a fill: it marks the row without washing out the
    status colour or the monogram sitting inside it. */
 .rowOn {
-  background: var(--azure-100);
-  box-shadow: inset 3px 0 0 var(--accent);
+  background: var(--signal-100);
+  box-shadow: inset 1px 0 0 var(--accent);
 }
 
 .row:focus-visible,
@@ -780,8 +780,8 @@
   font-family: var(--font-mono);
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--azure-800);
-  background: var(--azure-100);
+  color: var(--signal-800);
+  background: var(--signal-100);
   border-radius: var(--radius);
 }
 
@@ -1204,8 +1204,8 @@ a.metaItem:hover {
 }
 
 .attachment:hover {
-  background: var(--azure-100);
-  border-color: var(--azure-200);
+  background: var(--signal-100);
+  border-color: var(--signal-200);
 }
 
 .attachmentIcon {

@@ -85,7 +85,7 @@
   font-size: var(--fs-2xl);
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .regLabel {

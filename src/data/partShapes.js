@@ -11,11 +11,20 @@
 /** Industry id → part shape. */
 export const industryShapes = {
   automotive: "shaft",
-  electrical: "busbar",
-  "general-engineering": "bolt",
-  construction: "flange",
   agriculture: "linkage",
-  "pumps-valves": "valve",
+  "highway-offhighway": "hub",
+  "oil-gas": "valve",
+  "general-engineering": "bolt",
+};
+
+/**
+ * Product id → part shape, where the category drawing does not fit that
+ * particular family. Overrides categoryShapes below; everything not listed
+ * here falls back to it.
+ */
+export const productShapes = {
+  "sheet-metal": "bracket",
+  "wear-parts": "wear",
 };
 
 /** Product capability category → part shape. */

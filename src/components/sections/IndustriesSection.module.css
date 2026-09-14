@@ -22,12 +22,15 @@
 
 .thumb {
   width: 7rem;
+}
+
+.plate {
   aspect-ratio: 2 / 1;
   transition: border-color var(--dur) var(--ease-out);
 }
 
-.row:hover .thumb {
-  border-color: var(--azure-400);
+.row:hover .plate {
+  border-color: var(--signal-400);
 }
 
 /* A rule that wipes in under the row on hover. */
@@ -55,6 +58,7 @@
 }
 
 .number {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-lg);
   font-weight: 500;

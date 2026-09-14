@@ -1,14 +1,23 @@
 import { useMemo, useState } from "react";
 
+import { Link } from "react-router-dom";
+
 import products, { productCategories } from "../../data/products";
+import { categoryShapes, productShapes } from "../../data/partShapes";
 import cn from "../../utils/cn";
 import ProductCard from "../cards/ProductCard";
+import SectorPlate from "../ui/SectorPlate";
+import Icon from "../ui/Icon";
 import Button from "../ui/Button";
 import Notice from "../ui/Notice";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 import grid from "../ui/Grid.module.css";
 import styles from "./ProductsSection.module.css";
+
+const labelFor = (categoryId) =>
+  productCategories.find((category) => category.id === categoryId)?.label ??
+  categoryId;
 
 const countFor = (categoryId) =>
   categoryId === "all"
@@ -81,31 +90,88 @@ const ProductsSection = ({
             will tell you honestly whether we can source it.
           </p>
         ) : (
-          /*
-           * A mosaic rather than an even grid: the first capability runs wide
-           * as a lead item and the rest sit beside it. `showFilters` is the
-           * signal that this is the full Products page, where an even grid is
-           * the honest presentation because no family leads the others.
-           */
-          <div
-            className={
-              showFilters
-                ? `${grid.grid} ${grid.cols3}`
-                : `${grid.grid} ${styles.mosaic}`
-            }
-          >
-            {visibleProducts.map((product, index) => (
-              // Keying on the filter as well as the id replays the reveal
-              // animation when the list changes.
+          showFilters ? (
+            <div className={`${grid.grid} ${grid.cols3}`}>
+              {visibleProducts.map((product, index) => (
+                // Keying on the filter as well as the id replays the reveal
+                // animation when the list changes.
+                <ProductCard
+                  key={`${activeCategory}-${product.id}`}
+                  product={product}
+                  index={index}
+                />
+              ))}
+            </div>
+          ) : (
+            /*
+             * One sheet, then a spec index.
+             *
+             * This was six cards of the same shape stacked into a mosaic, which
+             * ran to 2,700px of the homepage repeating one idea. The lead keeps
+             * its full drawing sheet because it earns the room; the rest become
+             * rows on a parts list, which is how a specification is actually
+             * read and which stops the section from being a card wall. No fact
+             * is dropped — every row still carries all four spec pairs.
+             */
+            <>
               <ProductCard
-                key={`${activeCategory}-${product.id}`}
-                product={product}
-                index={index}
-                featured={!showFilters && index === 0}
-                className={!showFilters && index === 0 ? styles.lead : undefined}
+                product={visibleProducts[0]}
+                index={0}
+                featured
+                className={styles.lead}
               />
-            ))}
-          </div>
+
+              <ul className={styles.index}>
+                {visibleProducts.slice(1).map((product, index) => (
+                  <li key={product.id}>
+                    <Link
+                      to={`/request-a-quote?product=${product.id}`}
+                      className={styles.row}
+                      data-reveal
+                      style={{ "--reveal-delay": `${Math.min(index, 6) * 55}ms` }}
+                      aria-label={`Send a requirement for ${product.title.toLowerCase()}`}
+                    >
+                      <SectorPlate
+                        shape={
+                          productShapes[product.id] ??
+                          categoryShapes[product.category]
+                        }
+                        label={product.title}
+                        compact
+                        className={styles.rowPlate}
+                      />
+
+                      <span className={styles.rowMain}>
+                        <span className={styles.rowCategory}>
+                          {labelFor(product.category)}
+                        </span>
+                        <span className={styles.rowTitle}>{product.title}</span>
+                        <span className={styles.rowSummary}>{product.summary}</span>
+                      </span>
+
+                      <span className={styles.rowSpecs}>
+                        {[
+                          ["Processes", product.processes.join(" · ")],
+                          ["Materials", product.materials.join(" · ")],
+                          ["Tolerance", product.tolerance],
+                          ["Records", product.records.join(" · ")],
+                        ].map(([label, value]) => (
+                          <span key={label} className={styles.spec}>
+                            <span className={styles.specLabel}>{label}</span>
+                            <span className={styles.specValue}>{value}</span>
+                          </span>
+                        ))}
+                      </span>
+
+                      <span className={styles.rowGo} aria-hidden="true">
+                        <Icon name="arrow" size={17} />
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
         )}
       </div>
 

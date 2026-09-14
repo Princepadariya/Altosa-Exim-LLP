@@ -19,7 +19,7 @@
   z-index: -1;
   background: radial-gradient(
     circle at center,
-    rgba(15, 141, 168, 0.24),
+    rgba(211, 95, 36, 0.24),
     transparent 62%
   );
   pointer-events: none;
@@ -61,7 +61,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .eyebrow::before {
@@ -125,7 +125,7 @@
 .panelTick {
   flex-shrink: 0;
   margin-top: 3px;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 @media (max-width: 900px) {

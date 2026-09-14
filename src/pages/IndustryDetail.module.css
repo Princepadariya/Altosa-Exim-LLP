@@ -74,6 +74,7 @@
 }
 
 .considerationNumber {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-widest);
@@ -93,6 +94,77 @@
   font-size: var(--fs-base);
   line-height: var(--lh-relaxed);
   color: var(--text-muted);
+}
+
+/* --- Terms ---------------------------------------------------------------- */
+
+/* Definitions, not chips: a chip that cannot be clicked or read in full is
+   decoration. Two columns on wide screens so four terms read as one block
+   rather than a long ladder down the page. */
+.terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-5);
+}
+
+.term {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.termName {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.termDef {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+}
+
+.termsLink,
+.panelLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  transition: gap var(--dur) var(--ease-out);
+}
+
+.termsLink {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.panelLink {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+}
+
+.termsLink:hover,
+.panelLink:hover {
+  gap: 0.7rem;
+}
+
+/* Sits above the chips it qualifies, so the caveat is read before the list
+   rather than discovered under it. */
+.panelNote {
+  margin-top: calc(var(--space-4) * -1 + 0.2rem);
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-relaxed);
+  color: var(--text-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .termsLink,
+  .panelLink {
+    transition: none;
+  }
 }
 
 /* --- Sidebar -------------------------------------------------------------- */

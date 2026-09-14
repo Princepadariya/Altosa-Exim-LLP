@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 28% 18%, rgba(42, 180, 209, 0.09), transparent 58%),
+    radial-gradient(circle at 28% 18%, rgba(240, 122, 51, 0.09), transparent 58%),
     linear-gradient(158deg, var(--ink-850), var(--ink-980) 76%);
   border: 1px solid var(--dark-border-strong);
   border-radius: var(--radius-lg);
@@ -35,7 +35,7 @@
 }
 
 .sheet :global(.accent) {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .caption {

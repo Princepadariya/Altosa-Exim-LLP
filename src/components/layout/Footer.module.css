@@ -59,7 +59,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .blurb {

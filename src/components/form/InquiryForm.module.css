@@ -135,7 +135,7 @@
   color: var(--white);
   background: var(--verify);
   border-radius: var(--radius-full);
-  animation: pop var(--dur-slow) var(--ease-spring) both;
+  animation: pop var(--dur-slow) var(--ease-emphasis) both;
 }
 
 .successTitle {

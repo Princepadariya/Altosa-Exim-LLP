@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 import Icon from "../ui/Icon";
+import SectorPlate from "../ui/SectorPlate";
+import { industryShapes } from "../../data/partShapes";
 import styles from "./IndustryCard.module.css";
 
 /**
@@ -15,11 +17,15 @@ const IndustryCard = ({ industry, detailed = false, index = 0 }) => (
     data-reveal
     style={{ "--reveal-delay": `${Math.min(index, 6) * 70}ms` }}
   >
+    <SectorPlate
+      shape={industryShapes[industry.id]}
+      label={industry.title}
+      compact
+      className={styles.plate}
+    />
+
     <div className={styles.top}>
       <span className={styles.number}>{industry.number}</span>
-      <span className={styles.iconWrap}>
-        <Icon name={industry.icon} size={22} />
-      </span>
     </div>
 
     <h3 className={styles.title}>{industry.title}</h3>

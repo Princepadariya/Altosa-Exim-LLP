@@ -3,7 +3,7 @@
   gap: var(--space-4);
   padding: var(--space-5);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
+  border-left: 1px solid var(--accent);
   border-radius: var(--radius);
   background: var(--bg-subtle);
   font-size: var(--fs-sm);
@@ -11,17 +11,17 @@
   color: var(--text-muted);
 }
 
-/* --azure-400, not --accent: --accent is the light-surface value and all but
+/* --signal-400, not --accent: --accent is the light-surface value and all but
    disappears against a dark band. Same for the icon below. */
 .onDark {
   background: var(--dark-surface);
   border-color: var(--dark-border);
-  border-left-color: var(--azure-400);
+  border-left-color: var(--signal-400);
   color: var(--dark-text-muted);
 }
 
 .onDark .icon {
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .icon {

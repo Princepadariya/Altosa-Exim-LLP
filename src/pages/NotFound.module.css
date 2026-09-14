@@ -16,7 +16,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-widest);
-  color: var(--azure-400);
+  color: var(--signal-400);
 }
 
 .title {

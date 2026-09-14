@@ -179,7 +179,7 @@
      colours are kept exactly; the plate is what lets navy read on a dark bar. */
   background: #faf8f4;
   border-radius: var(--radius);
-  transition: transform var(--dur) var(--ease-spring);
+  transition: transform var(--dur) var(--ease-emphasis);
 }
 
 .brand:hover .brandMark {
@@ -510,7 +510,7 @@
 }
 
 .menuOverview:hover {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 .menuList {
@@ -537,7 +537,7 @@
 }
 
 .menuLink:global(.active) {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 /* --- Drawer groups -------------------------------------------------------- */
@@ -604,7 +604,7 @@
 
 .drawerSubLink:hover,
 .drawerSubLink:global(.active) {
-  color: var(--azure-300);
+  color: var(--signal-300);
 }
 
 @media (max-width: 1080px) {
