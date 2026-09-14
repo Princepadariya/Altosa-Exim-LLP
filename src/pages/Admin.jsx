@@ -5,6 +5,7 @@ import Icon from "../components/ui/Icon";
 import Seo from "../components/ui/Seo";
 import { isSupabaseConfigured, supabase } from "../lib/supabase";
 import { toCsv } from "../utils/csv";
+import logoMark from "../assets/logo-mark.svg";
 import styles from "./Admin.module.css";
 
 /**
@@ -334,7 +335,7 @@ const SignIn = () => {
 
       <div className={styles.authInner}>
         <div className={styles.lockup}>
-          <span className={styles.lockupMark} aria-hidden="true">AE</span>
+          <img className={styles.lockupMark} src={logoMark} alt="" width="68" height="48" />
           <span className={styles.lockupText}>
             <span className={styles.lockupName}>ALTOSA EXIM</span>
             <span className={styles.lockupSub}>Rajkot, Gujarat, India</span>
@@ -841,7 +842,7 @@ const Inbox = ({ onSignOut }) => {
     <div className={styles.inbox}>
       <header className={styles.topbar}>
         <div className={styles.topbarTitle}>
-          <span className={styles.mark} aria-hidden="true">AE</span>
+          <img className={styles.mark} src={logoMark} alt="" width="58" height="38" />
           <div>
             <h1 className={styles.title}>Inquiry inbox</h1>
             <p className={styles.subtitle}>

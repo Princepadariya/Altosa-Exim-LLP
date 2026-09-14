@@ -161,35 +161,29 @@
   flex-shrink: 0;
 }
 
+/*
+ * The company mark. Width and height are set on the tag as well as here, so the
+ * space is reserved before the SVG arrives and the header never shifts as it
+ * loads. The mark is wider than it is tall (about 1.53 : 1), so it is sized by
+ * height to sit level with the two lines of text beside it.
+ */
 .brandMark {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
+  display: block;
+  box-sizing: border-box;
+  width: 62px;
+  height: 42px;
+  padding: 4px 6px;
+  object-fit: contain;
   flex-shrink: 0;
-  border-radius: var(--radius-sm);
-  background: var(--accent);
-  overflow: hidden;
+  /* A light plate behind the logo rather than a recoloured logo. The brand
+     colours are kept exactly; the plate is what lets navy read on a dark bar. */
+  background: #faf8f4;
+  border-radius: var(--radius);
+  transition: transform var(--dur) var(--ease-spring);
 }
 
-.brandMark svg {
-  position: relative;
-  z-index: 1;
-  color: var(--white);
-}
-
-.brandMark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.4));
-  transform: translate(-100%, -100%);
-  transition: transform var(--dur-slow) var(--ease-out);
-}
-
-.brand:hover .brandMark::after {
-  transform: translate(0, 0);
+.brand:hover .brandMark {
+  transform: translateY(-1px) scale(1.03);
 }
 
 .brandText {

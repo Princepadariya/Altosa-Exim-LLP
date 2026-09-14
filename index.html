@@ -18,6 +18,155 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
     />
 
+    <!--
+      Intro loader, home page only.
+
+      Lives here rather than in React because a React loader can only appear once
+      the app bundle has downloaded, which would put a blank page in front of it.
+      Everything it needs to paint — this style block and the decision below —
+      is inline, so it is on screen with the first paint.
+
+      Shown once per browser session: a splash on every return to the home page
+      stops being an introduction and becomes a delay. src/utils/bootLoader.js
+      decides when to lift it.
+    -->
+    <script>
+      (function () {
+        try {
+          if (location.pathname === "/" && !sessionStorage.getItem("altosa:intro-seen")) {
+            document.documentElement.classList.add("boot-on");
+            document.documentElement.dataset.bootStart = String(performance.now());
+          }
+        } catch (e) {
+          /* Storage blocked (some private modes): skip the loader rather than
+             risk showing it on every visit. */
+        }
+      })();
+    </script>
+    <style>
+      #boot-loader {
+        display: none;
+      }
+
+      html.boot-on #boot-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #faf8f4;
+        transition: transform 0.95s cubic-bezier(0.76, 0, 0.24, 1);
+        /* Failsafe: if the app never loads to lift it, the loader removes itself
+           rather than covering the page indefinitely. */
+        animation: boot-failsafe 0.4s ease 7s forwards;
+      }
+
+      /* No scrolling underneath while it is up. */
+      html.boot-on:not(.boot-leave) {
+        overflow: hidden;
+      }
+
+      /* The home hero animates in on load. Held until the loader lifts, or its
+         entrance would play out unseen behind the cream. */
+      html.boot-on:not(.boot-leave) #root * {
+        animation-play-state: paused !important;
+      }
+
+      /* Exit: the loader rises away like a curtain, contents first. */
+      html.boot-leave #boot-loader {
+        transform: translateY(-100%);
+      }
+
+      .boot-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        transition:
+          opacity 0.35s ease,
+          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      html.boot-leave .boot-inner {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+
+      .boot-logo {
+        display: block;
+        width: min(230px, 58vw);
+        height: auto;
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+        animation: boot-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      }
+
+      .boot-bar {
+        width: min(170px, 44vw);
+        height: 2px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: rgba(11, 55, 104, 0.12);
+        opacity: 0;
+        animation: boot-fade 0.35s ease 0.4s forwards;
+      }
+
+      /* The logo's own gold, from its ribbon and waves. */
+      .boot-bar span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, #b27b1a, #e5b950, #9d6914);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: boot-fill 0.95s cubic-bezier(0.65, 0, 0.35, 1) 0.45s forwards;
+      }
+
+      @keyframes boot-in {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes boot-fade {
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes boot-fill {
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      @keyframes boot-failsafe {
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html.boot-on #boot-loader {
+          transition: opacity 0.3s ease;
+        }
+
+        html.boot-leave #boot-loader {
+          transform: none;
+          opacity: 0;
+        }
+
+        .boot-logo,
+        .boot-bar,
+        .boot-bar span {
+          animation-duration: 0.01s;
+          animation-delay: 0s;
+        }
+      }
+    </style>
+
     <!-- Fallback title and description; React replaces these per route. -->
     <title>Industrial Sourcing &amp; Export Partner in India | Altosa Exim LLP</title>
     <meta
@@ -26,6 +175,23 @@
     />
   </head>
   <body>
+    <!-- Decorative: the page beneath stays fully readable to assistive tech. The
+         logo path is processed by Vite, so it gets the same hashed, cached file
+         the footer uses rather than a second copy. -->
+    <div id="boot-loader" aria-hidden="true">
+      <div class="boot-inner">
+        <img
+          class="boot-logo"
+          src="/src/assets/Altosa_exim.svg"
+          alt=""
+          width="1060"
+          height="845"
+          fetchpriority="high"
+        />
+        <div class="boot-bar"><span></span></div>
+      </div>
+    </div>
+
     <div id="root"></div>
     <noscript>
       Altosa Exim LLP — merchant exporter and commission agent, Rajkot, Gujarat,

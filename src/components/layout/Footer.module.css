@@ -40,12 +40,17 @@
   max-width: 26rem;
 }
 
-.brandName {
-  font-family: var(--font-display);
-  font-size: var(--fs-xl);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--white);
+/* Sized by width. The lockup is nearly as tall as it is wide once the tagline
+   and its rules are counted, so sizing by height would read smaller than meant. */
+.brandLogo {
+  display: block;
+  box-sizing: border-box;
+  width: 140px;
+  height: auto;
+  padding: 10px 9px 7px;
+  margin-bottom: var(--space-4);
+  background: #faf8f4;
+  border-radius: var(--radius-lg);
 }
 
 .role {

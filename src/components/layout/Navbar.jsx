@@ -9,6 +9,7 @@ import useScrolled from "../../hooks/useScrolled";
 import cn from "../../utils/cn";
 import Button from "../ui/Button";
 import Icon from "../ui/Icon";
+import logoMark from "../../assets/logo-mark.svg";
 import styles from "./Navbar.module.css";
 
 /**
@@ -114,9 +115,19 @@ const Navbar = () => {
       >
         <div className={`container ${styles.inner}`}>
           <Link to="/" className={styles.brand} aria-label={`${company.name} — home`}>
-            <span className={styles.brandMark} aria-hidden="true">
-              <Icon name="arrowUpRight" size={19} strokeWidth={2.2} />
-            </span>
+            {/* Empty alt: the link is already named "Altosa Exim — home", and
+                a second name here would be read out twice. The mark only, not
+                the full lockup — at header height its lettering is illegible,
+                and the name is already set in text beside it. Original
+                colours on a light plate: the header is dark in every state,
+                and the navy would otherwise all but vanish against it. */}
+            <img
+              className={styles.brandMark}
+              src={logoMark}
+              alt=""
+              width="62"
+              height="42"
+            />
             <span className={styles.brandText}>
               <span className={styles.brandName}>
                 ALTOSA EXIM<span className={styles.brandSuffix}>LLP</span>

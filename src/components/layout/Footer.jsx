@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import company, { hasWhatsapp } from "../../data/company";
 import { footerNav } from "../../data/navigation";
 import Icon from "../ui/Icon";
+import logo from "../../assets/Altosa_exim.svg";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -16,7 +17,17 @@ const Footer = () => {
         <div className={styles.top}>
           <div className={styles.brandCol}>
             <div>
-              <p className={styles.brandName}>{company.legalName}</p>
+              {/* The full lockup in its original colours, on a light plate:
+                  the footer is dark, and without one the navy and black
+                  lettering would disappear. The legal name, with its LLP,
+                  stays in the copyright line. */}
+              <img
+                className={styles.brandLogo}
+                src={logo}
+                alt={company.legalName}
+                width="122"
+                height="97"
+              />
               <span className={styles.role}>{company.role}</span>
             </div>
 
